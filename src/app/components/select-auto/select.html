@@ -1,0 +1,36 @@
+<div class="select-auto">
+    <span>车辆品牌：</span>
+    <div class="btn-group" uib-dropdown  auto-close="outsideClick" is-open="isOpen">
+        <button id="btn-append-to-body" type="button" class="btn btn-default" uib-dropdown-toggle>
+            {{$select.brandName}}&nbsp;{{$select.carLineName}}<span class="caret"></span>
+        </button>
+        <div class="dropdown-menu select-auto-dropdown" role="menu" aria-labelledby="btn-append-to-body">
+            <div class="select-auto-list">
+                <div class="select-auto-dropdown-label"><ul><li ng-repeat="item in labels track by $index" ng-click="selectLabels(item, $event)">{{item}}</li></ul></div>
+                <div class="select-auto-dropdown-barnd">
+                    <ul>
+                        <li ng-repeat="brandItem in brand track by $index"
+                            ng-click="selectBrand(brandItem.id, $index, brandItem.name, $event)"
+                            ng-class="{'select-auto-type' : brandItem.mark,active: $index == 0}"
+                            brand-mark = "{{brandItem.mark}}"
+                            title="{{brandItem.name}}"
+                        >
+                            {{brandItem.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="select-auto-dropdown-car-line" ng-if="carLine && carLine.length > 0">
+                    <ul>
+                        <li ng-repeat="carLineItem in carLine track by $index"
+                            ng-click="selectCarLine(carLineItem.id, $index, carLineItem.name, $event)"
+                            ng-class="{'select-auto-type' : carLineItem.mark, active: $index == 0}"
+                            title="{{carLineItem.name}}"
+                        >
+                            {{carLineItem.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

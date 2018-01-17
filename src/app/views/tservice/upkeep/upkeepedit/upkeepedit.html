@@ -1,0 +1,70 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{vm.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" action="" name="edit_form" ng-submit="vm.submit($event, edit_form)" novalidate>
+            <div class="form-group">
+                <label for="brandListAdd" class="col-sm-3 control-label">*品牌:</label>
+                <div class="col-sm-8">
+                    <select ng-change="vm.changeSelect(vm.query.brand)"  ng-model="vm.query.brand" name="brandListAdd" id="brandListAdd" class="col-sm-8 form-control ib" ng-options="item.brandId as item.brandName for item in vm.CAR_TYPE" required ng-disabled="vm.readonly">
+                        <option value="" selected="selected">请选取品牌</option>
+                    </select>
+                    <div wd-messages="brandListAdd">
+                        <div wd-message="required">请选取品牌</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="seriseListAdd" class="col-sm-3 control-label">*系列:</label>
+                <div class="col-sm-8">
+                    <select ng-change="vm.changeSelectType(vm.query.serise)" ng-model="vm.query.serise" name="seriseListAdd" id="seriseListAdd" class="form-control" ng-options="item.seriseId as item.seriseName for item in vm.CAR_SERIES" required ng-disabled="vm.readonly">
+                        <option value="" selected="selected">请选择车辆系列</option>
+                    </select>
+                    <div wd-messages="seriseListAdd">
+                        <div wd-message="required">请选择车辆系列</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="modelNameAdd" class="col-sm-3 control-label">*车型:</label>
+                <div class="col-sm-8" ng-if="!vm.upkeepEdit">
+                    <select ng-model="vm.query.modelNameList" name="modelNameAdd" id="modelNameAdd" class="form-control" ng-options="item.modelId as item.modelName for item in vm.CAR_Model" required  ng-disabled="vm.readonly"><option value="" selected="selected">请选择车型</option></select>
+                    <div wd-messages="modelNameAdd">
+                        <div wd-message="required">请选择车型</div>
+                    </div>
+                </div>
+                <div class="col-sm-8" ng-if="vm.upkeepEdit">
+                  <input  ng-model="vm.query.modelName"  ng-disabled="vm.readonly" type="text"  class="form-control col-sm-10">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="upkeepType" class="col-sm-3 control-label">*保养项目:<br>(多选)</label>
+                <div class="col-sm-8">
+                    <select multiple  ng-model="vm.itemsArry" name="upkeepType" id="upkeepType" class="form-control" ng-options="item.maintainItemId as item.maintainItemName for item in vm.CAR_UPKEEP" style="height:200px;" required>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kilometre" class="col-sm-3 control-label">*公里设定/公里:</label>
+                <div class="col-sm-8">
+                    <input ng-model="vm.query.mileage" type="number" id="kilometre" class="form-control col-sm-10" name="kilometre" required ng-pattern="/(^[1-9][0-9]$)|(^[1-9][0-9][0-9]$)|(^[1-9][0-9][0-9][0-9]$)|(^[1-9][0-9][0-9][0-9][0-9][0-9]$)|(^[1-9][0-9][0-9][0-9][0-9]$)|(^[1][0][0][0][0][0][0]$)|(^100000&)|(^[1-9]$)$/" ng-readonly="vm.readonly">
+                    <div wd-messages="kilometre">
+                        <div wd-message="required">公里数必须填写</div>
+                        <div wd-message="pattern">公里数值为0-100万</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-3">
+                    <button ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary" type="submit" style="width: 85px;" disabled="disabled">提交</button>
+                    <button ng-click="vm.cancel()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,33 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">修改密码</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">*原始密码:</label>
+        <div class="col-sm-8">
+          <input ng-model="vm.oldPwd" type="password" value="" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">*新密码:</label>
+        <div class="col-sm-8">
+          <input ng-model="vm.newPwd" type="password" value="" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">*确认新密码:</label>
+        <div class="col-sm-8">
+          <input ng-model="vm.confirmPwd" type="password" value="" class="form-control" >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <button ng-click="vm.resetPassword()" class="btn btn-primary" style="width: 85px;">保存</button>
+          <button ng-click="vm.cancel()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

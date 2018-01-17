@@ -1,0 +1,83 @@
+<div class="content-padding">
+  <div class="content-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th colspan="10" class="tlr">
+          <div class="ib Searchfor">
+              <input style="width:200px;" type="text" class="ml15 ib form-control width-100"
+                     ng-model="outrescue.woId1" placeholder="请输入工单编号/底盘号"/>
+              <span class="glyphicon glyphicon-search"  ng-click="outrescue.pageIndex=1;outrescue.searchList(outrescue.woId1)"></span>
+          </div>
+            <button class="btn btn-default btn-small" ng-click="outrescue.formoreobj()">高级筛选</button>
+
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr ng-show="outrescue.moreobject">
+        <th colspan="10" style="text-align: left;">
+<!--
+          <div class="obj col-sm-4">
+            <div class="col-sm-3 ib Hfilter">工单号：</div>
+            <div class="col-sm-8  appSearch">
+              <input ng-model="outrescue.woId2" type="text" class="form-control col-sm-10">
+              <span class="glyphicon glyphicon-search"  ng-click="outrescue.advancedSearchList(outrescue.woId2,outrescue.state,1)"></span>
+            </div>
+          </div>
+-->
+          <div class="obj col-sm-3 ml20">
+            <div class="col-sm-3 ib Hfilter">当前状态：</div>
+            <div class="col-sm-9">
+              <select ng-change="outrescue.advancedSearchList(outrescue.woId2,outrescue.state,1)"
+                      ng-model="outrescue.state"
+                      class="col-sm-8 form-control ib" >
+                <option selected="selected" value="0">全部</option>
+                <option value ="1">申请取消救援</option>
+                <option value ="2">催单</option>
+              </select>
+            </div>
+          </div>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr>
+        <th nowrap=true>序号</th>
+        <th nowrap=true>操作</th>
+        <th>工单号</th>
+        <th style="align-content: inherit">400工单号</th>
+        <th>当前状态</th>
+        <th>底盘号</th>
+        <th>抢单时间</th>
+        <th>抢单账号</th>
+        <th>关闭原因</th>
+        <th>催单时间</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="obj in outrescue.mydata">
+        <td>{{obj.reviewCnt}}</td>
+        <td>
+          <a ui-sref="tservice.dealorderview({id:obj.woCode})">查看</a>
+<!--
+          <span ng-show="obj.outRescue"><a ng-click="outrescue.workCheck(obj.woCode,obj.closeReasion,obj.vin,obj.robAccount)">审核</a></span>
+-->
+        </td>
+        <td>{{obj.woCode}}</td>
+        <td>{{obj.csWoCode}}</td>
+        <td nowrap=true>{{obj.state}}</td>
+        <td>{{obj.chassisCode}}</td>
+        <td>{{obj.robTime}}</td>
+        <td>{{obj.robAccount}}</td>
+        <td>{{obj.closeReasion | cut:true:13:' ......'}}</td>
+        <td>{{obj.reminderTime}}</td>
+      </tr>
+      <tr ng-if="outrescue.mydata.length === 0">
+        <td colspan="10" style="text-align: center;">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    <wd-page-number  total="outrescue.total" page-size="outrescue.pageSize"  page-index="outrescue.pageIndex" query="outrescue.flip"></wd-page-number>
+
+</div>
+

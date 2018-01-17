@@ -1,0 +1,94 @@
+<div class="content-padding">
+  <div class="content-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th colspan="10" class="tlr">
+          <div class="rule-div">
+                <span class="rule-title">注册用户管理</span>
+          </div>
+          <div class="ib Searchfor">
+              <input style="width:285px;" type="text" class="ml5 ib form-control"
+                     ng-model="app.keyWord" placeholder="请输入注册账号/VIN/身份证号/组织机构代码"/>
+              <span class="glyphicon glyphicon-search" ng-click="app.pageIndex=1;app.onSearch()"></span>
+          </div>
+          <button class="btn btn-default btn-small" ng-click="app.getExecl()">导出</button>
+          <button class="btn btn-default btn-small" ng-click="app.formoreobj()">高级筛选</button>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr ng-show="app.moreobject">
+        <th colspan="10" class="tlr">
+          <div class="ib col-sm-5 wd-date">
+              <span class="ib col-sm-3 Hfilter">注册时间：</span>
+              <div class="mp-date-time-pick ib  col-sm-9">
+                <wd-date-picker class="ib col-sm-5" ng-change="app.pageIndex=1;app.onTimeFilter()" ng-model="app.registerDateStart"></wd-date-picker>
+                <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                <wd-date-picker class="ib col-sm-5" ng-change="app.pageIndex=1;app.onTimeFilter()" ng-model="app.registerDateEnd"></wd-date-picker>
+              </div>
+          </div>
+          <div class="obj col-sm-3">
+              <span class="ib col-sm-4 Hfilter">认证角色：</span>
+            <div class="ib col-sm-7">
+              <select class="form-control" ng-change="app.pageIndex=1;app.onRoleFilter()" ng-model="app.userRole"
+                      ng-options="item.key as item.value for item in app.ROLES">
+                <option value="">全部</option>
+              </select>
+            </div>
+          </div>
+          <div class="obj col-sm-2">
+            <div class="col-sm-4 ib Hfilter">车系：</div>
+            <div class="col-sm-7 ib">
+              <select class="form-control" ng-change="app.pageIndex=1;app.onSeriesFilter()" ng-model="app.carSeries"
+                      ng-options="item.key as item.value for item in app.SERISES">
+                <option value="">请选择车系</option>
+              </select>
+            </div>
+          </div>
+          <div class="obj col-sm-2">
+            <div class="col-sm-4 ib Hfilter">车型：</div>
+            <div class="col-sm-7 ib">
+              <select class="form-control" ng-change="app.pageIndex=1;app.onModelFilter()" ng-model="app.carModel"
+                      ng-options="item.key as item.value for item in app.MODELS">
+                <option value="">请选择车型</option>
+              </select>
+            </div>
+          </div>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr>
+        <th>注册账号</th>
+        <th>用户ID</th>
+        <th>认证角色</th>
+        <th>创建时间 <span ng-click="app.onSort()" class="glyphicon glyphicon-circle-arrow-{{app.direction}}"></span></th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="obj in app.list">
+        <td>{{obj.phone}}</td>
+        <td>{{obj.id}}</td>
+        <td>{{obj.role==='0'?'管理员':obj.role==='1'?'普通用户':obj.role==='2'?'司机':obj.role==='3'?'车主、司机':''}}</td>
+        <!--<td>{{((obj.ownerRole == 0) &&(obj.driverRole ==0)&&(obj.managerRole == 1))===true?'管理员':((obj.managerRole == 0) &&(obj.ownerRole ==0)&&(obj.driverRole == 0))===true?'普通用户':((obj.driverRole == 1) &&(obj.ownerRole ==0)&&(obj.managerRole == 0))===true?'司机':((obj.ownerRole == 1) &&(obj.driverRole ==1)&&(obj.managerRole == 0))===true?'车主、司机':''}}</td>-->
+        <td>{{obj.createDate}}</td>
+        <td>
+        <span ng-if="obj.role==='2'">
+          <a ng-click="app.seeDriver(obj)">查看</a>
+        </span>
+        <span ng-if="obj.role=='3'||obj.role=='0'">
+          <a ng-click="app.seeOwner(obj)">查看</a>
+        </span>
+          <!--绑定数据时合并成一个方法 根据权限判断-->
+        </td>
+      </tr>
+      <tr ng-if="app.list.length === 0">
+        <td colspan="10" style="text-align: center;">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <wd-page-number total="app.total" page-size="app.pageSize"
+                  page-index="app.pageIndex" query="app.query"></wd-page-number>
+</div>
+

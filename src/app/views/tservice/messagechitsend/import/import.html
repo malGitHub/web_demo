@@ -1,0 +1,18 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">导入基础数据</h3>
+  </div>
+  <form  action="" ng-submit="vm.submit($event)" enctype="multipart/form-data" >
+    <div class="modal-body">
+      <div class="form-group">
+        <input file-model="vm.file" name="file" id="file" type="file" class="form-control">
+        <p style="margin-top: 5px;">备注：每次批量导入最多支持5000条手机号</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="http://jfx.qdfaw.com:8081/fs/qqdfs1/M00/00/01/CmZfbVjUv6mAUytCAAAnmDp0XtE49.xlsx" class="btn btn-primary" style="width: 26%">模板下载</a>
+      <button type="submit" class="btn btn-primary" style="width: 26%" ng-disabled="!vm.file">导入</button>
+      <button ng-click="vm.cancel()" type="reset" class="btn btn-default" style="width: 26%">取消</button>
+    </div>
+  </form>
+</div>

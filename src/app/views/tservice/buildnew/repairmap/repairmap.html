@@ -1,0 +1,57 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{vm.title}}</h3>
+    </div>
+    <div class="modal-body repairmap">
+      <div class="form-group">
+        <div class="col-sm-2 mb10">
+          <select ng-change="vm.changeProvince()" ng-model="vm.province" class="form-control" id="pName"
+                  ng-options="item.name for item in vm.AreaList">
+            <option value="" selected="selected">全选</option>
+          </select>
+        </div>
+
+        <div class="Hfilter city">省</div>
+
+        <div class="col-sm-2 mb10">
+          <select ng-change="vm.changeCity()" ng-model="vm.city" class="form-control" id="cName"
+                  ng-options="item.name for item in vm.CityList">
+            <option value="" selected="selected">全选</option>
+          </select>
+        </div>
+
+        <div class="Hfilter city">市</div>
+      </div>
+      <form class="form-horizontal mt10 mapsediton">
+        <div class="form-group mapWH">
+          <div class="search" id="search">
+            <div class="col-sm-10">
+              <input type="text" ng-model="vm.searchReasult" id="searchAddress" class="form-control pdr20 searchInput" placeholder="请输入搜索地址">
+              <span class="glyphicon glyphicon-remove searchRemove" ng-click="vm.clearSearch()"></span>
+            </div>
+            <button class="searchBtn col-sm-2" type="button" ng-click="vm.addressFind()">搜索</button>
+            <table class="table" id="searchList" ng-if="vm.searchAreashow">
+              <tbody>
+              <tr ng-repeat="obj in vm.searchAreas">
+                <td ng-click="vm.searchAreaClick(obj.location,obj.name)"><span>{{$index+1}}</span><p class="mb0 ib" title="{{obj.serviceStationName}}">{{obj.name | cut:true:11:' ...'}}</p></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div mapbar-map map-id="bmap"></div>
+        </div>
+          <div class="form-group">
+              <label for="repairAdd" class="col-sm-3 control-label">维修地址:</label>
+              <div class="col-sm-8">
+                  <input type="text" ng-model="vm.address" id="repairAdd"  ng-change="vm.addressChange()"  class="form-control ng-pristine ng-valid" required>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-3">
+                  <button class="btn btn-primary" style="width: 85px;" type="button" ng-click="vm.addStation()">保存</button>
+                  <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+              </div>
+          </div>
+      </form>
+    </div>
+</div>

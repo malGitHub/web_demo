@@ -1,0 +1,34 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">工单关闭</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+          ng-submit="vm.submit($event, edit_form)" novalidate="">
+      <div class="form-group">
+        <label class="col-sm-2  col-sm-offset-1" style="text-align: left">关闭原因:</label>
+        <p class="col-sm-10 col-sm-offset-1">{{vm.reason}}</p>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 col-sm-offset-1"  style="text-align: left">服务站调查备注:</label>
+        <textarea class="col-sm-10  col-sm-offset-1"  rows="6" ng-model="vm.query.operateMsg" required>
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2  col-sm-offset-1" style="text-align: left">用户取消说明：</label>
+        <textarea class="col-sm-10  col-sm-offset-1"  rows="6"ng-model="vm.query.userNote"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <button type="button" ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary" ng-click="vm.workOrderClosed()"
+                  style="width: 85px;">同意关闭
+          </button>
+          <button  type="button" ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary" ng-click="vm.rejectWorkOrder()"
+                  style="width: 85px;">驳回
+          </button>
+          <button ng-click="vm.cancel()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

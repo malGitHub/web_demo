@@ -1,0 +1,63 @@
+<div>
+<div class="modal-header">
+  <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form" ng-submit="vm.submit($event, edit_form)" novalidate="">
+
+    <div class="form-group">
+      <label for="person" class="col-sm-3 control-label">*联系人名称</label>
+      <div class="col-sm-7">
+        <input ng-model="vm.data.name" type="text" id="person" name="person"  class="form-control ng-pristine ng-untouched ng-valid" required ng-maxlength=30>
+          <div wd-messages="person">
+              <div wd-message="required">联系人必须填写</div>
+              <div wd-message="maxlength">最多30个字符15个汉字</div>
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone" class="col-sm-3 control-label">*联系方式</label>
+      <div class="col-sm-7">
+        <input id="phone" name="phone" ng-model="vm.data.tel" type="text" class="form-control ng-pristine ng-untouched ng-valid" required  ng-pattern="/^\d+$/" ng-maxlength=20>
+        <div wd-messages="phone">
+            <div wd-message="required">联系方式必须填写</div>
+            <div wd-message="maxlength">手机号不可超过20位</div>
+            <div wd-message="pattern">联系方式格式不正确</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label for="file" class="col-sm-3 control-label">*图片:</label>
+      <input class="col-sm-2" id="file" name="file" type="file"  file-model="vm.file"  required style="width:180px;margin-top:5px;" />
+      <span class="col-sm-2" ng-click="vm.uploadImg()" style="line-height: 32px;margin-left:5px;color:#0042f1" ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary">上传</span>
+      <img class="col-sm-2" src="..\..\assets\images\tishi.png" style="width:40px;" title = "提示：图片格式为PNG或JPG
+
+尺寸为480像素*800像素（每张图片尺寸一致）
+"/>
+    </div>
+
+    <div class="form-group" ng-show="vm.data.imgPath">
+      <label for="view" class="col-sm-3 control-label">图片预览:</label>
+      <img id="view" class="col-sm-2"  ng-src="{{vm.data.imgPath}}" style="width:100px;"/>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-8 col-sm-offset-3">
+        <button ng-disabled="edit_form.$invalid || vm.requesting || !vm.hasImg" class="btn btn-primary" type="submit" style="width: 85px;" disabled="disabled">提交</button>
+        <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+
+
+
+  </form>
+
+
+
+</div>
+</div>
+<style type="text/css">#apDiv1 { position:absolute; left:380px; /*左右位置*/ top:120px;/*上下位置*/ width:100px; height:100px; z-index:1;}</style>
+

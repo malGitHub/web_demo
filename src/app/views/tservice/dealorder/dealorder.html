@@ -1,0 +1,211 @@
+<div class="content-padding">
+  <div class="content-body dealorder">
+    <table class="table">
+      <thead>
+      <tr>
+        <th colspan="15" class="tlr">
+
+
+            <div class="obj col-sm-2">
+              <div class="col-sm-5 ib Hfilter">工单类型：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.pageIndex='1';dealorder.advSearch()"
+                        ng-model="dealorder.query.orderType"
+                        class="col-sm-8 form-control"
+                        ng-options="item.val as item.name for item in dealorder.ORDER_TYPE">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+            <div class="obj col-sm-2">
+              <div class="col-sm-5 ib Hfilter">当前状态：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.pageIndex='1';dealorder.advSearch()"
+                        ng-model="dealorder.query.orderStatus"
+                        class="col-sm-8 form-control"
+                        ng-options="item.val as item.name for item in dealorder.ORDER_STATE">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+            <div class="obj col-sm-2">
+              <div class="col-sm-5 ib Hfilter">预约方式：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.pageIndex='1';dealorder.advSearch()"
+                        ng-model="dealorder.query.dateType"
+                        class="col-sm-8 form-control"
+                        ng-options="item.val as item.name for item in dealorder.SUBSCRIBE_TYPE">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+          <div class="ib Searchfor">
+            <input type="text" class="ml5 ib form-control wh260"
+                   ng-model="dealorder.query.keyword"
+                   placeholder="请输入工单号/400工单号/底盘号"/>
+            <span class="glyphicon glyphicon-search" ng-click="dealorder.pageIndex='1';dealorder.advSearch()"></span>
+          </div>
+        <button class="btn btn-default btn-small" ng-click="dealorder.returnStart()">重置</button>
+        <button class="btn btn-default btn-small" ng-click="dealorder.getExecl()">导出</button>
+        <button class="btn btn-default btn-small" ng-click="dealorder.formoreobj()">高级筛选</button>
+
+        </th>
+      </tr>
+      <tr ng-show="dealorder.moreobject">
+        <th colspan="20" style="text-align: left;">
+          <div class="col-sm-12">
+            <div class="obj col-sm-4">
+              <div class="wd-date ib">
+                <div class="ib Hfilter col-sm-3">建单时间：</div>
+                <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                  <wd-date-picker class="ib col-sm-5"  date="dealorder.query.createTimeStart"
+                                  ng-model="dealorder.query.createTimeStart"
+                                  ng-change="dealorder.pageIndex='1';dealorder.advSearch();" format="yyyy-mm-dd">
+                  </wd-date-picker>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                  <wd-date-picker class="ib col-sm-5"  date="dealorder.query.createTimeEnd"
+                                  ng-model="dealorder.query.createTimeEnd"
+                                  ng-change="dealorder.pageIndex='1';dealorder.advSearch();"  format="yyyy-mm-dd" >
+                  </wd-date-picker>
+                </div>
+              </div>
+            </div>
+            <div class="obj col-sm-5">
+              <div class="col-sm-2 ib Hfilter">服务站：</div>
+              <div class="col-sm-2 ib"  >
+                <select ng-change="dealorder.changeProvince()" ng-model="dealorder.provinceId" class="form-control" id="pName"
+                        ng-options="item.id as item.name for item in dealorder.AreaList" >
+                  <option value="" selected="selected">全选</option>
+                </select>
+              </div>
+
+              <span class="ib Hfilter fl wh30" style="text-align: center;">省</span>
+              <div class="col-sm-2 ib" >
+                <select ng-change="dealorder.changeCity()" ng-model="dealorder.cityId" class="form-control" id="cName"
+                        ng-options="item.id as item.name for item in dealorder.CityList">
+                  <option value="" selected="selected">全选</option>
+                </select>
+              </div>
+
+              <span class="ib Hfilter fl wh30" style="text-align: center;">市</span>
+              <div class="col-sm-3 ib" >
+                <select ng-change="dealorder.changeStore()" ng-model="dealorder.storeId" class="form-control" id="sName"
+                        ng-options="item.stationId as item.stationName for item in dealorder.StoreList">
+                  <option value="" selected="selected">请选择服务站</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="obj col-sm-2" >
+              <div class="col-sm-5 ib Hfilter">服务用时：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.servicesTime()"
+                        ng-model="dealorder.serviceTime"
+                        class="col-sm-8 form-control"
+                        ng-options="item.value as item.name for item in dealorder.FUWU_TIME">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-12 mt5">
+            <div class="obj col-sm-4">
+              <div class="col-sm-2 ib twoline">服务类型：<br>（服务站）</div>
+              <div class="col-sm-3 ib mr5">
+                <select ng-change="dealorder.changeFirstServices()"
+                        ng-model="dealorder.firstServiceType"
+                        class="form-control"
+                        ng-options="item.val as item.name for item in dealorder.SERVICE_TYPE">
+                  <option value="">全部</option>
+                </select>
+              </div>
+              <div class="col-sm-3 ib">
+                <select ng-change="dealorder.changeServices()"
+                        ng-model="dealorder.serviceType"
+                        class="form-control"
+                        ng-options="item.value as item.name for item in dealorder.ServicesList">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+            <div class="obj col-sm-2">
+              <div class="col-sm-5 ib Hfilter">满意度：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.pageIndex='1';dealorder.advSearch()"
+                        ng-model="dealorder.query.satisfaction"
+                        class="col-sm-8 form-control"
+                        ng-options="item.val as item.name for item in dealorder.STAR_LEVEL">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+            <div class="obj col-sm-2">
+              <div class="col-sm-5 ib Hfilter">处理人：</div>
+              <div class="col-sm-7 ib">
+                <select ng-change="dealorder.pageIndex='1';dealorder.advSearch()"
+                        ng-model="dealorder.query.operatorId"
+                        class="col-sm-8 form-control"
+                        ng-options="item.operaterCode as item.operaterName for item in dealorder.HANDLE_PERSON">
+                  <option value="">全部</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </th>
+
+
+      </tr>
+
+      <tr>
+        <th>操作</th>
+        <th>工单号</th>
+        <th>400工单号</th>
+        <th>当前状态</th>
+        <th>底盘号</th>
+        <!--<th>发动机型号</th>-->
+        <th>驾驶室类型</th>
+        <th>预约服务站</th>
+        <th>工单类型</th>
+        <th>预约方式</th>
+        <!--<th>服务类型</th>-->
+        <th>服务用时</th>
+        <th>当前业务员</th>
+        <th>满意度</th>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr ng-repeat="obj in dealorder.sendMsgData">
+        <td class="nowrapwork">
+          <a ng-if="obj.buttonShowFlg.viewFlg" ui-sref="tservice.dealorderview({id:obj.woCode,phone:obj.phone})">查看</a>
+          <a ng-if="obj.buttonShowFlg.modifyFlg" ui-sref="tservice.dealorderview({id:obj.woCode,flg:'modify',phone:obj.phone})">修改</a>
+          <a ng-if="obj.buttonShowFlg.replyFlg" ng-click="dealorder.reply(obj)">专家回复</a>
+          <a ng-if="obj.buttonShowFlg.sendFlg" ng-click="dealorder.send(obj)">分派</a>
+          <a ng-if="obj.buttonShowFlg.cancelFlg" ng-click="dealorder.cancelOrder(obj)">取消工单</a>
+          <a ng-if="obj.buttonShowFlg.closeFlg" ng-click="dealorder.toClose(obj)">关闭</a>
+          <a ng-if="obj.buttonShowFlg.visitFlg" ng-click="dealorder.toVisit(obj)">回访</a>
+        </td>
+        <td>{{obj.woCode}}</td>
+        <td>{{obj.csWoCode}}</td>
+        <td>{{obj.woStatusStr}}</td>
+        <td>{{obj.carVin}}</td>
+        <!--<td>{{obj.engine}}</td>-->
+        <td>{{obj.carType}}</td>
+        <td><p class="mb0" title="{{obj.serviceStationName}}">{{obj.serviceStationName | cut:true:10:' ...'}}</p></td>
+        <td>{{obj.woTypeStr}}</td>
+        <td>{{obj.modeCodeStr}}</td>
+        <!--<td>{{obj.serviceType}}</td>-->
+        <td>{{obj.serviceTime}}</td>
+        <td>{{obj.stationUserName}}</td>
+        <td>{{obj.userRateStr}}</td>
+      </tr>
+      <tr ng-if="dealorder.total === 0">
+        <td colspan="20" style="text-align: center;">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <wd-page-number total="dealorder.total" page-size="dealorder.pageSize" page-index="dealorder.pageIndex" query="dealorder.flip"></wd-page-number>
+</div>

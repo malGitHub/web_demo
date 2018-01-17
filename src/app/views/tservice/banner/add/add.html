@@ -1,0 +1,69 @@
+<div>
+<div class="modal-header">
+  <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form" ng-submit="vm.submit($event, edit_form)" novalidate="">
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">APP端</label>
+      <div class="col-sm-7">
+       <div class="control-label fw500 tll">{{vm.from}}</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="person" class="col-sm-3 control-label">标题</label>
+      <div class="col-sm-7">
+        <input ng-model="vm.data.name" type="text" id="person" name="person" class="form-control ng-pristine ng-untouched ng-valid" required ng-maxlength=30>
+        <div wd-messages="person">
+            <div wd-message="required">联系人必须填写</div>
+            <div wd-message="maxlength">最多30个字符15个汉字</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="style" class="col-sm-3 control-label">类型</label>
+      <div class="col-sm-4">
+        <select  ng-model="vm.data.bannerType" name="style" id="style" class="ib form-control" ng-options="item.key as item.value for item in vm.style" required>
+          <option value="" selected="selected">全部</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label for="file" class="col-sm-3 control-label">图片:</label>
+      <input class="col-sm-2" file-model="vm.file" type="file" name="file" id="file" style="width:180px;margin-top:5px;" required/>
+      <span class="fl" ng-click="vm.uploadImg()" style="line-height: 32px;margin-left:5px;color:#0042f1">上传</span>
+
+    </div>
+    <div class="form-group" ng-show="vm.data.imgPath">
+      <label for="view" class="col-sm-3 control-label"></label>
+      <img id="view" class="col-sm-2 wh100"  ng-src="{{vm.data.imgPath}}"/>
+    </div>
+    <div class="form-group">
+      <label for="URL" class="col-sm-3 control-label">链接url</label>
+      <div class="col-sm-7">
+        <input id="URL" name="URL" ng-model="vm.data.bannerLink" type="text"  class="form-control" ng-pattern="/((https|http|ftp|rtsp|mms)?://)([0-9a-z_!~*'()-]+\.)*([a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(\.[a-zA-Z]{1,4})(:[0-9]{1,4})?((/?)|(/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+/?)\.?$/" required>
+        <div wd-messages="URL">
+          <div wd-message="pattern">请填写正确的链接地址</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-8 col-sm-offset-3">
+        <button ng-disabled="edit_form.$invalid || vm.requesting || !vm.hasImg" class="btn btn-primary" type="submit" style="width: 85px;">保存</button>
+        <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+      </div>
+    </div>
+
+
+
+  </form>
+
+
+
+</div>
+</div>
+
+

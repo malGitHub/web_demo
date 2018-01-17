@@ -1,0 +1,202 @@
+<div class="content-padding buildnew">
+  <div class="content-body">
+    <form class="form-horizontal" name="edit_form" ng-submit="buildnew.submit($event, edit_form)" novalidate>
+      <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">工单信息</h5>
+      <div class="form-group">
+        <!--<label class="col-sm-2 control-label">工单号：</label>
+        <div class="col-sm-3">
+          <p class="form-control col-sm-10">{{buildnew.workOrder.woCode}}</p>
+        </div>-->
+
+        <label for="missonType" class="col-sm-2 control-label"><span style="color:red">*</span>工单类型：</label>
+        <div class="col-sm-3">
+          <select ng-change="buildnew.changeSelect(buildnew.workOrder.woType)"  ng-model="buildnew.workOrder.woType" name="missonType" id="missonType" class="col-sm-8 form-control ib" ng-options="item.key as item.value for item in buildnew.MISSON_TYPE" >
+            <option value="" selected="selected">请选择工单类型</option>
+          </select>
+          <div wd-messages="missonType">
+            <div wd-message="required">请选择工单类型</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="misson400" class="col-sm-2 control-label">400工单号：</label>
+        <div class="col-sm-3">
+          <input ng-model="buildnew.workOrder.csWoCode" type="text" id="misson400" class="form-control col-sm-10" name="misson400" ng-pattern="/^[0-9]{20}$/">
+          <div wd-messages="misson400">
+             <div wd-message="pattern">400工单号为20位数字</div>
+          </div>
+        </div>
+        <label  for="driverRegTel" class="col-sm-2 col-sm-offset-1 control-label"><span style="color:red">*</span>司机APP注册手机号：</label>
+        <div class="col-sm-3" style="position:relative">
+          <input ng-model="buildnew.workOrder.driverRegTel" type="text" id="driverRegTel" class="form-control col-sm-10" name="people" ng-pattern="/^1[3,4,5,7,8]\d{9}$/" style="z-index: 1000" ng-click="buildnew.clickDriverTel();" ng-change="buildnew.changeDriverTel();" autocomplete="off">
+          <table class="table" id="phonesList" ng-if="buildnew.phonesTable" style="position: absolute;top:32px;right:0;z-index: 1000000;border:1px #5e5e5e solid;max-height:10px!important;background:#fff;">
+            <tbody>
+            <tr ng-repeat="obj in buildnew.drivePhones">
+              <td style="padding:0!important;text-align: left;cursor: pointer" ng-click="buildnew.drivePhonesTd(obj.phone,$event)">{{obj.phone}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div wd-messages="people">
+            <div wd-message="pattern">手机号为11位数字</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color:red">*</span>服务站：</label>
+        <div class="col-sm-3">
+          {{buildnew.workOrder.serviceStationName}}
+          <button ng-click="buildnew.openServeMap()" class="btn btn-default"  type="button"  style="width: 85px;">{{buildnew.openServeTest}}</button>
+        </div>
+
+        <label for="missonType" class="col-sm-2 col-sm-offset-1 control-label">服务站电话：</label>
+        <div class="col-sm-3">
+          <p class="form-control col-sm-10">{{buildnew.workOrder.serviceStationTel}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">维修项目：</label>
+        <div class="col-sm-4">
+             <span ng-repeat="item in buildnew.repair_item" style="float:left;margin-right:10px;">
+                <input type="checkbox" ng-model="item.isChecked" ng-checked="item.isChecked">{{item.itemName | cut:true:8:' ...'}}
+            </span>
+        </div>
+        <label ng-if="buildnew.ordertime" class="col-sm-2 control-label"><span style="color:red">*</span>预约到站时间：</label>
+        <div class="col-sm-2 wd-date" ng-if="buildnew.ordertime">
+          <div class="mp-date-time-pick ib">
+            <wd-date-picker class="ib" ng-change="buildnew.ordertimeChange()" start-date="buildnew.nowTime" ng-model="buildnew.workOrder.orderTime" format="yyyy-mm-dd hh:ii:ss" view="6" is-empty-show="true" >
+            </wd-date-picker>
+          </div>
+        </div>
+        <label ng-if="buildnew.repairGroups" for="repairName" class="col-sm-2  control-label"><span style="color:red">*</span>报修人姓名：</label>
+        <div ng-if="buildnew.repairGroups" class="col-sm-3" style="position:relative">
+          <input ng-model="buildnew.workOrder.repairName" type="text" id="repairName" class="form-control col-sm-10" name="repairName" required style="z-index: 1000">
+           <div wd-messages="repairName">
+            <div wd-message="required">请填写报修人姓名</div>
+          </div>
+        </div>
+       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">保养项目：</label>
+        <div class="col-sm-4">
+            <span ng-repeat="item in buildnew.maintain_item" style="float:left;margin-right:10px;">
+                <input type="checkbox" ng-model="item.isChecked" ng-checked="item.isChecked">{{item.itemName | cut:true:8:' ...'}}
+            </span>
+        </div>
+
+        <label ng-if="buildnew.repairGroups" for="contant" class="col-sm-2  control-label"><span style="color:red">*</span>报修人电话：</label>
+        <div class="col-sm-3" style="position:relative" ng-if="buildnew.repairGroups">
+          <input ng-model="buildnew.workOrder.repairTel" type="text" id="contant" class="form-control col-sm-2" name="contant" ng-pattern="/^\d+$/" ng-maxlength=20>
+          <div wd-messages="contant">
+            <div wd-message="required">请填写报修人电话</div>
+            <div wd-message="pattern">电话格式不正确</div>
+            <div wd-message="maxlength">电话不可超过20位</div>
+          </div>
+        </div>
+
+      </div>
+       <div class="form-group">
+        <label class="col-sm-2 control-label">当前处理人：</label>
+        <div class="col-sm-3">
+          <p class="form-control col-sm-10">{{userInfo.userName}}</p>
+        </div>
+        <label  ng-if="buildnew.repairGroups" for="repairAdd" class="col-sm-2 col-sm-offset-1 control-label"><span style="color:red">*</span>报修人地址：</label>
+         <button  ng-if="buildnew.repairGroups" ng-click="buildnew.openMap()" class="btn btn-default col-sm-1" type="button" style="width: 85px;margin-right: 10px;">选择</button>
+         <!--<div class="col-sm-3"ng-if="buildnew.repairGroups" >-->
+          <!--<input ng-model="buildnew.workOrder.repairAdd" type="text" id="repairAdd" class="form-control col-sm-10" name="repairAdd" required >-->
+          <!--<div wd-messages="repairAdd">-->
+            <!--<div wd-message="required">请填写报修人地址</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-8 col-sm-3" ng-if="buildnew.repairGroups" >
+          <input ng-model="buildnew.workOrder.repairAdd" type="text" id="repairAdd" class="form-control col-sm-12" name="repairAdd" required >
+          <div wd-messages="repairAdd">
+            <div wd-message="required">请填写报修人地址</div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span style="color:red">*</span>用户反馈：</label>
+        <div class="col-sm-7">
+          <textarea class="form-control" ng-model="buildnew.workOrder.userFeedback" name="userFeedback" id="userFeedback" rows="9" ng-maxlength=500></textarea>
+          <div wd-messages="userFeedback">
+            <div wd-message="maxlength">最多输入500个汉字</div>
+          </div>
+        </div>
+      </div>
+      <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">用户信息</h5>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车牌号：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.carCode}}</label>
+        </div>
+        <label class="col-sm-2 control-label">用户名称：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.userName}}</label>
+        </div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">底盘号：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.chassisNum}}</label>
+        </div>
+        <label class="col-sm-2 control-label">联系电话：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.phone}}</label>
+        </div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">驾驶室类型：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.cabinType}}</label>
+        </div>
+        <label class="col-sm-2 control-label">联系电话2：</label>
+        <div class="col-sm-4">
+          <label class="control-label"></label>
+        </div>
+         <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">发动机类型：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.engineModel}}</label>
+        </div>
+        <label class="col-sm-2 control-label">购车时间：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.buyTime}}</label>
+        </div>
+        <div style="clear: both"></div>
+          <label class="col-sm-2 control-label">发动机型号：</label>
+          <div class="col-sm-4">
+            <label class="control-label">{{buildnew.carInfo.engineNumber}}</label>
+          </div>
+        <label class="col-sm-2 control-label">产品代码：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.productCode}}</label>
+        </div>
+
+
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">行驶公里数：</label>
+        <div class="col-sm-4">
+          <label class="control-label">{{buildnew.carInfo.mileage}}</label>
+        </div>
+
+        <div style="clear: both"></div>
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <button class="btn btn-primary" type="submit" style="width: 85px;" ng-disabled="buildnew.requesting">确定</button>
+          <button ui-sref="tservice.build" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+        </div>
+      </div>
+      <div style="clear: both"></div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+header {
+    position: relative;
+    z-index: 1;
+
+
+    .as-navbar {
+        background-color: $color-base;
+
+        //logo
+        .navbar-brand {
+            color: $color-btn-deputy;
+
+            &:hover {
+                color: $color-btn-deputy !important;
+            }
+        }
+
+        .active {
+            background-color: $color-down-base;
+            cursor: hand;
+        }
+        .as-nav>li {
+            display: none;
+            height: 48px;
+            line-height: 48px;
+
+            .dropdown-menu {
+                min-width: 0;
+                padding: 0;
+                li {
+                    padding: 0;
+                    a {
+                        padding: 15px 15px 16px;
+                    }
+                }
+            }
+        }
+        .as-nav>li>a, .as-nav>li>.btn {
+            display: inline-block;
+            height: 48px;
+            line-height: 48px;
+
+            color: $color-btn-deputy;
+            padding: 0 15px;
+            text-decoration: none;
+
+            &:hover {
+                background-color: $color-hover-base;
+            }
+
+            &:focus {
+                background-color: $color-down-base;
+            }
+        }
+
+    }
+}
+
+
+
+.frame-header-contact, .frame-header-doc, .frame-header-manage, .frame-header-service {
+    display: block !important;
+}
+.frame-header-index-bar {
+    .frame-header-login, .frame-header-reg {
+        display: block !important;
+    }
+}
+
+.frame-header-user-bar {
+    .frame-header-user {display:  block !important;}
+}
+
+/*.frame-header-admin-bar {
+    .frame-header-admin {display: block !important;}
+}*/
+.navbar-header img{width: 145px;padding: 5px 10px;display: block;float: left;}

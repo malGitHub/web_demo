@@ -1,0 +1,51 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="6">
+                    <div class="grant-div">
+                        <span class="grant-title">发放管理</span>
+                      <br/>
+                      <span>更新时间：{{grant.refresh_time}}</span>
+                    </div>
+
+                    <div class="search-div">
+                        <div class="ib Searchfor">
+                            <input type="text" class="ml5 ib form-control wh300" ng-keyup="grant.queryKeyUp($event)" ng-model="grant.inputText" placeholder="请输入活动关键字/发放网点/VIN"/>
+                            <span class="glyphicon glyphicon-search" ng-click="grant.pageIndex=1;grant.changeData()"></span>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>活动名称</th>
+                <th>发放限额</th>
+                <th>已发放数量</th>
+                <th>剩余数量</th>
+                <th>活动是否过期</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in grant.grantData">
+                <td>{{obj.activityName}}</td>
+                <td>{{obj.quantity}}<span ng-if="grant.unitTool(obj.quantity+'')">{{obj.unit}}</span></td>
+                <td>{{obj.sendQuantity}}<span ng-if="grant.unitTool(obj.sendQuantity+'')">{{obj.unit}}</span></td>
+                <td>{{obj.restQuantity}}<span ng-if="grant.unitTool(obj.restQuantity+'')">{{obj.unit}}</span></td>
+                <td ng-if="obj.activityStatus == 0">是</td>
+                <td ng-if="obj.activityStatus == 1">否</td>
+                <td>
+                    <a ui-sref="tservice.grantdit({id:obj.activityId})" >详情</a>
+                </td>
+            </tr>
+            <tr ng-if="grant.grantData.length === 0">
+                <td colspan="6" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="grant.total" page-size="grant.pageSize" page-index="grant.pageIndex"
+                    query="grant.flip"></wd-page-number>
+</div>
+

@@ -1,0 +1,147 @@
+<div class="content-padding">
+  <uib-tabset>
+    <uib-tab heading="车主版">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ng-click="banner.new2('1')">新增</button>
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="banner.query1.name" placeholder="搜索标题关键字"/>
+                <span class="glyphicon glyphicon-search" ng-click="banner.selectChange('1')"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="banner.moreSearch1=!banner.moreSearch1">高级筛选</button>
+            </th>
+          </tr>
+          <tr ng-show="banner.moreSearch1">
+            <th colspan="13" style="text-align: right;">
+              <div class="obj col-sm-2">
+                <div class="col-sm-5 ib Hfilter">状态：</div>
+                <div class="col-sm-7 ib">
+                  <select class="form-control" ng-change="banner.selectChange('1')" ng-model="banner.query1.bannerStatus" ng-options="item.key as item.value for item in banner.bannerStatus">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj col-sm-2" >
+                <div class="col-sm-5 ib Hfilter">类型：</div>
+                <div class="col-sm-7 ib">
+                  <select ng-change="banner.selectChange('1')"
+                          ng-model="banner.query1.bannerType"
+                          class="col-sm-8 form-control"
+                          ng-options="item.key as item.value for item in banner.bannerType">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+            </th>
+
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>位置</th>
+            <th>状态</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>图片</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in banner.mydata1">
+            <td>{{obj.bannerStatus=='1'?$index+1+banner.preTolal1:'/'}}</td>
+            <td>{{obj.bannerStatus=='1'?'上线':'下线'}}</td>
+            <td>{{obj.bannerName}}</td>
+            <td>{{obj.bannerType=='1'?'链接':''}}</td>
+            <td><img ng-src="{{obj.imgPath}}" alt="{{obj.name}}" width="100"></td>
+            <td>
+              <a ng-if="!($index==0)" ng-click="banner.upInsurance(obj.id,'1')">上移</a>
+              <a ng-if="!($index==(banner.mydata1.length-1))" ng-click="banner.downInsurance(obj.id,'1')">下移</a>
+              <a ng-click="banner.onlineNot(obj,'1')">{{obj.bannerStatus=='0'?'上线':'下线'}}</a>
+              <a ng-click="banner.edit2(obj,'1')">编辑</a>
+              <a ng-click="banner.delSafest(obj.id,obj.bannerName,'1')">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="banner.mydata1.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="banner.total1" page-size="banner.pageSize1"  page-index="banner.pageIndex1" query="banner.page1"></wd-page-number>
+    </uib-tab>
+
+    <uib-tab heading="司机版">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ng-click="banner.new2('2')">新增</button>
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="banner.query2.name" placeholder="搜索标题关键字"/>
+                <span class="glyphicon glyphicon-search" ng-click="banner.selectChange('2')"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="banner.moreSearch=!banner.moreSearch">高级筛选</button>
+            </th>
+          </tr>
+          <tr ng-show="banner.moreSearch">
+            <th colspan="13" style="text-align: right;">
+              <div class="obj col-sm-2">
+                <div class="col-sm-5 ib Hfilter">状态：</div>
+                <div class="col-sm-7 ib">
+                  <select class="form-control" ng-change="banner.selectChange('2')" ng-model="banner.query2.bannerStatus" ng-options="item.key as item.value for item in banner.bannerStatus">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj col-sm-2" >
+                <div class="col-sm-5 ib Hfilter">类型：</div>
+                <div class="col-sm-7 ib">
+                  <select ng-change="banner.selectChange('2')"
+                          ng-model="banner.query2.bannerType"
+                          class="col-sm-8 form-control"
+                          ng-options="item.key as item.value for item in banner.bannerType">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+            </th>
+
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>位置</th>
+            <th>状态</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>图片</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in banner.mydata2">
+            <td>{{obj.bannerStatus=='1'?$index+1+banner.preTolal2:'/'}}</td>
+            <td>{{obj.bannerStatus=='1'?'上线':'下线'}}</td>
+            <td>{{obj.bannerName}}</td>
+            <td>{{obj.bannerType=='1'?'链接':''}}</td>
+            <td><img ng-src="{{obj.imgPath}}" alt="{{obj.name}}" width="100"></td>
+            <td>
+              <a ng-if="!($index==0)" ng-click="banner.upInsurance(obj.id,'2')">上移</a>
+              <a ng-if="!($index==(banner.mydata2.length-1))" ng-click="banner.downInsurance(obj.id,'2')">下移</a>
+              <a ng-click="banner.onlineNot(obj,'2')">{{obj.bannerStatus=='0'?'上线':'下线'}}</a>
+              <a ng-click="banner.edit2(obj,'2')">编辑</a>
+              <a ng-click="banner.delSafest(obj.id,obj.bannerName,'2')">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="banner.mydata2.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="banner.total2" page-size="banner.pageSize2"  page-index="banner.pageIndex2" query="banner.page2"></wd-page-number>
+    </uib-tab>
+  </uib-tabset>
+</div>

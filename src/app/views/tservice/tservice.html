@@ -1,0 +1,115 @@
+<we-navbar class="weNavbar"></we-navbar>
+<div style="clear: both;"></div>
+<aside class="frame-sidebar" ng-show="tservice.isShowSiderbar">
+  <ul class="sidebar-navi" wd-sections="">
+    <li class="active2" ng-if="!(userInfo.funcs.tserviceAuthentication != 1&&userInfo.funcs.tserviceUpkeep != 1&&userInfo.funcs.tserviceCare != 1&&userInfo.funcs.tserviceWebim != 1&&userInfo.funcs.tserviceApp != 1&&userInfo.funcs.tserviceBreakdown != 1&&userInfo.funcs.tserviceTelephone != 1&&userInfo.funcs.tserviceMessage != 1&&userInfo.funcs.tserviceSubscribe != 1&&userInfo.funcs.tserviceVehicles != 1&&userInfo.funcs.tserviceBanner != 1)">
+      <a ng-click="tservice.hideNav();tservice.catalogone=true;">
+        <span class="glyphicon glyphicon-menu-dorl fr mt10 mr10"></span>
+        <span class="glyphicon glyphicon-lock ml15 mr10"></span>业务支撑
+      </a>
+      <ul class="sidebar-navi-s" ng-show="tservice.catalogone">
+        <li wd-section-match="/tservice/authentication" ng-show="userInfo.funcs.tserviceAuthentication == 1">
+          <a ui-sref="tservice.authentication"><span class="ml37"></span>车主认证审核</a>
+        </li>
+        <li wd-section-match="/tservice/upkeep" ng-show="userInfo.funcs.tserviceUpkeep == 1">
+          <a ui-sref="tservice.upkeep"><span class="ml37"></span>保养管理</a>
+        </li>
+        <li wd-section-match="/tservice/care" ng-show="userInfo.funcs.tserviceCare == 1">
+          <a ui-sref="tservice.care"><span class="ml37"></span>一键呼救</a>
+        </li>
+        <li wd-section-match="/tservice/webim" ng-click="tservice.kefu()" ng-show="userInfo.funcs.tserviceWebim == 1">
+          <a ui-sref="tservice.webim" ng-click="tservice.webim()"><span class="ml37"></span>在线客服<i ng-bind="publicParames.onlineNum" ng-if="publicParames.onlineNum!==''"  class="onlineNum"></i></a>
+        </li>
+        <li wd-section-match="/tservice/app" ng-show="userInfo.funcs.tserviceApp == 1">
+          <a ui-sref="tservice.app"><span class="ml37"></span>APP用户管理</a>
+        </li>
+        <li wd-section-match="/tservice/breakdown" ng-show="userInfo.funcs.tserviceBreakdown == 1">
+          <a ui-sref="tservice.breakdown"><span class="ml37"></span>故障诊断</a>
+        </li>
+        <li wd-section-match="/tservice/telephone" ng-show="userInfo.funcs.tserviceTelephone == 1">
+          <a ui-sref="tservice.telephone"><span class="ml37"></span>紧急电话配置</a>
+        </li>
+        <li wd-section-match="/tservice/message" ng-show="userInfo.funcs.tserviceMessage == 1">
+          <a ui-sref="tservice.message"><span class="ml37"></span>消息管理</a>
+        </li>
+        <li wd-section-match="/tservice/subscribe" ng-show="userInfo.funcs.tserviceSubscribe == 1">
+          <a ui-sref="tservice.subscribe"><span class="ml37"></span>预约项目配置</a>
+        </li>
+        <li wd-section-match="/tservice/vehicles" ng-show="userInfo.funcs.tserviceVehicles == 1">
+          <a ui-sref="tservice.vehicles"><span class="ml37"></span>车辆信息查询</a>
+        </li>
+        <li wd-section-match="/tservice/banner" ng-show="userInfo.funcs.tserviceBanner == 1">
+          <a ui-sref="tservice.banner"><span class="ml37"></span>APPbanner配置</a>
+        </li>
+
+      </ul>
+    </li>
+    <li class="active2" wd-section-match="/tservice/supplysource" ng-if="userInfo.funcs.tserviceSupplysource == 1 && false">
+      <a  ng-click="tservice.hideNav();" ui-sref="tservice.supplysource">
+        <span class="glyphicon glyphicon-shopping-cart ml15 mr10"></span>货源会员认证
+      </a>
+     </li>
+    <li class="active2" ng-if="!(userInfo.funcs.tserviceDptcontrol != 1&&userInfo.funcs.tserviceRole != 1&&userInfo.funcs.tserviceUser != 1)">
+      <a ng-click="tservice.hideNav();tservice.catalogtwo=true;">
+        <span class="glyphicon glyphicon-menu-dorl fr mt10 mr10"></span>
+        <span class="glyphicon glyphicon-th ml15 mr10"></span>系统管理
+      </a>
+      <ul class="sidebar-navi-s"  ng-show="tservice.catalogtwo">
+        <li wd-section-match="/tservice/dptcontrol" ng-show="userInfo.funcs.tserviceDptcontrol == 1">
+          <a ui-sref="tservice.dptcontrol"><span class="ml37"></span>部门管理</a>
+        </li>
+        <li wd-section-match="/tservice/role" ng-show="userInfo.funcs.tserviceRole == 1">
+          <a ui-sref="tservice.role"><span class="ml37"></span>角色管理</a>
+        </li>
+        <li wd-section-match="/tservice/user" ng-show="userInfo.funcs.tserviceUser == 1">
+          <a ui-sref="tservice.user"><span class="ml37"></span>用户管理</a>
+        </li>
+      </ul>
+    </li>
+    <li class="active2" ng-if="!(userInfo.funcs.tserviceBuild != 1&&userInfo.funcs.tserviceAssigndocument != 1&&userInfo.funcs.tserviceDealorder != 1&&userInfo.funcs.tserviceClose != 1&&userInfo.funcs.tserviceOutrescue != 1&&userInfo.funcs.tserviceStatistics != 1)">
+      <a ng-click="tservice.hideNav();tservice.catalogthr=true;">
+        <span class="glyphicon glyphicon-menu-dorl fr mt10 mr10"></span>
+        <span class="glyphicon glyphicon-briefcase ml15 mr10"></span>服务预约管理
+      </a>
+      <ul class="sidebar-navi-s"  ng-show="tservice.catalogthr">
+        <li wd-section-match="/tservice/build" ng-show="userInfo.funcs.tserviceBuild == 1">
+           <a ui-sref="tservice.build"><span class="ml37"></span>新建工单</a>
+        </li>
+        <li wd-section-match="/tservice/assigndocument" ng-show="userInfo.funcs.tserviceAssigndocument == 1  && false">
+          <a ui-sref="tservice.assigndocument"><span class="ml37"></span>客服分单<i ng-bind="tservice.customerNum=tservice.customerNum>99?'99+':tservice.customerNum" ng-if="tservice.customerNum!==0"  class="outCountNum"></i></a>
+        </li>
+        <li wd-section-match="/tservice/dealorder" ng-show="userInfo.funcs.tserviceDealorder == 1">
+            <a ui-sref="tservice.dealorder"><span class="ml37"></span>工单处理<i ng-bind="tservice.WorkOrderCount=tservice.WorkOrderCount>99?'99+':tservice.WorkOrderCount" ng-if="tservice.WorkOrderCount!==0"  class="outCountNum"></i></a>
+        </li>
+        <li wd-section-match="/tservice/close" ng-show="userInfo.funcs.tserviceClose == 1">
+          <a ui-sref="tservice.close"><span class="ml37"></span>关闭申请审核</a><!--<i ng-bind="tservice.closeWoLoop=tservice.closeWoLoop>99?'99+':tservice.closeWoLoop" ng-if="tservice.closeWoLoop!=0"  class="outCountNum"></i>-->
+        </li>
+        <li wd-section-match="/tservice/outrescue" ng-show="userInfo.funcs.tserviceOutrescue == 1">
+          <a ui-sref="tservice.outrescue"><span class="ml37"></span>外出救援<i ng-bind="tservice.outListCount=tservice.outListCount>99?'99+':tservice.outListCount" ng-if="tservice.outListCount!=0"  class="outCountNum"></i></a>
+        </li>
+        <li wd-section-match="/tservice/statistics"  ng-show="userInfo.funcs.tserviceStatistics == 1">
+          <a ui-sref="tservice.statistics"><span class="ml37"></span>服务统计分析</a>
+        </li>
+      </ul>
+    </li>
+    <li class="active2" ng-if="!(userInfo.funcs.tserviceActivities != 1&&userInfo.funcs.tserviceGrant != 1&&userInfo.funcs.tserviceCash != 1)">
+      <a ng-click="tservice.hideNav();tservice.catalogfour=true;">
+        <span class="glyphicon glyphicon-menu-dorl fr mt10 mr10"></span>
+        <span class="glyphicon glyphicon-gift ml15 mr10"></span>市场推广
+      </a>
+      <ul class="sidebar-navi-s"  ng-show="tservice.catalogfour">
+        <li wd-section-match="/tservice/activities" ng-show="userInfo.funcs.tserviceActivities == 1">
+          <a ui-sref="tservice.activities"><span class="ml37"></span>活动管理</a>
+        </li>
+        <li wd-section-match="/tservice/grant" ng-show="userInfo.funcs.tserviceGrant == 1">
+          <a ui-sref="tservice.grant"><span class="ml37"></span>发放管理</a>
+        </li>
+        <li wd-section-match="/tservice/cash" ng-show="userInfo.funcs.tserviceCash == 1">
+          <a ui-sref="tservice.cash"><span class="ml37"></span>兑换管理</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>
+<span class="toggle-slider-button" ng-click="tservice.toggleSiderbar()" ng-class="{true: 'sliderLeft', false: ''}[tservice.isShowSiderbar]">{{tservice.isShowSiderbar?'<':'>';}}</span>
+<div class="frame-content" ui-view="" ng-class="{true: 'frame-contentLeft', false: ''}[tservice.isShowSiderbar]"></div>

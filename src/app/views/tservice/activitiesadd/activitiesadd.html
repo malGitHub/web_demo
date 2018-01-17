@@ -1,0 +1,154 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建活动</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="activitiesadd.submit($event, add_form)" novalidate="">
+    <h5 class="h5title">活动信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label for="activityName"  class="col-sm-1 control-label"><span style="color:red">*</span>活动名称</label>
+      <div class="col-sm-4" >
+        <input ng-model="activitiesadd.query.activityName" type="text" id="activityName" name="activityName"  class="form-control  ng-pristine ng-valid" placeholder="请输入活动名称" required ng-maxlength=100>
+        <div wd-messages="activityName">
+          <div wd-message="required">活动名称必填</div>
+          <div wd-message="maxlength">活动名称不可超过100个字符或汉字</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动开始日期</label>
+      <div class="wd-date">
+        <div class="mp-date-time-pickib col-sm-4 authenticationTime">
+          <wd-date-picker class="ib col-sm-5"  start-date="activitiesadd.nowTime" date="activitiesadd.roleDateStart"
+                          ng-model="activitiesadd.query.activityStartDate" format="yyyy-mm-dd"
+                           required>
+          </wd-date-picker>
+        </div>
+      </div>
+
+      <label  class="control-label"><span style="color:red">*</span>活动结束日期</label>
+      <label class="radio-inline padtop0">
+        <input name="Time" type="radio" ng-value="0" ng-model="activitiesadd.EndDate">
+        送完为止
+      </label>
+      <label class="radio-inline padtop0">
+        <input name="Time" type="radio" ng-value="1" ng-model="activitiesadd.EndDate">
+        自定义
+      </label>
+      <div class="wd-date ib">
+        <div class="mp-date-time-pick ib authenticationTime" ng-if="activitiesadd.EndDate=='1'">
+        <wd-date-picker class="ib"  start-date="activitiesadd.nowTime" date="activitiesadd.activityEndDate"
+                        ng-model="activitiesadd.query.activityEndDate" format="yyyy-mm-dd"
+                         required>
+        </wd-date-picker>
+      </div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label for="activityQuota"  class="col-sm-1 control-label"><span style="color:red">*</span>发放数量</label>
+      <div class="col-sm-4 wh200">
+        <input ng-model="activitiesadd.query.activityQuota" type="number" min="1" id="activityQuota" name="activityQuota"  class="form-control  ng-pristine ng-valid" placeholder="请输入赠送物品总数量" ng-maxlength=60 required ng-pattern=" /^\+?[1-9]\d*$/">
+        <div wd-messages="activityQuota">
+          <div wd-message="required">发放数量必填</div>
+          <div wd-message="maxlength">发放数量最多60个字符或汉字</div>
+          <div wd-message="pattern">数量为大于零的正整数</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" style='margin-left: 20px;'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单车发放数量</label>
+      <div class="col-sm-1 wh200">
+        <select ng-model="activitiesadd.singleModel" ng-change="activitiesadd.changeSelectCustom()"
+                 class="form-control" required>
+          <option value="1" selected="selected">1</option>
+          <option value="0">自定义</option>
+        </select>
+      </div>
+      <div class="col-sm-1 ml5 wh150" ng-if="activitiesadd.singleModel=='0'">
+        <input ng-model="activitiesadd.query.singleQuota" type="number" min="1" name="singleQuota" id="singleQuota"
+               class="form-control  ng-pristine ng-valid" placeholder="请输入赠送物品数量" required ng-maxlength=20 ng-pattern=" /^\+?[1-9]\d*$/">
+        <div wd-messages="singleQuota">
+          <div wd-message="required">数量必填</div>
+          <div wd-message="maxlength">数量最多20位</div>
+          <div wd-message="pattern">数量为大于零的正整数</div>
+        </div>
+      </div>
+    </div>
+    <h5 class="h5title">优惠券信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label for="couponName"  class="col-sm-1 control-label"><span style="color:red">*</span>名称</label>
+      <div class="col-sm-4" >
+        <input ng-model="activitiesadd.query.couponName" type="text" id="couponName" name="couponName"  class="form-control  ng-pristine ng-valid" placeholder="请输入优惠券标题" required ng-maxlength=60>
+        <div wd-messages="couponName">
+          <div wd-message="required">优惠券标题必填</div>
+          <div wd-message="maxlength">标题最多60个字符或汉字</div>
+        </div>
+      </div>
+
+      <label for="couponContent" class="col-sm-1 control-label"><span style="color:red">*</span>内容:</label>
+      <div class="col-sm-4">
+        <textarea ng-model="activitiesadd.query.couponContent" rows="1" id="couponContent" name="couponContent" class="form-control ng-pristine ng-valid" placeholder="请输入优惠券内容" required  ng-maxlength=200></textarea>
+        <div wd-messages="couponContent">
+          <div wd-message="required">优惠券内容必填</div>
+          <div wd-message="maxlength">内容最多200个字符或汉字</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label for="couponUnit"  class="col-sm-1 control-label"><span style="color:red">*</span>单位</label>
+      <div class="col-sm-4 wh200" >
+        <input ng-model="activitiesadd.query.couponUnit" type="text" id="couponUnit" name="couponUnit"  class="form-control  ng-pristine ng-valid" placeholder="请输入赠送物品单位，例元、桶、件..." required ng-maxlength=20>
+        <div wd-messages="couponUnit">
+          <div wd-message="required">单位必填</div>
+          <div wd-message="maxlength">单位最多20个字符或汉字</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>优惠券有效期</label>
+      <label class="radio-inline">
+        <input name="coupon" type="radio" ng-model="activitiesadd.query.expirationStatus" ng-value="0" >
+        不限
+      </label>
+      <label class="radio-inline">
+        <input name="coupon" type="radio" ng-model="activitiesadd.query.expirationStatus" ng-value="1">
+        领取之后一定周期内
+      </label>
+      <div class="ib"  ng-if = "activitiesadd.query.expirationStatus=='1'">
+        <input ng-model="activitiesadd.query.expirationDays"  type="number" min="1" id="expirationDays" name="expirationDays"  class="form-control  ng-pristine ng-valid ib wh100" placeholder="限制天数" required/>
+        <span class="ib wh20 mr5" style="vertical-align: bottom;margin-bottom: 3px;">/天</span>
+        <div wd-messages="expirationDays">
+          <div wd-message="required">天数必填</div>
+        </div>
+      </div>
+      <label class="radio-inline activeradio">
+        <input name="coupon" type="radio" ng-model="activitiesadd.query.expirationStatus" ng-value="2">
+        自定义
+      </label>
+      <div class="wd-date ib">
+        <div class="mp-date-time-pick ib" ng-if="activitiesadd.query.expirationStatus=='2'">
+          <wd-date-picker class="ib"  start-date="activitiesadd.nowTime" date="activitiesadd.expirationStartDate"
+                          ng-model="activitiesadd.query.expirationStartDate" format="yyyy-mm-dd"
+                          required>
+          </wd-date-picker><span class="ib Hfilter" style="text-align: center;">至</span>
+          <wd-date-picker class="ib"  start-date="activitiesadd.nowTime" date="activitiesadd.expirationEndDate"
+                          ng-model="activitiesadd.query.expirationEndDate" format="yyyy-mm-dd"
+                          required>
+          </wd-date-picker>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2" >
+        <button ng-disabled="add_form.$invalid||activitiesadd.requesting" class="btn btn-primary" type="submit" style="width: 85px;" >下一步</button>
+        <button ng-click="activitiesadd.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+      </div>
+    </div>
+  </form>
+</div>
+

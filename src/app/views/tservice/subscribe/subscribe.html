@@ -1,0 +1,75 @@
+<div class="content-padding">
+    <uib-tabset >
+        <uib-tab heading="预约保养项">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="10" style="text-align: right;">
+                            <button class="btn btn-default btn-small" ng-click="subscribe.add()">新增</button>
+                            <div class="ib Searchfor">
+                                <input style="width:200px;" type="text" class="ml15 ib form-control width-100" ng-model="subscribe.searchKey1" placeholder="请输入保养项目"/>
+                                <span class="glyphicon glyphicon-search" ng-click="subscribe.pageIndex1=1;subscribe.commonSearch(subscribe.searchKey1,1)"></span>
+                            </div>
+                        </th>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>保养项目</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in subscribe.mydata1 | filter:subscribe.inputText">
+                        <td>{{obj.itemName | cut:true:50:' ...'}}</td>
+                        <td>
+                            <a ng-click="subscribe.edit(obj)">编辑</a>
+                            <a ng-click="subscribe.remove(obj.itemId,1)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="subscribe.mydata1.length === 0">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="subscribe.total1" page-size="subscribe.pageSize1"  page-index="subscribe.pageIndex1" query="subscribe.flip1"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="预约维修项">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="10" style="text-align: right;">
+                            <button class="btn btn-default btn-small" ng-click="subscribe.addRepair()">新增</button>
+                            <div class="ib Searchfor">
+                                <input style="width:200px;" type="text" class="ml15 ib form-control width-100"  ng-model="subscribe.searchKey2" placeholder="请输入维修项目"/>
+                                <span class="glyphicon glyphicon-search" ng-click="subscribe.pageIndex2=1;subscribe.commonSearch(subscribe.searchKey2,2)"></span>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>维修项目</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in subscribe.mydata2">
+                        <td>{{obj.itemName | cut:true:50:' ...'}}</td>
+                        <td>
+                            <a ng-click="subscribe.editRepair(obj)">编辑</a>
+                            <a ng-click="subscribe.remove(obj.itemId,2)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="subscribe.mydata2.length === 0">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="subscribe.total2" page-size="subscribe.pageSize2"  page-index="subscribe.pageIndex2" query="subscribe.flip2"></wd-page-number>
+        </uib-tab>
+    </uib-tabset >
+</div>
+
+

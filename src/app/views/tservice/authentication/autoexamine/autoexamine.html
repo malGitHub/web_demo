@@ -1,0 +1,135 @@
+
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{vm.title}}</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+          ng-submit="vm.submit($event, edit_form)" novalidate="">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">申请时间:</label>
+
+        <div class="col-sm-8" style="line-height: 34px">
+          {{vm.autoexamine.applyDate}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">申请人账户:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.userPhone" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">车辆VIN:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.vin" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">车系:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.seriesName" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">车型:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.modelName" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">所属省:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.provinceName" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">所属市:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.cityName" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">身份证(组织机构代码):</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.identityCard" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">购车发票号:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.invoiceNo" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">审核状态:</label>
+        <div class="col-sm-8">
+          <input  value="{{vm.autoexamine.identityCard===0?'未审核':'已审核'}}" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">审核时间:</label>
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.reviewDate" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group" ng-if="vm.resultInputIf">
+        <label class="col-sm-3 control-label">审核结果:</label>
+        <div class="col-sm-8">
+          <input value="{{vm.autoexamine.reviewResult===3?'无':vm.autoexamine.reviewResult===1?'未通过':'通过'}}" type="text" class="form-control" readonly="readonly">
+
+        </div>
+      </div>
+      <div class="form-group" >
+        <label class="col-sm-3 control-label">审核人:</label>
+        <div class="col-sm-8">
+          <input ng-model="vm.autoexamine.reviewer" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group" ng-if="vm.reviewViewIf">
+        <label for="views" class="col-sm-3 control-label"> 审核意见:</label>
+        <div class="col-sm-8">
+          <textarea  id="views" name="views" ng-model="vm.autoexamine.advice" ng-disabled="vm.reviewViewDis" class="form-control"  ng-maxlength=50 required></textarea>
+          <div wd-messages="views">
+              <div wd-message="maxlength">最多50个字符</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="vm.reviewResultSelectIf">
+        <label class="col-sm-3 control-label">审核结果:</label>
+
+        <div class="col-sm-8">
+          <select ng-model="vm.autoexamine.reviewResult" class="form-control"
+                  ng-disabled="vm.resultDis"
+                  ng-options="item.key as item.value for item in vm.EX_RESULTS">
+            <option value={{vm.autoexamine.reviewResult}} selected="selected"></option>
+          </select>
+        </div>
+      </div>
+      <input type="hidden"  ng-model="vm.autoexamine.reviewId"  />
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <button ng-if="vm.save" ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary"
+                  type="submit"
+                  style="width: 85px;" >提交
+          </button>
+          <button  class="btn btn-primary" type="button" ng-click="vm.edt()"  ng-if="vm.edit" ng-disabled="vm.autoexamine.reviewResult==1"
+                  style="width: 85px;">编辑
+          </button>
+          <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+

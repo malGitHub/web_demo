@@ -1,0 +1,191 @@
+<div class="content-padding">
+    <uib-tabset >
+        <uib-tab heading="故障诊断">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="10" style="text-align: right;">
+                            <div class="ib Searchfor">
+                                <input ng-model="breakdown.inputKey" style="width:200px;" type="text" class="ml15 ib form-control width-100" placeholder="请输入故障码"/>
+                                <span ng-click="breakdown.pageIndexOne=1;breakdown.inputChange()" class="glyphicon glyphicon-search"></span>
+                            </div>
+                            <button class="btn btn-default btn-small" ng-click="breakdown.formoreobj()">高级筛选</button>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr ng-show="breakdown.moreobject">
+                        <th colspan="10" style="text-align: right;">
+                            <div class="obj col-sm-5 wd-date">
+                                <div class="col-sm-3 ib Hfilter">故障上传时间：</div>
+                                <div class="mp-date-time-pick ib col-sm-9">
+                                    <wd-date-picker class="ib col-sm-5" ng-change="breakdown.pageIndexOne=1;breakdown.changeDate()" date="breakdown.breakdownDate" ng-model="breakdown.query.faultTimeStart">
+                                    </wd-date-picker>
+                                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                                    <wd-date-picker class="ib col-sm-5" ng-change="breakdown.pageIndexOne=1;breakdown.changeDate()" date="breakdown.breakdownDate" ng-model="breakdown.query.faultTimeEnd">
+                                    </wd-date-picker>
+                                </div>
+                            </div>
+                            <div class="ib col-sm-3">
+                                <span class="ib col-sm-3 Hfilter">故障等级：</span>
+                                <div class="ib col-sm-8">
+                                    <select ng-change="breakdown.pageIndexOne=1;breakdown.breakdownFaultLevel()" class="form-control" ng-model="breakdown.query.faultLevel" ng-options="item.key as item.name for item in breakdown.breakdownClassAll">
+                                        <option value="" selected="selected">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="ib col-sm-3">
+                                <div class="ib col-sm-3 Hfilter">VIN：</div>
+                                <div class="ib  col-sm-8 authenticationSearch" style="margin:0">
+                                    <input type="text" class="ib form-control width-100"
+                                        ng-model="breakdown.query.vin" placeholder="请输入VIN"/>
+                                  <span class="glyphicon glyphicon-search" ng-click="breakdown.pageIndexOne=1;breakdown.onVinFilter()"></span>
+                                </div>
+                            </div>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr>
+                        <th style="min-width:150px;">手机号</th>
+                        <th>VIN</th>
+                        <th>车辆型号</th>
+                        <th>故障等级</th>
+                        <th>故障码</th>
+                        <th>上传时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in breakdown.Breakdowndata">
+                        <td class="borader">{{obj.phone}}</td>
+                        <td>{{obj.vin}}</td>
+                        <td>{{obj.carModel}}</td>
+                        <td id="testID2" ng-class="{true: 'faultCodeRed', false: ''}[obj.faultLevel=='A'||obj.faultLevel=='B']">{{obj.faultLevel}}</td>
+                        <td  ng-class="{true: 'faultCodeRed', false: ''}[obj.faultLevel=='A'||obj.faultLevel=='B']">{{obj.faultCode}}</td>
+                        <td>{{obj.faultTime}}</td>
+                        <td>
+                            <a ng-click="breakdown.edit(obj.faultId,obj.faultTime)">详情</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="breakdown.Breakdowndata.length === 0||breakdown.Breakdowndata==null">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="breakdown.totalOne" page-size="breakdown.pageSizeOne"  page-index="breakdown.pageIndexOne" query="breakdown.flipOne"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="通知规则">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="10" style="text-align: right;">
+                            <button ng-click="breakdown.addRule()" class="btn btn-default btn-small">新增</button>
+                            <div class="ib Searchfor">
+                                <input ng-model="breakdown.ruleSearchKey" style="width:200px;" type="text" class="ml15 ib form-control width-100" placeholder="请输入关键字"/>
+                                <span ng-click="breakdown.pageIndexTwo=1;breakdown.ruleInput()" class="glyphicon glyphicon-search"></span>
+                            </div>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr>
+                        <th>故障等级</th>
+                        <th>等级分类</th>
+                        <th>通知方式</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in breakdown.BreakdownRules">
+                        <td>{{obj.levelCode}}</td>
+                        <td>{{obj.levelType}}</td>
+                        <td>{{obj.noticeTypeName}}</td>
+                        <td>
+                            <a ng-click="breakdown.editRule(obj.ruleId)">编辑</a>
+                            <a ng-click="breakdown.removeRule(obj.ruleId,obj.levelCode)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="breakdown.BreakdownRules.length === 0">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="breakdown.totalTwo" page-size="breakdown.pageSizeTwo"  page-index="breakdown.pageIndexTwo" query="breakdown.flipTwo"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="故障码库">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="10" style="text-align: right;">
+                            <button ng-click="breakdown.addCode()" class="btn btn-default btn-small">新增</button>
+                            <button  ng-click="breakdown.openImport()"  class="btn btn-default btn-small">导入</button>
+                            <div class="ib Searchfor">
+                                <input ng-model="breakdown.codefaultCode" style="width:200px;" type="text" class="ml15 ib form-control width-100" placeholder="请输入故障码"/>
+                                <span ng-click="breakdown.pageIndexThr=1;breakdown.codeChange()" class="glyphicon glyphicon-search"></span>
+                            </div>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr ng-show="breakdown.moreobject2">
+                        <th colspan="10" style="text-align: right;">
+                            <div class="obj col-sm-5">
+                                上报时间：
+                                <div class="mp-date-time-pick ib">
+                                    <wd-date-picker class="ib" start-date="breakdown.datePickTimeStart" end-date="breakdown.datePickTimeEnd" date="breakdown.datePickTime" ng-model="breakdown.datePickTime">
+                                    </wd-date-picker>
+                                </div>
+                                至
+                                <div class="mp-date-time-pick ib">
+                                    <wd-date-picker class="ib Hfilter" start-date="breakdown.datePickTimeStart" end-date="breakdown.datePickTimeEnd" date="breakdown.datePickTime" ng-model="breakdown.datePickTime">
+                                    </wd-date-picker>
+                                </div>
+                            </div>
+                            <div class="ib col-sm-3">
+                                <span class="ib col-sm-2 col-sm-offset-1 Hfilter">系列:</span>
+                                <div class="ib col-sm-9">
+                                    <select class="form-control" ng-model="wutest.selectVal" ng-options="item.key as item.name for item in wutest.selectList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="ib col-sm-3">
+                                <span class="ib col-sm-2 col-sm-offset-1 Hfilter">车型:</span>
+                                <div class="ib col-sm-9">
+                                    <select class="form-control" ng-model="wutest.selectVal" ng-options="item.key as item.name for item in wutest.selectList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="obj col-sm-1">
+                                <button class="col-sm-10 col-sm-offset-2 Hfilter">筛选</button>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>故障码</th>
+                        <th>故障分类</th>
+                        <th>故障描述</th>
+                        <th>故障等级</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in breakdown.FaultBase">
+                        <td>{{obj.faultCode}}</td>
+                        <td>{{obj.faultType}}</td>
+                        <td>{{obj.faultDesc}}</td>
+                        <td>{{obj.faultLevel}}</td>
+                        <td>
+                            <a ng-click="breakdown.itemCode(obj.faultCode)">编辑</a>
+                            <a ng-click="breakdown.removeCode(obj.faultCode)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="breakdown.FaultBase.length === 0">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="breakdown.totalThr" page-size="breakdown.pageSizeThr"  page-index="breakdown.pageIndexThr" query="breakdown.flipThr"></wd-page-number>
+        </uib-tab>
+    </uib-tabset >
+</div>

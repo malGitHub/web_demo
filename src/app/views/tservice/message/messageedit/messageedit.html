@@ -1,0 +1,64 @@
+<div>
+<div class="modal-header">
+  <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form" ng-submit="vm.submit($event, edit_form)" novalidate="">
+
+
+    <div class="form-group" style='margin-left:20px'>
+      <label for="4" class="col-sm-2 control-label">消息标题</label>
+      <div class="col-sm-9" >
+        <input ng-model="vm.modelObj.title" type="text" id="4"  class="form-control ng-pristine ng-untouched ng-valid" name="">
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+        <label class="col-sm-2 control-label">分类</label>
+        <div class="obj col-sm-3" >
+          <div class="col-sm-10">
+            <select ng-change="vm.changeType()" ng-disabled="true" ng-model="vm.modelObj.type" name="vm.modelObj.type" required  class="form-control" ng-options="item.val as item.name for item in vm.MSG_TYPE_OPT" >
+              <option value="" selected="selected">请选择</option>
+            </select>
+          </div>
+        </div>
+        <div class="obj col-sm-3">
+          <div class="col-sm-10">
+            <select ng-model="vm.modelObj.stype" name="vm.modelObj.stype" ng-disabled="true"  placeholder=".col-xs-5"  class="form-control" ng-options="item.val as item.name for item in vm.nodeSelectOpts">
+              <option value="" selected="selected">请选择分类</option>
+            </select>
+          </div>
+        </div>
+        <div class="obj col-sm-3">
+          <div class="col-sm-10">
+            <select  required ng-model="vm.modelObj.receiveType" class="form-control" ng-options="item.val as item.name for item in vm.MSG_REVICE_TYPE_OPT" >
+              <option value="" selected="selected">请选择推送端</option></select>
+            </select>
+          </div>
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="messageType" class="col-sm-2 control-label" style='margin-left:14px'>消息内容</label>
+      <div class="col-sm-9">
+          <textarea ng-model="vm.modelObj.content" required  rows="15" class="form-control" maxlength="500"></textarea>
+        </select>
+      </div>
+    </div>
+   <div class="form-group">
+       <span class="col-sm-9 col-sm-offset-1 ib" style="color:red">重要提示： { }中的内容不可编辑，否则将影响APP端消息获取，其余文字可编辑</span>
+   </div>
+    <div class="form-group">
+      <div class="col-sm-8 col-sm-offset-3">
+        <button ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary" type="submit" style="width: 85px;" disabled="disabled">提交</button>
+        <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+
+
+
+  </form>
+
+
+
+</div>
+</div>

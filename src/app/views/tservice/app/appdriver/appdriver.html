@@ -1,0 +1,77 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{vm.title}}</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+          ng-submit="vm.submit($event, edit_form)" novalidate="">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">注册手机号:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.appdriver.phone" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">用户ID:</label>
+
+        <div class="col-sm-8">
+          <input ng-model="vm.appdriver.userId" type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">认证角色:</label>
+
+        <div class="col-sm-8">
+          <input value="{{vm.appdriver.role===0?'管理员':vm.appdriver.role===1?'普通用户':vm.appdriver.role===2?'司机':vm.appdriver.role===3?'车主、司机':''}}"  type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">驾驶类型:</label>
+
+        <div class="col-sm-8">
+          <input value="{{vm.appdriver.drivingLicense===1?'A1':vm.appdriver.drivingLicense===2?'A2':vm.appdriver.drivingLicense===3?'B1':vm.appdriver.drivingLicense===4?'B2':vm.appdriver.drivingLicense===5?'C1':vm.appdriver.drivingLicense===6?'C2':'C3'}}"
+                 type="text" class="form-control" readonly="readonly">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label"> 关联车辆列表:</label>
+          <div class="col-sm-8 appCarList">
+            <table class="table" border="0">
+              <tbody>
+              <tr>
+                <th>VIN</th>
+                <th>车系</th>
+                <th>车型</th>
+                <th>车牌号</th>
+                <th>发票号</th>
+                <!--<th>发票或行驶证照片</th>-->
+                <th>是否驾驶</th>
+              </tr>
+              <tr ng-repeat="obj in vm.appdriver.carList" border="0">
+                <td>{{obj.carId}}</td>
+                <td>{{obj.carSerise | cut:true:10:' ...'}}</td>
+                <td>{{obj.carModel}}</td>
+                <td>{{obj.carNumber}}</td>
+                <td>{{obj.invoiceNo}}</td>
+                <!--<td><img ng-src="{{obj.invoicePhoto}}" alt="发票或行驶证照片" style="width:150px;"></td>-->
+                <td>{{obj.driveStatus===0?'未驾驶':'当前驾驶'}}</td>
+
+              </tr>
+              <tr ng-if="vm.appdriver.carList.length === 0" border="0">
+                <td colspan="5" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+

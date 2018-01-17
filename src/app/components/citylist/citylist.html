@@ -1,0 +1,16 @@
+<div ng-show="!queryType || queryType=='id'">
+    <select class="form-control" style="width: auto" ng-model="selectPro" ng-change="changePro()" ng-options="pro.id as pro.name for pro in provinces">
+        <option value="">--请选择省份--</option>
+    </select>
+    <select class="form-control ml5" style="width: auto"  ng-model="selectCity" ng-change="changeCity()" ng-options="city.id as city.name for city in citys" >
+        <option value="">--请选择城市--</option>
+    </select>
+</div>
+<div ng-show="queryType && queryType=='carCode' ">
+  <select class="form-control" style="width: auto" ng-model="selectPro" ng-change="changePro()" ng-options="pro.carCode as pro.name for pro in provinces">
+    <option value="">--选择省份--</option>
+  </select>
+  <select class="form-control ml5" style="width: auto"  ng-model="selectCity" ng-change="changeCity()" ng-options="city.carCode as city.name for city in citys" >
+    <option value="">--选择城市--</option>
+  </select>
+</div>

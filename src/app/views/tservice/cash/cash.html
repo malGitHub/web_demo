@@ -1,0 +1,50 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="6">
+                    <div class="grant-div">
+                        <span class="grant-title">兑换管理</span>
+                      <br/>
+                        <span>更新时间：{{cash.refresh_time}}</span>
+                    </div>
+                    <div class="search-div">
+                        <div class="ib Searchfor">
+                            <input type="text" class="ml5 ib form-control wh300" ng-keyup="cash.pageIndex=1;cash.queryKeyUp($event)" ng-model="cash.inputText" placeholder="请输入活动关键字/VIN/手机号/兑换网点"/>
+                            <span class="glyphicon glyphicon-search" ng-click="cash.pageIndex=1;cash.changeDate()"></span>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>活动名称</th>
+                <th>已兑换数量</th>
+                <th>剩余数量</th>
+                <th>优惠券是否过期</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in cash.cashData">
+                <td>{{obj.activityName}}</td>
+                <td>{{obj.exchangeQuantity}}<span ng-if="cash.unitTool(obj.exchangeQuantity+'')">{{obj.unit}}</span></td>
+                <td>{{obj.restQuantity}}<span ng-if="cash.unitTool(obj.restQuantity+'')">{{obj.unit}}</span></td>
+                <td>
+                  <div ng-if="obj.activityStatus == 0">是</div>
+                  <div ng-if="obj.activityStatus == 1">否</div>
+                </td>
+                <td>
+                    <a ui-sref="tservice.cashdit({id:obj.activityId})" >详情</a>
+                </td>
+            </tr>
+            <tr ng-if="cash.cashData.length === 0">
+                <td colspan="5" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="cash.total" page-size="cash.pageSize" page-index="cash.pageIndex"
+                    query="cash.flip"></wd-page-number>
+</div>
+

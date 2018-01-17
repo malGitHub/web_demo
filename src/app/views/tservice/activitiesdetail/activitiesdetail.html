@@ -1,0 +1,210 @@
+<div class="modal-header">
+  <h3 class="modal-title">活动详情</h3>
+</div>
+<div class="modal-body activitiesdetail">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="activitiesend.submit($event, add_form)" novalidate="">
+    <!--------------------------------------兑换设置start-------------------------------------------->
+    <h5 class="h5title">兑换设置</h5>
+    <div class="col-sm-1" style="line-height: 40px;text-indent:10px;font-size:14px;">兑换网点</div>
+    <div class="content-padding col-sm-8">
+      <uib-tabset>
+        <uib-tab heading="全部网点" select="activitiesdetail.clearTab3();">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeProvinceOne_ex()" ng-model="activitiesdetail.query3.provinceId" class="form-control" id="pNameAll_ex"
+                              ng-options="item.id as item.name for item in activitiesdetail.AreaList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeCityOne_ex()" ng-model="activitiesdetail.query3.cityId" class="form-control" id="cNameAll_ex"
+                              ng-options="item.id as item.name for item in activitiesdetail.CityList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeStoreTypeOne_ex()" ng-model="activitiesdetail.query3.stationType" id="storeTypeAll_ex" class="form-control" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeStoreOne_ex()" ng-model="activitiesdetail.query3.stationId" class="form-control" id="sNameAll_ex"
+                              ng-options="item.stationId as item.stationName for item in activitiesdetail.StoreList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesdetail.query3.flag='';activitiesdetail.getAllList_ex()" ng-disabled="activitiesdetail.overdue" class="form-control wh100" >查询</button>
+                    <div style="clear:both"></div>
+
+                    <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesdetail.query3.keyWord" type="text" class="form-control col-sm-2 wh182" ng-readonly="activitiesdetail.overdue" placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesdetail.query3.page_number=1;activitiesdetail.query3.flag=1;activitiesdetail.getAllList_ex();activitiesdetail.addBtn_ex==false;" class="glyphicon glyphicon-search"></span>
+                      </div>
+                      <!--<input class="form-control col-sm-2 wh145 " type="text"   placeholder="输入网点关键字">-->
+                      <div class="col-sm-5"  >
+                        <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                        <div class="col-sm-3">
+                          <select class="form-control" ng-model="activitiesdetail.limitif_ex"
+                                  ng-change="activitiesdetail.changeLimit_ex()" ng-disabled="activitiesdetail.overdue">
+                            <option value="false" selected="selected">不限</option>
+                            <option value="true">自定义</option>
+                          </select>
+                        </div>
+
+                        <!--<div class="Hfilter" style="float:left;margin:0 8px;"></div>-->
+                        <input class="form-control" style="width:140px;" type="number" min="1" ng-if="activitiesdetail.limitif_ex=='true'"
+                               ng-model="activitiesdetail.limit_ex"
+                               placeholder="请填写数量" required>
+                      </div>
+
+                    </div>
+                    <button type="button" style="float: right;" ng-click="activitiesdetail.addshop_ex();activitiesdetail.addBtn_ex==true;" class="form-control wh100" ng-disabled="activitiesdetail.addBtn_ex">添加至活动</button>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesdetail.allStationList_ex">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1" ng-if="obj.quantity==0">发放限额：不限</td>
+                <td class="col-sm-1" ng-if="obj.quantity!=0">发放限额：{{obj.quantity}}</td>
+                <!--<td class="col-sm-1">
+                  <span class="glyphicon glyphicon-remove" ng-click="activitiesstep.allStoreDelete($index)"></span>
+                </td>-->
+              </tr>
+              <tr ng-if="activitiesdetail.allStationList_ex === 0 || activitiesdetail.noData_ex==true;">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number ng-if="!activitiesdetail.noData_ex" total="activitiesdetail.total3" page-size="activitiesdetail.query3.page_size"  page-index="activitiesdetail.query3.page_number" query="activitiesdetail.flip3"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="已添加网点" select="activitiesdetail.clearTab4();activitiesdetail.getAddedList_ex()" active="true">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeProvince_ex()" ng-model="activitiesdetail.query4.provinceId" class="form-control" id="pNameAdded_e"
+                              ng-options="item.id as item.name for item in activitiesdetail.AreaList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeCity_ex()" ng-model="activitiesdetail.query4.cityId" class="form-control" id="cNameAdded_e"
+                              ng-options="item.id as item.name for item in activitiesdetail.CityList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeStoreType_ex()" ng-model="activitiesdetail.query4.stationType" id="storeTypeAdded_e" class="form-control" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesdetail.changeStore_ex()" ng-model="activitiesdetail.query4.stationId" class="form-control" id="sNameAdded_e"
+                              ng-options="item.stationId as item.stationName for item in activitiesdetail.StoreList_ex" ng-disabled="activitiesdetail.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesdetail.query4.flag='';activitiesdetail.clearStore_ex=false;activitiesdetail.getAddedList_ex()" class="form-control wh100" ng-disabled="activitiesdetail.overdue">查询</button>
+                    <div style="clear:both"></div>
+
+                    <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesdetail.query4.keyWord" type="text" class="form-control col-sm-2 wh182 " ng-readonly="activitiesdetail.overdue" placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesdetail.query4.page_number=1;activitiesdetail.query4.flag=1;activitiesdetail.getAddedList_ex()" class="glyphicon glyphicon-search"></span>
+                      </div>
+                      <div class="Hfilter" style="float:left;margin:0 12px;"></div>
+                    </div>
+                    <button type="button" ng-if="activitiesdetail.stopType==0" style="float: right;" ng-click="activitiesdetail.clearStation_ex()" class="form-control wh100" ng-disabled="activitiesdetail.overdue">清除网点</button>
+                    <button type="button" ng-if="activitiesdetail.stopType==1" style="float: right;" ng-click="activitiesdetail.clearStation_exchange()" class="form-control wh100" ng-disabled="activitiesdetail.overdue">清除网点</button>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesdetail.addedStationList_ex">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1" ng-if="obj.quantity==0">发放限额：不限</td>
+                <td class="col-sm-1" ng-if="obj.quantity!=0">发放限额：{{obj.quantity}}</td>
+                <td class="col-sm-1" ng-if="!activitiesdetail.overdue">
+                  <span ng-if="activitiesdetail.stopType==0" class="glyphicon glyphicon-remove" ng-click="activitiesdetail.storeDelete_ex($index)"></span>
+                  <span ng-if="activitiesdetail.stopType==1" class="glyphicon glyphicon-remove" ng-click="activitiesdetail.storeDelete_exchange($index)"></span>
+                </td>
+              </tr>
+              <tr ng-if="activitiesdetail.addedStationList_ex.length ===0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  total="activitiesdetail.total4" page-size="activitiesdetail.query4.page_size"  page-index="activitiesdetail.query4.page_number" query="activitiesdetail.flip4"></wd-page-number>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div style="clear: both;"></div>
+
+    <!--------------------------------------兑换设置end-------------------------------------------->
+    <h5 style="background: #666;height:1px;"></h5>
+    <div ng-if="activitiesdetail.views">
+      <div class="form-group" style='margin-left:20px;margin-bottom:5px;'>
+        <div  class="col-sm-1 control-label col-sm-offset-1" style="width:30px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核意见：</div>
+      </div>
+      <div class="form-group" style='margin-left:20px'>
+        <div class="col-sm-9 col-sm-offset-1">
+          <textarea ng-model="activitiesdetail.list.reviewContent" name="checkvies" id="checkvies" cols="110" rows="9" ng-readonly=true></textarea>
+        </div>
+      </div>
+      <div class="form-group" style='margin-left:20px'>
+        <div  class="col-sm-1 control-label col-sm-offset-1" style="width:65px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核结论：</div>
+        <div class="col-sm-2">
+          <select  ng-model="activitiesdetail.list.reviewStatus" name="myviews" id="myviews" class="form-control" ng-options="item.viewId as item.viewName for item in activitiesdetail.datavies" ng-disabled=true>
+            <option value="" selected="selected">请选择</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-offset-2" >
+        <button class="btn btn-primary"  ng-if="(activitiesdetail.activeStatus==1 ||activitiesdetail.activeStatus==3 ||activitiesdetail.activeStatus==4||activitiesdetail.activeStatus==5)&&activitiesdetail.read&&!activitiesdetail.saveBtn" type="button" style="width: 85px;" ng-click="activitiesdetail.editConfirm()">编辑</button>
+        <button class="btn btn-primary" type="button" style="width: 85px;"   ng-click="activitiesdetail.submit('1')" ng-if="activitiesdetail.saveBtn">保存</button>
+         <button ng-disabled="add_form.$invalid ||activitiesdetail.addDate==1||activitiesdetail.addedStationList_ex.length==0||activitiesdetail.carDate==1" class="btn btn-primary" ng-if="activitiesdetail.activeStatus==1 ||activitiesdetail.activeStatus==3 ||activitiesdetail.activeStatus==4||activitiesdetail.activeStatus==5" type="button" ng-click="activitiesdetail.submit('2')" style="width: 85px;" >提交</button>
+        <button ng-click="activitiesdetail.closeAdd()" class="btn btn-primary" type="button" style="width: 85px;">上一步</button>
+       </div>
+    </div>
+  </form>
+ </div>
+
+

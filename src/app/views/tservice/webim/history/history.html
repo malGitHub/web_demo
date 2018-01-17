@@ -1,0 +1,33 @@
+<div>
+  <div class="modal-body history">
+    <div class="wrapper box-sizing">
+      <div class="content" style="height: 560px;">
+        <div class="right-panel radius5px" id="rightPanel">	<!-- 聊天面板 -->
+          <div class="chat-box" style="height: 557px;">
+            <div class="title" id="chatTitle" style="height: 81px;">
+              　　<span style="width:500px;overflow:hidden;">
+                <span id="contactTime" ng-bind="vm.information.customerName" style="float: left;margin-right: 50px;"></span>
+                <p ng-bind="vm.information.startTime" style="float: left;"></p><p style="float: left;">~</p><span ng-bind="vm.information.endTime" ></span>
+              </span>
+              <button  id="closeHistory" type="button" ng-click="vm.closeEdit()" class="close ng-scope"><span>×</span></button>
+            </div>
+            <div class="niceBar">
+              <section class="chat-content box-sizing" id="chatContent"  ng-bind-html='myText' ><!-- 聊天记录 -->
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-default" style="margin:0 auto;margin-top:10px;display: block" ng-click="vm.callBack()">回　呼</button>
+      <!--<button id="fat-btn" class="btn btn-primary" data-loading-text="Loading..."
+              type="button"> 回呼
+      </button>-->
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  function loadImg() {
+    document.getElementById('chatContent').scrollTop = document.getElementById('chatContent').scrollHeight;
+  }
+</script>

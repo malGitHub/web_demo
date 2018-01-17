@@ -1,0 +1,307 @@
+ <div class="content-padding" ng-controller="TserviceSupplysourceController">
+    <uib-tabset>
+      <uib-tab heading="陆鲸" select="supplysource.changeTab(1)">
+    <div class="content-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th colspan="10" style="text-align: right;">
+            <div class="rule-div">
+              <span class="rule-title">货源会员认证</span>
+              <a ng-click="supplysource.showDetailAll()"><img src="..\..\assets\images\tishi.png" class="wh30 ml10" ></a>
+              <div id="instructionDetailLu"  style="border: 1px solid #ccc; width: 600px; height:520px;position: absolute;left: 188px; top:15px; z-index:5;background-color: #fff; text-align: left;padding:10px 20px 30px 10px; line-height:14px;" ng-show="supplysource.prinexplain">
+                <p class="pb10">审核原则说明：<span style="float: right;width: 30px;height: 20px; background-color: #DDDDDD; color: #2e2e2e; text-align: center; line-height: 20px;" ng-click="supplysource.closeDetailAll()">X</span></p>
+                <p>身份证实名审核：</p>
+                <p class="pb10">审核内容：核对身份证姓名，号码与上传证件是否一致</p>
+                <p>身份证：</p>
+                <p>证件要求：上传身份证原件的正反面</p>
+                <p>审核内容：核对身份证姓名，号码与上传证件是否一致，并将信息与权威数据源进行核对</p>
+                <p class="pb10">实名审核是所有认证的基础，如果实名认证不通过，则其他资料不做审核。</p>
+                <p>驾驶证：</p>
+                <p>证件要求：上传驾驶证原件，所上传的驾驶证图片与申请人需一致</p>
+                <p class="pb10">审核内容：驾驶证信息与权威数据源进行核对，核对证件号码，准驾车型，档案编号是否一致，核对驾驶证状态是否正常及驾驶证是否过期</p>
+                <p>行驶证：</p>
+                <p>证件要求：上传行驶证原件，查看驾驶证准驾车型是否与所驾车辆符合</p>
+                <p class="pb10">审核内容：行驶证与权威数据源进行核对，核对车牌号，车辆识别代码，发动机号是否一致，核对行驶证状态及行驶证是否过期</p>
+                <p>真实头像</p>
+                <p>头像要求：上传的头像居中且正脸拍摄，避免逆光，测光，及强曝光，不得佩戴墨镜以及戴鸭舌帽等遮挡物拍摄。</p>
+                <p>审核内容：核对头像为身份证本人是否一致。</p>
+              </div>
+              <button ng-if="false" type="button" class="btn btn-default btn-small ml10" ng-click="supplysource.personcheck()">人工审查  {{supplysource.checkOn}}</button>
+            </div>
+            <div class="ib Searchfor">
+              <input ng-model="supplysource.query.keyWord" type="text" class="ml15 ib form-control width-100 wh260"  placeholder="请输入真实姓名/用户名/或身份证号码"/>
+              <span ng-click="supplysource.page_number=1;supplysource.queryData()" class="glyphicon glyphicon-search"></span>
+            </div>
+            <button class="btn btn-default btn-small" ng-click="supplysource.getExecl()" id="btnExcel">导出</button>
+             <button class="btn btn-default btn-small" ng-click="supplysource.choosemore()">高级筛选</button>
+          </th>   <!--第一行th用于新建等按钮-->
+        </tr>
+        <tr ng-show="supplysource.highcontrol">
+          <th colspan="10">
+            <div class="col-sm-12">
+              <div class="obj col-sm-4">
+                <div class="wd-date ib">
+                  <div class="ib Hfilter col-sm-3">审核时间：</div>
+                  <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"  date="supplysource.query.reviewDateStart"
+                                    end-date="supplysource.nowDate"
+                                    ng-model="supplysource.query.reviewDateStart"
+                                    ng-change="supplysource.page_number=1;supplysource.queryData();" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"  date="supplysource.query.reviewDateEnd"
+                                    end-date="supplysource.nowDate"
+                                    ng-model="supplysource.query.reviewDateEnd"
+                                    ng-change="supplysource.page_number=1;supplysource.queryData();"  format="yyyy-mm-dd" >
+                    </wd-date-picker>
+                  </div>
+                </div>
+              </div>
+
+              <!--           <div class="obj col-sm-2">
+                            <span class="col-sm-5 ib Hfilter">人工审核结果：</span>
+                            <div class="col-sm-7 ib">
+                              <select  ng-change="supplysource.page_number=1;supplysource.queryData()"  ng-model="supplysource.query.manualReview" name="personalaudit" id="personalaudit" class="ib form-control" ng-options="item.key as item.value for item in supplysource.stateResultOther">
+                                <option value="" selected="selected">全部</option>
+                              </select>
+                            </div>
+                        </div>-->
+
+             <!-- <div class="obj col-sm-2">
+                <span class="col-sm-7 ib Hfilter">第三方认证结果：</span>
+                <div class="col-sm-5 ib">
+                  <select  ng-change="supplysource.page_number=1;supplysource.queryData()"  ng-model="supplysource.query.thirdReview" name="thirdaudit" id="thirdaudit" class="ib form-control" ng-options="item.key as item.value for item in supplysource.stateResult">
+                    <option value="" selected="selected">全部</option>
+                  </select>
+                </div>
+              </div>-->
+
+              <div class="obj col-sm-2">
+                <span class="col-sm-7 ib Hfilter">认证最终结果：</span>
+                <div class="col-sm-5 ib">
+                  <select  ng-change="supplysource.page_number=1;supplysource.queryData()" ng-model="supplysource.query.finalReview" name="finalaudit" id="finalaudit" class="ib form-control" ng-options="item.key as item.value for item in supplysource.stateResult">
+                    <option value="" selected="selected">全部</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="obj col-sm-4">
+                <div class="wd-date ib">
+                  <div class="ib Hfilter col-sm-3">提交时间：</div>
+                  <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"  date="supplysource.query.reviewDateStart"
+                                    end-date="supplysource.nowDate"
+                                    ng-model="supplysource.query.submitDateStart"
+                                    ng-change="supplysource.page_number=1;supplysource.queryData();" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"  date="supplysource.query.reviewDateEnd"
+                                    end-date="supplysource.nowDate"
+                                    ng-model="supplysource.query.submitDateEnd"
+                                    ng-change="supplysource.page_number=1;supplysource.queryData();"  format="yyyy-mm-dd" >
+                    </wd-date-picker>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-sm-12">
+              <div class="obj col-sm-5">
+                <span class="col-sm-4 ib Hfilter">第三方认证类型和结果：</span>
+                <div class="col-sm-3 ib">
+                  <select  ng-change="supplysource.page_number=1;supplysource.queryData()"  ng-model="supplysource.query.reviewType" name="reviewType" id="reviewType" class="ib form-control" ng-options="item.key as item.value for item in supplysource.thirdCommits">
+                    <option value="" selected="selected">全部</option>
+                  </select>
+                </div>
+                <span class="ib Hfilter fl" style="text-align: center;">&nbsp;&nbsp;</span>
+                <div class="col-sm-2 ib">
+                  <select  ng-change="supplysource.page_number=1;supplysource.queryData()"  ng-model="supplysource.query.thirdReview" name="thirdaudit" id="thirdaudit" class="ib form-control" ng-options="item.key as item.value for item in supplysource.stateResult">
+                    <option value="" selected="selected">全部</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </th>
+        </tr>
+        <tr>
+          <th>提交时间<span style="margin-left: 2px;" ng-if="!supplysource.controlSort" class="glyphicon glyphicon-circle-arrow-up" ng-click="supplysource.orderCheck()"></span><span style="margin-left: 2px;" ng-if="supplysource.controlSort" class="glyphicon glyphicon-circle-arrow-down" ng-click="supplysource.orderCheck()"></span></th>
+          <th>用户名</th>
+          <th>真实姓名</th>
+          <th>身份证号</th>
+          <th>第三方认证状态</th>
+          <th>人工审核结果</th>
+          <th>认证最终结果</th>
+          <th>审核人</th>
+          <th>审核时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="message in supplysource.informa">
+          <td>{{message.submitTime}}</td>
+          <td>{{message.phone}}</td>
+          <td>{{message.realName}}</td>
+          <td>{{message.identityNo}}</td>
+          <td>{{message.thirdReviewResult}}</td>
+          <!--<td>{{message.manualReviewResult}}</td>
+          <td>{{message.finalReviewResult==message.thirdReviewResult}}</td>
+          <td>{{message.reviewer}}</td>
+          <td>{{message.reviewTime}}</td>-->
+          <td></td>
+          <td>{{message.thirdReviewResult}}</td>
+          <td></td>
+          <td></td>
+          <td ng-if="supplysource.manualSwitch!=0"><a ui-sref="tservice.supplysourcecheck({id:message.id,manualSwitch:supplysource.manualSwitch,thirdReviewResult:message.thirdReviewResult,manualReviewResult:message.manualReviewResult})">{{message.manualReviewResult=='通过' ?'查看':'审核'}}</a></td>
+          <td ng-if="supplysource.manualSwitch==0"><a ui-sref="tservice.supplysourcecheck({id:message.id,manualSwitch:supplysource.manualSwitch,thirdReviewResult:message.thirdReviewResult})">查看</a></td>
+        </tr>
+        <tr ng-if="supplysource.informa.length === 0">
+          <td colspan="10" class="tlc">无数据</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+      <wd-page-number  total="supplysource.total" page-size="supplysource.page_size"  page-index="supplysource.page_number" query="supplysource.flip"></wd-page-number>
+  </uib-tab>
+      <uib-tab heading="货车帮" select="supplysource.changeTab(2)">
+        <div class="content-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th colspan="10" style="text-align: right;">
+                <div class="rule-div">
+                  <span class="rule-title">货源会员认证</span>
+                  <a ng-click="supplysource.tab2.showDetailAll()"><img src="..\..\assets\images\tishi.png" class="wh30 ml10" ></a>
+                  <div id="instructionDetail"  style="border: 1px solid #ccc; width: 600px; height:520px;position: absolute;left: 188px; top:15px; z-index:5;background-color: #fff; text-align: left;padding:10px 20px 30px 10px; line-height:14px;" ng-show="supplysource.tab2.prinexplain">
+                    <p class="pb10">审核原则说明：<span style="float: right;width: 30px;height: 20px; background-color: #DDDDDD; color: #2e2e2e; text-align: center; line-height: 20px;" ng-click="supplysource.tab2.closeDetailAll()">X</span></p>
+                    <p>驾驶证：</p>
+                    <p>证件要求：上传驾驶证原件，所上传的驾驶证图片与申请人需一致</p>
+                    <p class="pb10">审核内容：驾驶证信息与权威数据源进行核对，核对证件号码，准驾车型，档案编号是否一致，核对驾驶证状态是否正常及驾驶证是否过期</p>
+                    <p>行驶证：</p>
+                    <p>证件要求：上传行驶证原件，查看驾驶证准驾车型是否与所驾车辆符合</p>
+                    <p class="pb10">审核内容：行驶证与权威数据源进行核对，核对车牌号，车辆识别代码，发动机号是否一致，核对行驶证状态及行驶证是否过期</p>
+                    <p>真实头像</p>
+                    <p>头像要求：上传的头像居中且正脸拍摄，避免逆光，测光，及强曝光，不得佩戴墨镜以及戴鸭舌帽等遮挡物拍摄。</p>
+                    <p>审核内容：核对头像为身份证本人是否一致。</p>
+                  </div>
+                  <button ng-if="false" type="button" class="btn btn-default btn-small ml10" ng-click="supplysource.tab2.personcheck()">人工审查  {{supplysource.tab2.checkOn}}</button>
+                </div>
+                <div class="ib Searchfor">
+                  <input ng-model="supplysource.tab2.query.keyword" type="text" class="ml15 ib form-control width-100 wh260"  placeholder="请输入真实姓名/用户名/或身份证号码"/>
+                  <span ng-click="supplysource.tab2.page_number=1;supplysource.queryData2()" class="glyphicon glyphicon-search"></span>
+                </div>
+                <button class="btn btn-default btn-small" ng-click="supplysource.tab2.getExecl()" id="btnExcelHcb">导出</button>
+                <button class="btn btn-default btn-small" ng-click="supplysource.tab2.choosemore()">高级筛选</button>
+              </th>   <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="supplysource.tab2.highcontrol">
+              <th colspan="10">
+                <div class="obj col-sm-4">
+                  <div class="wd-date ib">
+                    <div class="ib Hfilter col-sm-3">审核时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="supplysource.tab2.query.auditDateS"
+                                      end-date="supplysource.nowDate"
+                                      ng-model="supplysource.tab2.query.auditDateS"
+                                      ng-change="supplysource.tab2.page_number=1;supplysource.queryData2();" format="yyyy-mm-dd">
+                      </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="supplysource.tab2.query.auditDateE"
+                                      end-date="supplysource.nowDate"
+                                      ng-model="supplysource.tab2.query.auditDateE"
+                                      ng-change="supplysource.tab2.page_number=1;supplysource.queryData2();"  format="yyyy-mm-dd" >
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                </div>
+
+                <!--           <div class="obj col-sm-2">
+                              <span class="col-sm-5 ib Hfilter">人工审核结果：</span>
+                              <div class="col-sm-7 ib">
+                                <select  ng-change="supplysource.page_number=1;supplysource.queryData()"  ng-model="supplysource.query.manualStatus" name="personalaudit" id="personalaudit" class="ib form-control" ng-options="item.key as item.value for item in supplysource.stateResultOther">
+                                  <option value="" selected="selected">全部</option>
+                                </select>
+                              </div>
+                          </div>-->
+
+                <div class="obj col-sm-2">
+                  <span class="col-sm-7 ib Hfilter">第三方认证结果：</span>
+                  <div class="col-sm-5 ib">
+                    <select  ng-change="supplysource.tab2.page_number=1;supplysource.queryData2()"  ng-model="supplysource.tab2.query.thirdStatus" name="thirdaudit" id="thirdauditHcb" class="ib form-control" ng-options="item.key as item.value for item in supplysource.tab2.stateResult">
+                      <option value="" selected="selected">全部</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="obj col-sm-2">
+                  <span class="col-sm-7 ib Hfilter">认证最终结果：</span>
+                  <div class="col-sm-5 ib">
+                    <select  ng-change="supplysource.tab2.page_number=1;supplysource.queryData2()" ng-model="supplysource.tab2.query.finalStatus" name="finalaudit" id="finalauditHcb" class="ib form-control" ng-options="item.key as item.value for item in supplysource.tab2.stateResult">
+                      <option value="" selected="selected">全部</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="obj col-sm-4">
+                  <div class="wd-date ib">
+                    <div class="ib Hfilter col-sm-3">提交时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="supplysource.tab2.query.submitDateS"
+                                      end-date="supplysource.nowDate"
+                                      ng-model="supplysource.tab2.query.submitDateS"
+                                      ng-change="supplysource.tab2.page_number=1;supplysource.queryData2();" format="yyyy-mm-dd">
+                      </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="supplysource.query.submitDateE"
+                                      end-date="supplysource.nowDate"
+                                      ng-model="supplysource.tab2.query.submitDateE"
+                                      ng-change="supplysource.tab2.page_number=1;supplysource.queryData2();"  format="yyyy-mm-dd" >
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                </div>
+
+
+              </th>
+            </tr>
+            <tr>
+              <th>提交时间<span style="margin-left: 2px;" ng-if="!supplysource.tab2.controlSort" class="glyphicon glyphicon-circle-arrow-up" ng-click="supplysource.tab2.orderCheck()"></span><span style="margin-left: 2px;" ng-if="supplysource.tab2.controlSort" class="glyphicon glyphicon-circle-arrow-down" ng-click="supplysource.tab2.orderCheck()"></span></th>
+              <th>用户名</th>
+              <th>真实姓名</th>
+              <th>身份证号</th>
+              <th>第三方认证状态</th>
+              <th>人工审核结果</th>
+              <th>认证最终结果</th>
+              <th>审核人</th>
+              <th>审核时间</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="message in supplysource.tab2.informa">
+              <td>{{message.submitDate}}</td>
+              <td>{{message.userName}}</td>
+              <td>{{message.realName}}</td>
+              <td>{{message.idCard}}</td>
+              <td>{{message.thirdStatus}}</td>
+              <!--<td>{{message.manualStatus}}</td>
+              <td>{{message.finalReviewResult==message.thirdReviewResult}}</td>
+              <td>{{message.auditor}}</td>
+              <td>{{message.auditDate}}</td>-->
+              <td></td>
+              <td>{{message.thirdStatus}}</td>
+              <td></td>
+              <td></td>
+              <td><a ui-sref="tservice.supplysourcecheckhcb({id:message.userId,manualSwitch:supplysource.tab2.manualSwitch,thirdReviewResult:message.thirdReviewResult})">查看</a></td>
+            </tr>
+            <tr ng-if="supplysource.tab2.informa.length === 0">
+              <td colspan="10" class="tlc">无数据</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+          <wd-page-number  total="supplysource.tab2.total" page-size="supplysource.tab2.page_size"  page-index="supplysource.tab2.page_number" query="supplysource.tab2.flip"></wd-page-number>
+    </uib-tab>
+</uib-tabset>
+</div>

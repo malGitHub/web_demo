@@ -1,0 +1,44 @@
+<header class="frame-header-user-bar" ng-class="{'home-header':state == 'home'}" ng-show="!isFullScreen">
+    <nav class="as-navbar navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="/assets/images/newlogo.png" alt="云服务平台运营支撑系统logo">
+                <a class="navbar-brand" ui-sref="home">
+                  云服务平台运营支撑系统
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="as-nav navbar-nav navbar-right">
+                    <!--<li ng-if="!userInfo" class="frame-header-manage">-->
+                        <!--<a ng-click="toLogin()">登录</a>-->
+                    <!--</li>-->
+                    <li ng-if="userInfo" class="frame-header-user btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary" style="border: 0" uib-dropdown-toggle ng-disabled="disabled">
+                            欢迎，{{userInfo.userName}}<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-if="roleType == 3">
+                                <a ui-sref="user.edit">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                  Personal information
+                                </a>
+                            </li>
+                            <li>
+                                <a ng-click="settings()">
+                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                  修改密码
+                                </a>
+                            </li>
+                            <li>
+                                <a ng-click="logout()">
+                                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

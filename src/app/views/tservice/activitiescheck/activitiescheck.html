@@ -1,0 +1,229 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{activitiesnew.title}}</h3>
+</div>
+<div class="modal-body activitiesnew">
+  <div class="bggray"></div>
+  <div class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern">
+    <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">活动信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.activityName" type="text" id="activityname" class="form-control col-sm-10" name="activityname" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动开始日期</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.activityStartDate" type="text" id="activityStartDate" class="form-control wh182" name="activityStartDate" ng-readonly="activitiescheck.read">
+      </div>
+      <label  class="control-label col-sm-offset-1"><span style="color:red">*</span>活动结束日期</label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="0" ng-model="activitiescheck.detail.aciveTimeInput" ng-disabled="activitiescheck.read">
+        送完为止
+      </label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="-1" ng-model="activitiescheck.detail.aciveTimeInput" ng-disabled="activitiescheck.read">
+        自定义
+      </label>
+      <div class="ib"  style="max-width: 200px;" ng-if="activitiescheck.detail.aciveTimeInput=='-1'">
+        <input ng-model="activitiescheck.detail.activityEndDate" type="text" id="activityEndDate" class="form-control wh182" name="activityEndDate" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>发放数量</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.activityQuota" type="number" id="activitycount" class="form-control wh100" name="activitycount" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单车发放数量</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.singleQuota" type="number" id="singleQuota" class="form-control wh100" name="singleQuota" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">优惠券信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.couponName" type="text" id="activitygood" class="form-control col-sm-10" name="activitygood" ng-readonly="activitiescheck.read">
+      </div>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>内容</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.couponContent" type="text" id="activitycontent" class="form-control col-sm-10" name="activitycontent" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单位</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiescheck.detail.couponUnit" type="text" id="activityunit" class="form-control wh60" name="activityunit" ng-readonly="activitiescheck.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>优惠券有效期</label>
+      <div class="control-label" style="text-align: left;float:left;">
+        <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="0" ng-model="activitiescheck.detail.expirationStatus" ng-disabled="activitiescheck.read">
+          不限
+        </label>
+        <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="1" ng-model="activitiescheck.detail.expirationStatus" ng-disabled="activitiescheck.read">
+          领取之后一定周期内
+        </label>
+        <div class="ib" ng-if="activitiescheck.detail.expirationStatus=='1'">
+          <input ng-model="activitiescheck.detail.expirationDays" type="number" id="activityvalide" class="form-control  ng-pristine ng-valid ib wh100" name="activityvalide" placeholder="限制天数" ng-readonly="activitiescheck.read"> <span class="ib wh20 mr5">/天</span>
+        </div>
+        <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="2" ng-model="activitiescheck.detail.expirationStatus" ng-disabled="activitiescheck.read">
+          自定义
+        </label>
+        <div class="mp-date-time-pick ib" ng-if="activitiescheck.detail.expirationStatus=='2'">
+          <input ng-model="activitiescheck.detail.expirationStartDate" type="text" id="expirationStartDate" class="form-control wh182" name="expirationStartDate" ng-readonly="activitiescheck.read">
+          <span class="ib Hfilter" style="text-align: center;">至</span>
+          <input ng-model="activitiescheck.detail.expirationEndDate" type="text" id="expirationEndDate" class="form-control wh182" name="expirationEndDate" ng-readonly="activitiescheck.read">
+        </div>
+      </div>
+    </div>
+<!--------------------------------------发放网点start-------------------------------------------->
+    <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">发放设置</h5>
+    <h4 style="line-height: 40px;text-indent:10px;font-size:14px;">发放网点</h4>
+       <div class="col-sm-7 col-sm-offset-1"  >
+        <table style="margin-left: 20px;">
+          <tbody>
+          <tr>
+            <td><span style="color:red">*</span>所选网点：</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+     <div class="content-padding col-sm-8 col-sm-offset-1">
+      <div class="content-body">
+         <table class="table">
+           <tbody>
+           <tr ng-repeat="obj in activitiescheck.addedStationList">
+             <td class="col-sm-2">{{obj.provinceName}}</td>
+             <td class="col-sm-2">{{obj.cityName}}</td>
+             <td class="col-sm-2">{{obj.stationTypeName}}</td>
+             <td class="col-sm-2">{{obj.stationName}}</td>
+             <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+          </tr>
+          <tr ng-if="activitiescheck.allStationList.length ===0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+        <wd-page-number  total="activitiescheck.total1" page-size="activitiescheck.query1.page_size"  page-index="activitiescheck.query1.page_number" query="activitiescheck.flip1"></wd-page-number>
+     </div>
+   <div style="clear: both;"></div>
+ <!--------------------------------------发放网点end-------------------------------------------->
+<!--------------------------------------车型选择start------------------------------------------>
+    <h4 style="line-height: 40px;text-indent:10px;font-size:14px;">车型选择</h4>
+    <div class="form-group" style='margin-left:20px' ng-if="activitiescheck.selSeries">
+      <div class="col-sm-7 col-sm-offset-1 activeScroll"  >
+          <table>
+            <tbody>
+            <tr><td><span style="color:red">*</span>所选车型：</td></tr>
+            <tr ng-repeat="obj in activitiescheck.selectedSeries;">
+               <td class="col-sm-1">{{ $index + 1 }}&nbsp;&nbsp;&nbsp;{{obj.seriesName}}</td>
+              <td class="col-sm-1">{{obj.modelName}}</td>
+              <td class="col-sm-1">车辆下线日期：
+                <span ng-if="obj.carOfflineStartDate!=undefined&&obj.carOfflineStartDate!=''">{{obj.carOfflineStartDate}}</span>
+                <span ng-if="obj.carOfflineStartDate==undefined||obj.carOfflineStartDate==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.carOfflineEndDate==undefined||obj.carOfflineEndDate==''">不限</span>
+                <span ng-if="obj.carOfflineEndDate!=undefined&&obj.carOfflineEndDate!=''">{{obj.carOfflineEndDate}}</span>
+              </td>
+              <td class="col-sm-1">车辆销售日期:
+                <span ng-if="obj.carSellingStartDate!=undefined&&obj.carSellingStartDate!=''">{{obj.carSellingStartDate}}</span>
+                 <span ng-if="obj.carSellingStartDate==undefined||obj.carSellingStartDate==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.carSellingEndDate==undefined||obj.carSellingEndDate==''">不限</span>
+                <span ng-if="obj.carSellingEndDate!=undefined&&obj.carSellingEndDate!=''">{{obj.carSellingEndDate}}</span>
+              </td>
+              <td class="col-sm-1">STD日期:
+                <span ng-if="obj.stdStartDate!=undefined&&obj.stdStartDate!=''">{{obj.stdStartDate}}</span>
+                <span ng-if="obj.stdStartDate==undefined||obj.stdStartDate==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.stdEndDate==undefined||obj.stdEndDate==''">不限</span>
+                <span ng-if="obj.stdEndDate!=undefined&&obj.stdEndDate!=''">{{obj.stdEndDate}}</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px' ng-if="activitiescheck.carSeries">
+      <div class="col-sm-2 col-sm-offset-1" >
+        <div style="height:200px;border:1px solid #ccc; overflow-y:scroll;overflow-x:hidden;position: relative;" >
+           <p ng-repeat="obj in activitiescheck.carChassisList track by $index" >
+             <span class="col-sm-1">{{obj.chassisNum}}</span>
+              <span class="col-sm-offset-3" style="margin-left:50px;">，</span>
+          </p>
+        </div>
+        </div>
+     </div>
+
+<!--------------------------------------车型选择end-------------------------------------------->
+<!--------------------------------------兑换设置start-------------------------------------------->
+    <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">兑换设置</h5>
+    <h4 style="line-height: 40px;text-indent:10px;font-size:14px;">兑换网点</h4>
+    <div class="col-sm-7 col-sm-offset-1"  >
+    <table style="margin-left: 20px;">
+      <tbody>
+      <tr>
+        <td><span style="color:red">*</span>所选网点：</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+    <div class="content-padding col-sm-8 col-sm-offset-1">
+      <div class="content-body">
+        <table class="table">
+           <tbody>
+             <tr ng-repeat="obj in activitiescheck.addedStationList_ex">
+               <td class="col-sm-2">{{obj.provinceName}}</td>
+               <td class="col-sm-2">{{obj.cityName}}</td>
+               <td class="col-sm-2">{{obj.stationTypeName}}</td>
+               <td class="col-sm-2">{{obj.stationName}}</td>
+               <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+            </tr>
+            <tr ng-if="activitiescheck.allStationList_ex.length ===0">
+              <td colspan="10" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+      <wd-page-number  total="activitiescheck.total2" page-size="activitiescheck.query2.page_size"  page-index="activitiescheck.query2.page_number" query="activitiescheck.flip2"></wd-page-number>
+       </div>
+    <div style="clear: both;"></div>
+ <!--------------------------------------兑换设置end-------------------------------------------->
+    <div class="col-sm-8 col-sm-offset-1">
+      <div style="margin-left: 20px;">
+        <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form" ng-submit="activitiescheck.submit($event, edit_form)" novalidate="">
+          <h5 style="background: #666;height:1px;"></h5>
+          <div class="form-group" style='margin-bottom:5px;'>
+            <div  class="col-sm-1 control-label" style="width:30px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核意见（必填）：</div>
+          </div>
+          <div class="form-group" >
+            <div class="col-sm-9">
+              <textarea ng-model="activitiescheck.detail.reviewContent" name="checkvies" id="checkvies" cols="110" rows="9" ng-maxlength=500  required ng-readonly="activitiescheck.auditread"></textarea>
+            </div>
+          </div>
+          <div class="form-group" >
+            <div  class="col-sm-1 control-label " style="width:65px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核结论：</div>
+            <div class="col-sm-3">
+              <select  ng-model="activitiescheck.detail.reviewStatus" name="myviews" id="myviews" class="form-control" ng-options="item.viewId as item.viewName for item in activitiescheck.datavies" required ng-disabled="activitiescheck.auditread">
+                <option value="" selected="selected">请选择</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2" >
+              <button ng-if="activitiescheck.ischeck!='1'"  ng-disabled="edit_form.$invalid || activitiescheck.requesting ||activitiescheck.detail.reviewStatus==2 ||activitiescheck.detail.reviewStatus==1"  class="btn btn-primary" style="width: 85px;" type="submit">保存</button>
+              <button ng-if="activitiescheck.ischeck!=1&&activitiescheck.sendType==0&&activitiescheck.offlineType==0" class="btn btn-primary" type="button" style="width: 85px;" ng-click="activitiescheck.auditread=false;activitiescheck.ischeck='2'">编辑</button>
+              <button ng-click="activitiescheck.close()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+     </div>
+  </div>
+</div>

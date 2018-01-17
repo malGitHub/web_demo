@@ -1,0 +1,117 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{vm.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" action="" name="add_form" ng-submit="vm.submit($event, add_form)" novalidate>
+            <div class="form-group">
+                <label for="applyUserPhone" class="col-sm-3 control-label">*角色名称:</label>
+
+                <div class="col-sm-8">
+                    <input ng-model="vm.applyUserPhone" type="text" id="applyUserPhone" class="form-control col-sm-10"
+                           name="applyUserPhone" ng-maxlength="20" required placeholder="限制最多20字">
+
+                    <div wd-messages="applyUserPhone">
+                        <div wd-message="required">角色名称必须填写</div>
+                        <div wd-message="maxlength">限制最多20字</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="backUp" class="col-sm-3 control-label">备注:</label>
+
+                <div class="col-sm-8">
+                    <textarea ng-model="vm.backUp" type="text" id="backUp" class="form-control col-sm-10"
+                              name="backUp" ng-maxlength="50" placeholder="限制最多50字"></textarea>
+
+                    <div wd-messages="backUp">
+                        <div wd-message="maxlength">限制最多50字</div>
+                    </div>
+
+                </div>
+            </div>
+            <h4 class="modal-title">{{vm.function}}</h4>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">业务支撑:</label>
+                <label for="BuessinesAll" class="control-label">全选 </label><input id="BuessinesAll" class="hide" ng-checked="vm.allChoosed" ng-click="vm.chooseBuessinesAll($event)" type="checkbox">
+                <div class="maxw1000 mt10" style="margin-left: 11%">
+                    <span class="wh120 ib mb8" ng-repeat="p in vm.buessinesList">
+                        <input type="checkbox"  ng-click="vm.checkIt(p)" value={{p.id}} id={{p.id}} ng-checked="p.checked">{{p.name}}
+                    </span>
+                </div>
+                <div ng-if="vm.buessinesList.length===0" class="tlc">
+                    无数据
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">系统设置:</label>
+                <label for="SystemAll" class="control-label">全选 </label><input class="hide" id="SystemAll" ng-checked="vm.allChoosed" ng-click="vm.chooseSystemAll($event)" type="checkbox">
+
+                <div class="maxw1000 mt10" style="margin-left: 11%">
+                    <span class="wh120 ib mb8" ng-repeat="s in vm.systemList">
+                        <input type="checkbox" value={{s.id}} ng-click="vm.checkIt(s)" id={{s.id}} ng-checked="s.checked">{{s.name}}
+                    </span>
+                </div>
+                <div ng-if="vm.systemList.length===0" class="tlc">
+                   无数据
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">货源会员认证:</label>
+                <label for="SourceAll" class="control-label">全选</label><input id="SourceAll" class="hide" ng-checked="vm.allChoosed" ng-click="vm.chooseSourceAll($event)" type="checkbox">
+
+                <div class="maxw1000 mt10" style="margin-left: 11%">
+                    <span class="wh120 ib mb8" ng-repeat="sa in vm.sourceAuthList">
+                        <input type="checkbox" value={{sa.id}} ng-checked="sa.checked" id={{sa.id}} ng-click="vm.checkIt(sa)" >{{sa.name}}
+                    </span>
+                </div>
+                <div ng-if="vm.sourceAuthList.length===0" class="tlc">
+                    无数据
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">市场推广:</label>
+                <label for="MarketAll" class="control-label">全选</label><input id="MarketAll" class="hide" ng-checked="vm.allChoosed" ng-click="vm.chooseMarketAll($event)" type="checkbox">
+
+                <div class="maxw1000 mt10" style="margin-left: 11%">
+                    <span class="wh12 ib mb8" ng-repeat="m in vm.marketList">
+                        <input type="checkbox" value={{m.id}} ng-checked="m.checked" id={{m.id}} ng-click="vm.checkIt(m)" >{{m.name}}
+                    </span>
+                </div>
+                <div ng-if="vm.marketList.length===0">
+                    无数据
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">服务预约管理:</label>
+                <label for="SubscribeAll" class="control-label">全选</label><input id="SubscribeAll" class="hide" ng-checked="vm.allChoosed" ng-click="vm.chooseSubscribeAll($event)" type="checkbox">
+
+                <div class="maxw1000 mt10" style="margin-left: 11%">
+                    <span class="wh120 ib mb8" ng-repeat="su in vm.subscribeList">
+                        <input type="checkbox" value={{su.id}} ng-checked="su.checked" id={{su.id}} ng-click="vm.checkIt(su)" >{{su.name}}
+                    </span>
+                </div>
+                <div ng-if="vm.marketList.length===0">
+                    无数据
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4">
+                    <button ng-disabled="add_form.$invalid || vm.requesting || !vm.checkRequest" class="btn btn-primary" type="submit"
+                            style="width: 85px;">提交
+                    </button>
+                    <button ng-click="vm.cancel()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+                </div>
+            </div>
+          <div style="clear: both;"></div>
+        </form>
+    </div>
+</div>
+

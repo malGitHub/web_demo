@@ -1,0 +1,258 @@
+<div>
+<div class="modal-header">
+  <h3 class="modal-title">消息重发</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="messageresend.submit($event, add_form)" novalidate="">
+
+    <div ng-show="messageresend.createInfo">
+      <div class="form-group" style='margin-left:20px'>
+        <label  class="col-sm-1 control-label">创建人</label>
+        <label  class="col-sm-1 control-label">{{messageresend.query.userName}}</label>
+      </div>
+      <div class="form-group" style='margin-left:20px'>
+        <label  class="col-sm-1 control-label">创建时间</label>
+        <label  class="col-sm-1 control-label">{{messageresend.query.createTime}}</label>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>消息描述</label>
+      <div class="col-sm-4" >
+        <input ng-model="messageresend.query.describe" type="text" id="describe" name="describe"  class="form-control" required>
+        <span style="color:red" ng-show="add_form.describe.$dirty && add_form.describe.$invalid">
+          <span ng-show="add_form.describe.$error.required">必填</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>标题</label>
+      <div class="col-sm-4" >
+        <input ng-model="messageresend.query.title" type="text" id="title"  class="form-control" name="title" required>
+        <span style="color:red" ng-show="add_form.title.$dirty && add_form.title.$invalid">
+          <span ng-show="add_form.title.$error.required">必填</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>内容</label>
+      <div class="col-sm-4" >
+        <textarea rows="5" ng-model="messageresend.query.content" maxlength="500" style="width:100%" id="content" name="content" ng-keyup="messageresend.countChar()" required></textarea>
+        <span style="color:red" ng-show="add_form.content.$dirty && add_form.content.$invalid">
+          <span ng-show="add_form.content.$error.required" style="position: absolute;margin-top: 38px;">必填</span>
+        </span>
+        <br>
+        <div style="color:#cccccc;text-align: right;">还可以输入<span id="countSpan">{{messageresend.contentLen}}</span>个字符</div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label">目标用户</label>
+      <label class="radio-inline">
+        <input name="targetUser" type="radio" ng-model="messageresend.query.targetUser" ng-click="messageresend.forAllUserDiv()" value="0" >
+        全部用户
+      </label>
+      <label class="radio-inline">
+        <input name="targetUser" type="radio" ng-model="messageresend.query.targetUser" ng-click="messageresend.forPartUserDiv()" value="1">
+        部分用户
+      </label>
+      <label class="radio-inline">
+        <input name="targetUser" type="radio" ng-model="messageresend.query.targetUser" ng-click="messageresend.forSpecialUserDiv()" value="2">
+        特定用户
+      </label>
+    </div>
+
+    <div ng-show="messageresend.partuserdiv" class="form-group" style='margin-left: 20px;'>
+      <!--<label  class="col-sm-1 control-label"></label>-->
+      <div class="obj col-sm-3" ng-show="false">
+        <div class="col-sm-3 ib Hfilter">品牌:</div>
+        <div class="col-sm-9 ib">
+          <select ng-change="messageresend.changeSelect(messageresend.query.brandId)"  ng-model="messageresend.query.brandId" class="col-sm-8 form-control">
+            <option value="5" >一汽解放</option>
+          </select>
+        </div>
+      </div>
+
+        <div class="col-sm-1 ib Hfilter">系列:</div>
+        <div class="col-sm-2 ib">
+          <select ng-change="messageresend.changeSelectType(messageresend.query.seriseId)" ng-model="messageresend.query.seriseId" name="seriseList" id="seriseList" class="col-sm-8 form-control" ng-options="item.seriseId as item.seriseName for item in messageresend.CAR_SERIES">
+            <option value="" selected="selected">请选择系列</option>
+          </select>
+        </div>
+
+        <div class="col-sm-1 ib Hfilter">车型:</div>
+        <div class="col-sm-2 ib">
+          <select ng-model="messageresend.query.modelId" name="modelNameAdd" id="modelNameAdd" class="form-control"  ng-options="item.modelId as item.modelName for item in messageresend.CAR_Model">
+            <option value="" selected="selected">请选择车型</option>
+          </select>
+        </div>
+
+        <div class="col-sm-1 ib Hfilter">角色:</div>
+        <div class="col-sm-2">
+          <select ng-model="messageresend.query.role" class="col-sm-8 form-control" >
+            <option value="" >请选择角色</option>
+            <option value="0">车主</option>
+            <option value="1">司机</option>
+            <option value="2">管理员</option>
+          </select>
+        </div>
+    </div>
+
+    <div ng-show="messageresend.specialuserdiv" class="form-group" style='margin-left: 20px;'>
+      <label  class="col-sm-1 control-label"></label>
+      <div class="col-sm-2" >
+        <input ng-model="messageresend.keyword" type="text"  class="form-control" placeholder="请输入手机号/VIN码">
+        <input type="button" class="btn button-balanced" ng-click="messageresend.getDeviceInfo()" value="搜索"/>
+        <div class="col-sm-3" >
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">  
+           <tr>
+             <td colspan="4">
+                      <div style="width: 196px;">
+                          <select class="col-sm-3 form-control" size="8" ondblclick="moveOption(document.add_form.list1, document.add_form.list2)" name="list1" ng-options="item.deviceId as item.phone for item in messageresend.RESULT" ng-model="messageresend.list1model">
+                          </select>
+                      </div>
+                  </td>
+                  <td align="center">
+                      <input type="button" value=">>" onclick="moveOption(document.add_form.list1, document.add_form.list2)">
+                      <br>
+                      <input type="button" value="<<" onclick="moveOption(document.add_form.list2, document.add_form.list1)">
+                  </td>
+                  <td colspan="4">
+                      <div style="width: 196px;">
+                          <select class="col-sm-3 form-control" size="8" name="list2" ng-model="messageresend.list2model">
+                          </select>
+                      </div>
+                  </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label">通知方式</label>
+      <label class="radio-inline">
+        <input name="sendType" type="radio" value="0" ng-model="messageresend.query.sendType">
+        APP消息
+      </label>
+      <!--
+      <label class="radio-inline">
+        <input name="sendType" type="radio" value="1" ng-model="messageresend.query.sendType">
+        手机短信
+      </label>
+      -->
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label">推送时间</label>
+      <label class="radio-inline">
+        <input name="sendTime" type="radio" value="0" ng-click="messageresend.forLjSend()" ng-model="messageresend.query.sendType">
+        立即推送
+      </label>
+      <label class="radio-inline">
+        <input name="sendTime" type="radio" value="1" ng-click="messageresend.forDsSend()" ng-model="messageresend.query.sendType">
+        定时推送
+      </label>
+    </div>
+
+    <div class="form-group" ng-show="messageresend.sendtimediv" style='margin-left:20px'>
+      <label class="col-sm-1 control-label"></label>
+      <div class="col-sm-4">
+        <div class="mp-date-time-pick" >
+          <wd-date-picker class="ib" start-date="messageresend.start_time"
+                          format="yyyy-mm-dd hh:ii:ss" view="6" is-empty-show="true"
+                          ng-model="messageresend.query.sendTime">
+          </wd-date-picker>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label class="col-sm-1 control-label">有效期</label>
+      <label class="radio-inline">
+        <input name="validity" type="radio" ng-model="messageresend.query.validity" value="0" >
+        不保存，终端离线时消息被忽略
+      </label>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label class="col-sm-1 control-label"></label>
+      <label class="radio-inline">
+        <input name="validity" type="radio" ng-model="messageresend.query.validity" value="1" >
+        保存
+      </label>
+
+      <div class="radio-inline" >
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="messageresend.query.saveDays">
+            <option value="6">6天</option>
+            <option value="5">5天</option>
+            <option value="4">4天</option>
+            <option value="3">3天</option>
+            <option value="2">2天</option>
+            <option value="1">1天</option>
+            <option value="0">0天</option>
+          </select>
+        </div>
+      <div class="col-sm-3">
+        <select class="form-control" ng-model="messageresend.query.saveHours">
+          <option value="24">24h</option>
+          <option value="23">23h</option>
+          <option value="22">22h</option>
+          <option value="21">21h</option>
+          <option value="20">20h</option>
+          <option value="19">19h</option>
+          <option value="18">18h</option>
+          <option value="17">17h</option>
+          <option value="16">16h</option>
+          <option value="15">15h</option>
+          <option value="14">14h</option>
+          <option value="13">13h</option>
+          <option value="12">12h</option>
+          <option value="11">11h</option>
+          <option value="10">10h</option>
+          <option value="9">9h</option>
+          <option value="8">8h</option>
+          <option value="7">7h</option>
+          <option value="6">6h</option>
+          <option value="5">5h</option>
+          <option value="4">4h</option>
+          <option value="3">3h</option>
+          <option value="2">2h</option>
+          <option value="1">1h</option>
+          <option value="0">0h</option>
+        </select>
+      </div>
+        <span class="Hfilter">终端上线后可收到消息</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2" >
+        <button ng-disabled="add_form.$invalid" class="btn btn-primary" type="submit" style="width: 85px;">发送</button>
+        <button ng-click="messageresend.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+</div>
+
+<script language="JavaScript">
+  function moveOption(e1, e2){
+    try{
+      for(var i=0;i<e1.options.length;i++){
+        if(e1.options[i].selected){
+          var e = e1.options[i];
+          e2.options.add(new Option(e.text, e.value));
+          e1.remove(i);
+         // i=i-1
+        }
+      }
+    }
+    catch(e){}
+  }
+
+
+</script>

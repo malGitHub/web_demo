@@ -1,0 +1,603 @@
+<div class="content-padding statistics">
+  <ul class="nav nav-tabs">
+    <li class="uib-tab fixed" ng-class="{active: statistics.test==1}" ng-click="statistics.toggle(1);statistics.clickTab1()">
+      <a class="ng-binding">工单阶段统计</a>
+    </li>
+    <li class="uib-tab fixed"  ng-class="{active: statistics.test==2}"  ng-click="statistics.toggle(2);statistics.clickTab2()">
+      <a class="ng-binding">服务时效统计</a>
+    </li>
+    <li class="uib-tab ng-isolate-scope fixed"  ng-class="{active: statistics.test==5}"  ng-click="statistics.toggle(5);statistics.clickTab5()">
+      <a class="ng-binding">异常工单统计</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane ng-scope" ng-class="{active: statistics.test==1}">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="13">
+              <div class="col-sm-12 mb30">
+                <div class="all">
+                  {{statistics.provinceName1}}
+                </div>
+                <ul class="col-sm-10 circle">
+                  <li><div>{{statistics.mydata1Total.individualNum}}</div><p>待分派</p></li>
+                  <li><div>{{statistics.mydata1Total.waitingCarNum}}</div><p>待接车</p></li>
+                  <li><div>{{statistics.mydata1Total.checkInNum}}</div><p>检查中</p></li>
+                  <li><div>{{statistics.mydata1Total.repairNum}}</div><p>维修中</p></li>
+                  <li><div>{{statistics.mydata1Total.unConfirmedNum}}</div><p>待确认</p></li>
+                  <li><div>{{statistics.mydata1Total.waitingStationNum}}</div><p>待出站</p></li>
+                  <li><div>{{statistics.mydata1Total.exitStationNum}}</div><p>已出站</p></li>
+                  <li><div>{{statistics.mydata1Total.systemClose}}</div><p>系统关闭</p></li>
+                  <li><div class="red">{{statistics.mydata1Total.num}}</div><p class="fontRed">全部工单</p></li>
+                </ul>
+              </div>
+              <div class="col-sm-12">
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">区域：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.forlist1();statistics.changeProvince1()" ng-model="statistics.province1" class="col-sm-8 form-control" ng-options="item.name for item in statistics.AreaListOne"  style="max-width:263px;"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">系列：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.forlist1()" ng-model="statistics.carSeriseName" name="carSerise" id="carSerise" class="col-sm-8 form-control" ng-options="item.seriseName for item in statistics.CAR_SERIES">
+                      <option value="" selected="selected">全部</option></select>
+                    </select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">工单类型：</div>
+                  <div class="col-sm-7">
+                    <select ng-change="statistics.forlist1()"  ng-model="statistics.query.woType" class="col-sm-8 form-control" ng-options="item.val as item.name for item in statistics.ORDER_TYPE"  style="max-width:263px;"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-4">
+                  <div class="wd-date ib">
+                    <div class="ib Hfilter col-sm-2">建单时间：</div>
+                    <div class="mp-date-time-pick col-sm-10 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query.createTimeStart"
+                                       ng-model="statistics.query.createTimeStart"
+                                      ng-change="statistics.forlist1();" format="yyyy-mm-dd">
+                      </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query.createTimeEnd"
+                                       ng-model="statistics.query.createTimeEnd"
+                                      ng-change="statistics.forlist1();"  format="yyyy-mm-dd" >
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                </div>
+                <div class="obj col-sm-2 tlr mt5">
+                  <button class="btn btn-default btn-small" ng-click="statistics.clear1()">重置</button>
+                  <button class="btn btn-default btn-small" ng-click="statistics.getExecl1()">导出当前</button>
+                </div>
+              </div>
+            </th>
+          </tr>
+
+          <tr>
+            <th>序号</th>
+            <th>工单类型</th>
+            <th >系列</th>
+            <th>省份</th>
+            <th >待分派</th>
+            <th>待接车</th>
+            <th >检查中</th>
+            <th>维修中</th>
+            <th >完成待确认</th>
+            <th>待出站</th>
+            <th>已出站</th>
+            <th>系统关闭</th>
+            <th>全部工单</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in statistics.mydata1">
+            <td>{{$index+1}}</td>
+            <td>{{obj.woType}}</td>
+            <td>{{obj.carSerise}}</td>
+            <td><a ng-click="statistics.add1(obj.provinceName,obj.province)">{{obj.provinceName}}</a></td>
+            <td>{{obj.individualNum}}</td>
+            <td>{{obj.waitingCarNum}}</td>
+            <td>{{obj.checkInNum}}</td>
+            <td>{{obj.repairNum}}</td>
+            <td>{{obj.unConfirmedNum}}</td>
+            <td>{{obj.waitingStationNum}}</td>
+            <td>{{obj.exitStationNum}}</td>
+            <td>{{obj.systemClose}}</td>
+            <td>{{obj.num}}</td>
+          </tr>
+          <tr ng-if="statistics.mydata1.length === 0">
+            <td colspan="13" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="statistics.total" page-size="statistics.pageSize"  page-index="statistics.pageIndex" query="statistics.flip"></wd-page-number>
+    </div>
+    <div class="tab-pane ng-scope" ng-class="{active: statistics.test==2}">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="12">
+              <div class="col-sm-12 mb30">
+                <div class="all">
+                  {{statistics.provinceName2}}
+                </div>
+                <ul class="col-sm-10 circle">
+                  <li class="totalHour"><div class="">{{statistics.mydata2Total}}</div>
+                    <p>{{statistics.seriveName}}{{statistics.timelong}}</p></li>
+                </ul>
+              </div>
+              <div class="col-sm-12">
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">工单类型：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.forlist2()" ng-model="statistics.query2.woType" class="col-sm-8 form-control" ng-options="item.val as item.name for item in statistics.ORDER_TYPE"  style="max-width:263px;"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">系列：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.forlist2()" ng-model="statistics.carSeriseName2" name="seriseList" id="seriseList" class="col-sm-8 form-control" ng-options="item.seriseName for item in statistics.CAR_SERIES">
+                      <option value="" selected="selected">全部</option></select>
+                    </select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">区域：</div>
+                  <div class="col-sm-7">
+                    <select  ng-change="statistics.forlist2();statistics.changeProvince2()" ng-model="statistics.province2" class="col-sm-8 form-control" ng-options="item.name for item in statistics.AreaListOne"  style="max-width:263px;"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-4">
+                  <div class="col-sm-3 ib Hfilter">服务时长：</div>
+                  <div class="col-sm-4">
+                    <select ng-change="statistics.servicetimeChange(statistics.query2.costTimeType);statistics.forlist2();" ng-model="statistics.query2.costTimeType" name="servicetime" id="servicetime" class="col-sm-8 form-control" ng-options="item.id as item.name for item in statistics.servicetimeList"  style="max-width:263px;"></select>
+                  </div>
+                  <span class="ib Hfilter wh30 fl" style="text-align: center;">时长:</span>
+                  <div class="col-sm-3">
+                    <select   ng-change="statistics.timelongChange();statistics.forlist2();"  ng-model="statistics.query2.costTime" name="timelong" id="timelong" class="col-sm-8 form-control" ng-options="item.id as item.name for item in statistics.timelongList"  style="max-width:263px;"></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2 tlr mt5">
+                  <button class="btn btn-default btn-small" ng-click="statistics.clear2()">重置</button>
+                  <button class="btn btn-default btn-small" ng-click="statistics.getExecl2()">导出当前</button>
+                </div>
+               </div>
+              <div  class="col-sm-12" style="margin: 10px 0;">
+                <div class="obj col-sm-4 wd-date" style="margin-left: -25px;">
+                     <div class="ib Hfilter col-sm-3 tlr ">建单时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query2.createTimeStart"
+                                       ng-model="statistics.query2.createTimeStart"
+                                      ng-change="statistics.forlist2();" format="yyyy-mm-dd">
+                      </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query2.createTimeEnd"
+                                       ng-model="statistics.query2.createTimeEnd"
+                                      ng-change="statistics.forlist2();"  format="yyyy-mm-dd" >
+                      </wd-date-picker>
+                    </div>
+                 </div>
+              </div>
+             </th>
+          </tr>
+
+          <tr>
+            <th>序号</th>
+            <th>工单类型</th>
+            <th >系列</th>
+            <th>省份</th>
+            <th >接车时长{{statistics.timelong}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in statistics.mydata2">
+            <td>{{$index+1}}</td>
+            <td>{{obj.woType}}</td>
+            <td>{{obj.carSerise}}</td>
+            <td><a ng-click="statistics.add2(obj.provinceName,obj.province)">{{obj.provinceName}}</a></td>
+            <td>{{obj.count}}</td>
+          </tr>
+          <tr ng-if="statistics.mydata2.length === 0">
+            <td colspan="12" class="tlc">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="statistics.totalTwo" page-size="statistics.pageSizeTwo"  page-index="statistics.pageIndexTwo" query="statistics.flipTwo"></wd-page-number>
+    </div>
+    <div class="tab-pane ng-scope" ng-class="{active: statistics.test==5}">
+      <div class="content-body dealorder">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="15" class="tlr">
+              <div class="obj col-sm-2">
+                <div class="col-sm-5 ib Hfilter">工单类型：</div>
+                <div class="col-sm-7 ib">
+                  <select ng-change="statistics.pageIndex5='1';statistics.advSearch()"
+                          ng-model="statistics.query5.orderType"
+                          class="col-sm-8 form-control"
+                          ng-options="item.val as item.name for item in statistics.ORDER_TYPE">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj col-sm-2">
+                <div class="col-sm-5 ib Hfilter">当前状态：</div>
+                <div class="col-sm-7 ib">
+                  <select ng-change="statistics.pageIndex5='1';statistics.advSearch()"
+                          ng-model="statistics.query5.orderStatus"
+                          class="col-sm-8 form-control"
+                          ng-options="item.val as item.name for item in statistics.ORDER_STATE">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj col-sm-2">
+                <div class="col-sm-5 ib Hfilter">预约方式：</div>
+                <div class="col-sm-7 ib">
+                  <select ng-change="statistics.pageIndex5='1';statistics.advSearch()"
+                          ng-model="statistics.query5.dateType"
+                          class="col-sm-8 form-control"
+                          ng-options="item.val as item.name for item in statistics.SUBSCRIBE_TYPE">
+                    <option value="">全部</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="ib Searchfor">
+                <input type="text" class="ib form-control wh260"
+                       ng-model="statistics.query5.keyword"
+                       placeholder="请输入工单号/400工单号/底盘号"/>
+                <span class="glyphicon glyphicon-search" ng-click="statistics.pageIndex5='1';statistics.advSearch()"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="statistics.clear5();">重置</button>
+              <button class="btn btn-default btn-small" ng-click="statistics.getExecl5()">导出</button>
+              <button class="btn btn-default btn-small" ng-click="statistics.formoreobj()">高级筛选</button>
+
+            </th>
+          </tr>
+          <tr ng-show="statistics.moreobject">
+            <th colspan="20" style="text-align: left;">
+              <div class="col-sm-12">
+                <div class="obj col-sm-4">
+                  <div class="wd-date ib">
+                    <div class="ib Hfilter col-sm-3">建单时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query5.createTimeStart"
+                                      ng-model="statistics.query5.createTimeStart"
+                                      ng-change="statistics.pageIndex5='1';statistics.advSearch();" format="yyyy-mm-dd">
+                      </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="statistics.query5.createTimeEnd"
+                                      ng-model="statistics.query5.createTimeEnd"
+                                      ng-change="statistics.pageIndex5='1';statistics.advSearch();"  format="yyyy-mm-dd" >
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                </div>
+                <div class="obj col-sm-5">
+                  <div class="col-sm-2 ib Hfilter">服务站：</div>
+                  <div class="col-sm-2 ib"  >
+                    <select ng-change="statistics.changeProvince()" ng-model="statistics.provinceId" class="form-control" id="pName"
+                            ng-options="item.id as item.name for item in statistics.AreaList" >
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+
+                  <span class="ib Hfilter fl wh30" style="text-align: center;">省</span>
+                  <div class="col-sm-2 ib" >
+                    <select ng-change="statistics.changeCity()" ng-model="statistics.cityId" class="form-control" id="cName"
+                            ng-options="item.id as item.name for item in statistics.CityList">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+
+                  <span class="ib Hfilter fl wh30" style="text-align: center;">市</span>
+                  <div class="col-sm-3 ib" >
+                    <select ng-change="statistics.changeStore()" ng-model="statistics.storeId" class="form-control" id="sName"
+                            ng-options="item.stationId as item.stationName for item in statistics.StoreList">
+                      <option value="" selected="selected">请选择服务站</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div class="obj col-sm-2" >
+                  <div class="col-sm-5 ib Hfilter">服务用时：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.servicesTime()"
+                            ng-model="statistics.serviceTime"
+                            class="col-sm-8 form-control"
+                            ng-options="item.value as item.name for item in statistics.FUWU_TIME">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-sm-12 mt5">
+                <!--<div class="obj col-sm-4">
+                  <div class="col-sm-2 ib twoline">服务类型：<br>（服务站）</div>
+                  <div class="col-sm-3 ib mr5">
+                    <select ng-change="statistics.changeFirstServices()"
+                            ng-model="statistics.firstServiceType"
+                            class="form-control"
+                            ng-options="item.val as item.name for item in statistics.SERVICE_TYPE">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3 ib">
+                    <select ng-change="statistics.changeServices()"
+                            ng-model="statistics.serviceType"
+                            class="form-control"
+                            ng-options="item.value as item.name for item in statistics.ServicesList">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>-->
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">满意度：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.pageIndex5='1';statistics.advSearch()"
+                            ng-model="statistics.query5.satisfaction"
+                            class="col-sm-8 form-control"
+                            ng-options="item.val as item.name for item in statistics.STAR_LEVEL">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">处理人：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.pageIndex5='1';statistics.advSearch()"
+                            ng-model="statistics.query5.operatorId"
+                            class="col-sm-8 form-control"
+                            ng-options="item.operaterCode as item.operaterName for item in statistics.HANDLE_PERSON">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </th>
+
+
+          </tr>
+
+          <tr>
+            <th>操作</th>
+            <th>工单号</th>
+            <th>400工单号</th>
+            <th>当前状态</th>
+            <th>底盘号</th>
+            <th>驾驶室类型</th>
+            <th>预约服务站</th>
+            <th>工单类型</th>
+            <th>预约方式</th>
+            <th>服务用时</th>
+            <th>当前业务员</th>
+            <th>满意度</th>
+          </tr>
+
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in statistics.sendMsgData">
+            <td class="nowrapwork">
+              <a ui-sref="tservice.dealorderview({id:obj.woCode,phone:obj.phone})">查看</a>
+            </td>
+            <td>{{obj.woCode}}</td>
+            <td>{{obj.csWoCode}}</td>
+            <td>{{obj.woStatusStr}}</td>
+            <td>{{obj.carVin}}</td>
+            <td>{{obj.carType}}</td>
+            <td><p class="mb0" title="{{obj.serviceStationName}}">{{obj.serviceStationName | cut:true:10:' ...'}}</p></td>
+            <td>{{obj.woTypeStr}}</td>
+            <td>{{obj.modeCodeStr}}</td>
+            <!--<td>{{obj.serviceType}}</td>-->
+            <td>{{obj.serviceTime}}</td>
+            <td>{{obj.stationUserName}}</td>
+            <td>{{obj.userRateStr}}</td>
+          </tr>
+          <tr ng-if="statistics.total5 === 0">
+            <td colspan="20" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="statistics.total5" page-size="statistics.pageSize5" page-index="statistics.pageIndex5" query="statistics.flip5"></wd-page-number>
+      <p class="fred">提示：异常工单为系统识别车辆在服务过程轨迹可疑的工单，请结合寰游平台车辆回访轨迹确认核实。</p>
+    </div>
+    <div class="tab-pane ng-scope" ng-class="{active: statistics.test==3}">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="13">
+              <div class="col-sm-12 mb30">
+                <div class="all">
+                  {{statistics.city1}}
+                </div>
+                <ul class="col-sm-10 circle">
+                  <li><div>{{statistics.mydata1Total3.individualNum}}</div><p>待分派</p></li>
+                  <li><div>{{statistics.mydata1Total3.waitingCarNum}}</div><p>待接车</p></li>
+                  <li><div>{{statistics.mydata1Total3.checkInNum}}</div><p>检查中</p></li>
+                  <li><div>{{statistics.mydata1Total3.repairNum}}</div><p>维修中</p></li>
+                  <li><div>{{statistics.mydata1Total3.unConfirmedNum}}</div><p>待确认</p></li>
+                  <li><div>{{statistics.mydata1Total3.waitingStationNum}}</div><p>待出站</p></li>
+                  <li><div>{{statistics.mydata1Total3.exitStationNum}}</div><p>已出站</p></li>
+                  <li><div>{{statistics.mydata1Total3.systemClose}}</div><p>系统关闭</p></li>
+                  <li><div class="red">{{statistics.mydata1Total3.num}}</div><p class="fontRed">全部工单</p></li>
+                </ul>
+              </div>
+              <div class="col-sm-12">
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">系列：</div>
+                  <div class="col-sm-7">
+                    <select   ng-change="statistics.forlist3()" ng-model="statistics.carSeriseName3" name="carSerise2" id="carSerise2" class="col-sm-8 form-control" ng-options="item.seriseName for item in statistics.CAR_SERIES"  style="max-width:263px;"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">工单类型：</div>
+                  <div class="col-sm-7 ib">
+                    <select  ng-change="statistics.forlist3()"  ng-model="statistics.query3.woType" class="col-sm-8 form-control maxw263" ng-options="item.val as item.name for item in statistics.ORDER_TYPE"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-4 wd-date">
+                  <div class="ib Hfilter col-sm-3 tlr ">建单时间：</div>
+                  <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"  date="statistics.query3.createTimeStart"
+                                    ng-model="statistics.query3.createTimeStart"
+                                    ng-change="statistics.forlist3();" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"  date="statistics.query3.createTimeEnd"
+                                    ng-model="statistics.query3.createTimeEnd"
+                                    ng-change="statistics.forlist3();"  format="yyyy-mm-dd" >
+                    </wd-date-picker>
+                  </div>
+                </div>
+                <div class="obj col-sm-4 tlr mt5">
+                  <button class="btn btn-default btn-small" ng-click="statistics.clear3()">重置</button>
+                  <button class="btn btn-default btn-small" ng-click="statistics.getExecl3()">导出当前</button>
+                </div>
+
+
+              </div>
+            </th>
+          </tr>
+
+          <tr>
+            <th>序号</th>
+            <th>工单类型</th>
+            <th >系列</th>
+            <th>服务站</th>
+            <th >待分派</th>
+            <th>待接车</th>
+            <th >检查中</th>
+            <th>维修中</th>
+            <th >完成待确认</th>
+            <th>待出站</th>
+            <th >已出站</th>
+            <th >系统关闭</th>
+            <th>全部工单</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in statistics.mydata3">
+            <td>{{$index+1}}</td>
+            <td>{{obj.woType}}</td>
+            <td>{{obj.carSerise}}</td>
+            <td>{{obj.stationName}}</td>
+            <td>{{obj.individualNum}}</td>
+            <td>{{obj.waitingCarNum}}</td>
+            <td>{{obj.checkInNum}}</td>
+            <td>{{obj.repairNum}}</td>
+            <td>{{obj.unConfirmedNum}}</td>
+            <td>{{obj.waitingStationNum}}</td>
+            <td>{{obj.exitStationNum}}</td>
+            <td>{{obj.systemClose}}</td>
+            <td>{{obj.num}}</td>
+          </tr>
+          <tr ng-if="statistics.mydata3.length === 0">
+            <td colspan="13" class="tlc">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="statistics.totalThr" page-size="statistics.pageSizeThr"  page-index="statistics.pageIndexThr" query="statistics.flipThr"></wd-page-number>
+    </div>
+    <div class="tab-pane ng-scope" ng-class="{active: statistics.test==4}">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="12">
+              <div class="col-sm-12 mb30">
+                <div class="all">
+                  {{statistics.city2}}
+                </div>
+                <ul class="col-sm-10 circle">
+                  <li class="totalHour"><div class="">{{statistics.mydata4Total}}</div><p>
+                    {{statistics.seriveName4}}{{statistics.timelong2}}
+                  </p></li>
+                </ul>
+              </div>
+              <div class="col-sm-12">
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">工单类型：</div>
+                  <div class="col-sm-7 ib">
+                    <select ng-change="statistics.forlist4()"  ng-model="statistics.query4.woType" class="col-sm-8 form-control maxw263" ng-options="item.val as item.name for item in statistics.ORDER_TYPE"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-2">
+                  <div class="col-sm-5 ib Hfilter">系列：</div>
+                  <div class="col-sm-7">
+                    <select  ng-change="statistics.forlist4()"  ng-model="statistics.carSeriseName4" name="modelName" id="modelName" class="col-sm-8 form-control maxw263" ng-options="item.seriseName for item in statistics.CAR_SERIES"><option value="" selected="selected">全部</option></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-3">
+                  <div class="col-sm-3 ib Hfilter">服务时长：</div>
+                  <div class="col-sm-4">
+                    <select  ng-change="statistics.servicetimeChange2(statistics.query4.costTimeType);statistics.forlist4();"  ng-model="statistics.query4.costTimeType" name="servicetime2" id="servicetime2" class="col-sm-8 form-control maxw263" ng-options="item.id as item.name for item in statistics.servicetimeList"></select>
+                  </div>
+                  <span class="ib Hfilter fl wh30" style="text-align: center;">时长:</span>
+                  <div class="col-sm-3">
+                    <select  ng-change="statistics.timelongChange2();statistics.forlist4();"  ng-model="statistics.query4.costTime" name="timelong2" id="timelong2" class="col-sm-8 form-control" ng-options="item.id as item.name for item in statistics.timelongList2"  style="max-width:263px;"></select>
+                  </div>
+                </div>
+                <div class="obj col-sm-3 wd-date">
+                  <div class="ib Hfilter col-sm-3 tlr ">建单时间：</div>
+                  <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"  date="statistics.query4.createTimeStart"
+                                    ng-model="statistics.query4.createTimeStart"
+                                    ng-change="statistics.forlist4();" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"  date="statistics.query4.createTimeEnd"
+                                     ng-model="statistics.query4.createTimeEnd"
+                                    ng-change="statistics.forlist4();"  format="yyyy-mm-dd" >
+                    </wd-date-picker>
+                  </div>
+                </div>
+                <div class="obj col-sm-2 tlr mt5">
+                  <button class="btn btn-default btn-small" ng-click="statistics.clear4()">重置</button>
+                  <button class="btn btn-default btn-small" ng-click="statistics.getExecl4()">导出当前</button>
+                </div>
+
+              </div>
+            </th>
+          </tr>
+
+          <tr>
+            <th>序号</th>
+            <th>工单类型</th>
+            <th>系列</th>
+            <th>服务站名称</th>
+            <th >接车时长{{statistics.timelong2}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in statistics.mydata4">
+            <td>{{$index+1}}</td>
+            <td>{{obj.woType}}</td>
+            <td>{{obj.carSerise}}</td>
+            <td>{{obj.stationName}}</td>
+            <td>{{obj.count}}</td>
+          </tr>
+          <tr ng-if="statistics.mydata4.length === 0">
+            <td colspan="12" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="statistics.totalFour" page-size="statistics.pageSizeFour"  page-index="statistics.pageIndexFour" query="statistics.flipFour"></wd-page-number>
+    </div>
+</div>
+</div>

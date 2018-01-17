@@ -1,0 +1,86 @@
+<div class="content-padding">
+  <div class="content-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th colspan="10" style="text-align: right;">
+          <div class="rule-div">
+            <span class="rule-title">车辆信息查询</span>
+          </div>
+          <div class="ib Searchfor">
+            <input ng-model="vehicles.query.keyWord" type="text" class="ml15 ib form-control width-100" style="width: 220px;" placeholder="请输入发票号/VIN码/证件号码"/>
+            <span ng-click="vehicles.page_number=1;vehicles.carInfoList()" class="glyphicon glyphicon-search"></span>
+          </div>
+          <button class="btn btn-default btn-small" ng-click="vehicles.choosemore()">高级筛选</button>
+        </th>   <!--第一行th用于新建等按钮-->
+      </tr>
+
+     <tr ng-show="vehicles.highcontrol" >
+           <th colspan="10" >
+              <div class="obj col-sm-5 wd-date" style="margin-left: -50px;">
+                     <div class="col-sm-3 ib Hfilter">同步时间：</div>
+                        <div class="mp-date-time-pick ib col-sm-9">
+                            <wd-date-picker class="ib col-sm-5" date="vehicles.query.syStartDate"
+                                       end-date="vehicles.nowDate"
+                                       ng-model="vehicles.query.syStartDate"
+                                       ng-change="vehicles.page_number=1;vehicles.carInfoList();" format="yyyy-mm-dd">
+                            </wd-date-picker>
+                            <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                             <wd-date-picker class="ib col-sm-5"  date="vehicles.query.syEndDate"
+                                         end-date="vehicles.nowDate"
+                                         ng-model="vehicles.query.syEndDate"
+                                         ng-change="vehicles.page_number=1;vehicles.carInfoList();"  format="yyyy-mm-dd">
+                             </wd-date-picker>
+                        </div>
+                     </div>
+               <div class="ib col-sm-3" style="min-width: 300px;">
+                    <span class="ib col-sm-3 Hfilter">系列：</span>
+                    <div class="ib col-sm-8">
+               <select style="min-width: 210px;"  ng-change="vehicles.page_number=1;vehicles.changeSeries()" ng-model="vehicles.query.series" id="series" class="form-control"
+                     ng-options="item.seriseId as item.seriseName for item in vehicles.CAR_SERIES">
+                   <option value="" selected="selected">请选择系列</option>
+              </select>
+            </div>
+       </div>
+        <div class="ib col-sm-3">
+          <div class="ib col-sm-3 Hfilter">车型：</div>
+              <div class="ib col-sm-8">
+            <select style="min-width: 210px;" ng-change="vehicles.page_number=1;vehicles.changeModel()" ng-model="vehicles.query.model" id="model" class="form-control"
+                   ng-options="item.modelId as item.modelName for item in vehicles.CAR_Model">
+             <option value="" selected="selected">请选择车型</option>
+           </select>
+        </div>
+      </div>
+ </th>
+</tr>
+
+      <tr>
+        <th>VIN</th>
+        <th>车系</th>
+        <th>车型</th>
+        <th>证件号</th>
+        <th>发票号</th>
+        <th>车辆下线日期<span style="margin-left: 2px;" ng-if="!vehicles.controlSort" class="glyphicon glyphicon-circle-arrow-up" ng-click="vehicles.orderCheck()"></span><span style="margin-left: 2px;" ng-if="vehicles.controlSort" class="glyphicon glyphicon-circle-arrow-down" ng-click="vehicles.orderCheck()"></span></th>
+        <th>车辆销售日期</th>
+        <th>同步日期</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="info in vehicles.vehicleList">
+        <td>{{info.carNo}}</td><!--<a ui-sref="tservice.vehiclesview({id:info.carNo})"></a>-->
+        <td>{{info.seriesName}}</td>
+        <td>{{info.modelName}}</td>
+        <td>{{info.identityCard}}</td>
+        <td>{{info.invoiceNo}}</td>
+        <td>{{info.carOfflineTime}}</td>
+        <td>{{info.salesDate}}</td>
+        <td>{{info.carSyncTime}}</td>
+      </tr>
+      <tr ng-if="vehicles.vehicleList.length === 0">
+        <td colspan="10" class="tlc">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <wd-page-number  total="vehicles.total" page-size="vehicles.page_size"  page-index="vehicles.page_number" query="vehicles.flip"></wd-page-number>
+</div>

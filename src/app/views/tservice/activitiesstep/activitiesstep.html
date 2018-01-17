@@ -1,0 +1,384 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建活动</h3>
+</div>
+<div class="modal-body activitiesnew">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form"
+        ng-submit="activitiesstep.submit($event, add_form)" novalidate="">
+     <!--------------------------------------发放网点start-------------------------------------------->
+    <h5 class="h5title">发放设置</h5>
+     <div class="col-sm-1" style="line-height: 40px;text-indent:10px;font-size:14px;">发放网点</div>
+    <div class="content-padding col-sm-8">
+       <uib-tabset>
+        <uib-tab heading="全部网点">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesstep.changeProvinceOne()" ng-model="activitiesstep.query1.provinceId" class="form-control" id="pNameAll"
+                              ng-options="item.id as item.name for item in activitiesstep.AreaList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesstep.changeCityOne()" ng-model="activitiesstep.query1.cityId" class="form-control" id="cNameAll"
+                              ng-options="item.id as item.name for item in activitiesstep.CityList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesstep.changeStoreTypeOne()" ng-model="activitiesstep.query1.stationType" id="storeTypeAll" class="form-control">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesstep.changeStoreOne()" ng-model="activitiesstep.query1.stationId" class="form-control" id="sNameAll"
+                              ng-options="item.stationId as item.stationName for item in activitiesstep.StoreList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesstep.query1.flag='';activitiesstep.query1.page_number=1;activitiesstep.getAllList()" class="form-control wh100">查询</button>
+                    <div style="clear:both"></div>
+
+                       <!--带搜索框的页面布局<div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesstep.query1.keyWord" type="text" class="form-control col-sm-2 wh182" placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesstep.query1.page_number=1;activitiesstep.query1.flag=1;activitiesstep.getAllList();activitiesstep.addBtn=false;" class="glyphicon glyphicon-search"></span>
+                      </div>
+                       <div class="col-sm-5">
+                        <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                        <div class="col-sm-3">
+                          <select class="form-control" ng-model="activitiesstep.limitif"
+                                  ng-change="activitiesstep.changeLimit()">
+                            <option value="false" selected="selected">不限</option>
+                            <option value="true">自定义</option>
+                          </select>
+                        </div>
+                           <input class="form-control" style="width:150px;" type="number" min="1" ng-if="activitiesstep.limitif=='true'"
+                                 ng-model="activitiesstep.limit"
+                                 placeholder="请填写数量" required>
+                        </div>-->
+                      <div class="Hfilter" style="float: left;" >设置发放限额：</div>
+                      <select class="form-control" ng-model="activitiesstep.limitif"
+                              ng-change="activitiesstep.changeLimit()" style="float: left;width:95px;">
+                        <option value="false" selected="selected">不限</option>
+                        <option value="true">自定义</option>
+                      </select>
+                      <div class="Hfilter" style="float:left;margin: 0 12px;"></div>
+                      <input class="form-control" style="float: left;width:150px;" type="number" min="1" ng-if="activitiesstep.limitif=='true'"
+                             ng-model="activitiesstep.limit"
+                             placeholder="请填写数量" required>
+                     <button type="button" style="float: right;"  ng-click="activitiesstep.addshop();" class="form-control wh100" ng-disabled="activitiesstep.addBtn||activitiesstep.requesting">添加至活动</button>
+                   </div>
+                </th>
+               </tr>
+               </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesstep.allStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+               </tr>
+              <tr ng-if="activitiesstep.allStationList === 0 || activitiesstep.noData==true;">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  ng-if="!activitiesstep.noData" total="activitiesstep.total1" page-size="activitiesstep.query1.page_size"  page-index="activitiesstep.query1.page_number" query="activitiesstep.flip1"></wd-page-number>
+         </uib-tab>
+        <uib-tab heading="已添加网点" select="activitiesstep.clearTab2();activitiesstep.getAddedList()">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <select ng-change="activitiesstep.changeProvince()" ng-model="activitiesstep.query2.provinceId" class="form-control" id="pNameAdded"
+                            ng-options="item.id as item.name for item in activitiesstep.AreaList">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                  <div class="col-sm-2">
+                    <select ng-change="activitiesstep.changeCity()" ng-model="activitiesstep.query2.cityId" class="form-control" id="cNameAdded"
+                            ng-options="item.id as item.name for item in activitiesstep.CityList">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                  <div class="col-sm-2">
+                    <select ng-change="activitiesstep.changeStoreType()" ng-model="activitiesstep.query2.stationType" id="storeTypeAdded" class="form-control">
+                      <option value="" selected="selected">全部</option>
+                      <option value="1">经销商</option>
+                      <option value="2">服务站</option>
+                    </select>
+                  </div>
+                  <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                  <div class="col-sm-2">
+                    <select ng-change="activitiesstep.changeStore()" ng-model="activitiesstep.query2.stationId" class="form-control" id="sNameAdded"
+                            ng-options="item.stationId as item.stationName for item in activitiesstep.StoreList">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+
+                  <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                  <button type="button" style="float: right;" ng-click="activitiesstep.query2.flag='';activitiesstep.query2.page_number=1;activitiesstep.getAddedList()" class="form-control wh100" >查询</button>
+                  <div style="clear:both"></div>
+
+                  <div style="margin-top: 5px;">
+                    <div class="ib Searchfor" style="float: left; margin: 0;">
+                      <input ng-model="activitiesstep.query2.keyWord" type="text" class="form-control col-sm-2 wh178" placeholder="请输入网点全称"/>
+                      <span ng-click="activitiesstep.query2.flag=1;activitiesstep.query2.page_number=1;activitiesstep.getAddedList()" class="glyphicon glyphicon-search"></span>
+                    </div>
+                     <div class="Hfilter" style="float:left;margin:0 12px;"></div>
+                  </div>
+                  <button type="button" style="float: right;" ng-click="activitiesstep.clearStation()" class="form-control wh100" >清除网点</button>
+                </div>
+                </th>
+              </tr>
+                </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesstep.addedStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+                 <td class="col-sm-1">
+                  <span class="glyphicon glyphicon-remove" ng-click="activitiesstep.storeDelete($index)"></span>
+                </td>
+              </tr>
+              <tr ng-if="activitiesstep.addedStationList.length ===0 ">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  total="activitiesstep.total2" page-size="activitiesstep.query2.page_size"  page-index="activitiesstep.query2.page_number" query="activitiesstep.flip2"></wd-page-number>
+         </uib-tab>
+      </uib-tabset>
+    </div>
+    <div style="clear: both;"></div>
+     <!--------------------------------------发放网点end-------------------------------------------->
+    <!--------------------------------------车型选择start------------------------------------------>
+     <div class="col-sm-1">
+      <h4 class="h4title mt50" >发放车辆</h4>
+     </div>
+      <div class="col-sm-2" style="margin-top: 52px;">
+        <label  class="control-label">
+          <input name="seriesCheck" type="radio" ng-model="activitiesstep.setSeries"  ng-value="true" ng-click="activitiesstep.delSpecified()">
+          车系设置
+        </label>
+        </div>
+    <div class="col-sm-2" style="margin-top: 52px;">
+      <label class="control-label">
+        <input name="seriesCheck" type="radio" ng-model="activitiesstep.setSeries"  ng-value="false" ng-click="activitiesstep.delSet()" >
+        特定车辆设置
+      </label>
+     </div>
+    <div style="clear: both;"></div>
+       <div class="form-group"  style='margin-left:20px;' ng-if="activitiesstep.setSeries">
+        <div class="col-sm-2 control-label col-sm-offset-1" style="width:98px;text-align: right;">系列</div>
+         <div style="float: left;min-width: 455px;">
+           <div style="float: left;">
+             <select ng-change="activitiesstep.changeSeries()" ng-model="activitiesstep.series" id="series" class="form-control  col-sm-2 wh120"
+                     ng-options="item.seriseId as item.seriseName for item in activitiesstep.CAR_SERIES">
+               <option value="" selected="selected">全选</option>
+             </select>
+           </div>
+           <div style="float: left;width:50px;margin-top:10px;text-align: center;">车型</div>
+           <div class="col-sm-1">
+             <select ng-model="activitiesstep.model" id="model" class="form-control col-sm-2 wh120"
+                     ng-options="item.modelId as item.modelName for item in activitiesstep.CAR_Model">
+               <option value="" selected="selected">全选</option>
+             </select>
+           </div>
+         </div>
+
+
+        <button type="button" ng-click="activitiesstep.addshop2()" ng-disabled="activitiesstep.requesting2" class="form-control col-sm-1 wh90">添加</button>
+      </div>
+
+    <div class="form-group"  style='margin-left:20px' ng-if="activitiesstep.setSeries">
+      <div>
+        <div class="col-sm-2  control-label col-sm-offset-1" style="width:98px;text-align: right;">车辆下线日期：</div>
+           <div style="float: left;">
+            <select ng-model="activitiesstep.offStartDate" class="form-control col-sm-2 wh120" ng-change="activitiesstep.changeOffStartDate()">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib"  ng-if="activitiesstep.offStartDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesstep.carOfflineStartDate"
+                                ng-model="activitiesstep.carOfflineStartDate" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+          <div style="float: left;width: 50px;margin-top:10px;text-align: center;">至</div>
+          <div style="float: left;">
+            <select ng-model="activitiesstep.offEndDate" class="form-control col-sm-2 wh120" ng-change="activitiesstep.changeOffEndDate()">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib" ng-if="activitiesstep.offEndDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesstep.carOfflineEndDate"
+                                ng-model="activitiesstep.carOfflineEndDate" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+         </div>
+      </div>
+      </div>
+
+      <div class="form-group"  style='margin-left:20px' ng-if="activitiesstep.setSeries">
+        <div>
+          <div class="col-sm-2 control-label col-sm-offset-1" style="width:98px;text-align: right;">车辆销售日期:</div>
+          <div style="float: left;">
+            <select ng-model="activitiesstep.sellStartDate" class="form-control col-sm-2 wh120" ng-change="activitiesstep.changeSellStartDate()">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib"  ng-if="activitiesstep.sellStartDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesstep.carSellingStartDate"
+                                ng-model="activitiesstep.carSellingStartDate" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+          <div style="float: left;width:50px;margin-top:10px;text-align: center;">至</div>
+          <div style="float: left;" >
+            <select ng-model="activitiesstep.sellEndDate" class="form-control col-sm-2 wh120" ng-change="activitiesstep.changeSellEndDate()">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib" ng-if="activitiesstep.sellEndDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesstep.carSellingEndDate"
+                                ng-model="activitiesstep.carSellingEndDate" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+         </div>
+      </div>
+
+    <div class="form-group"  style='margin-left:20px' ng-if="activitiesstep.setSeries">
+      <div>
+        <div class="col-sm-2 control-label  col-sm-offset-1" style="width:98px;text-align:right;">STD日期:</div>
+        <div style="float: left;">
+          <select ng-model="activitiesstep.stdStartTime" class="form-control col-sm-2 wh120" ng-change="activitiesstep.CHANGE_STDStartDate()">
+            <option value="false" selected="selected">不限</option>
+            <option value="true">自定义</option>
+          </select>
+          <div class="wd-date ib"  ng-if="activitiesstep.stdStartTime=='true'">
+            <div class="mp-date-time-pick ib" >
+              <wd-date-picker class="ib wh125" date="activitiesstep.stdStartDate"
+                              ng-model="activitiesstep.stdStartDate" format="yyyy-mm-dd">
+              </wd-date-picker>
+            </div>
+          </div>
+        </div>
+        <div style="float: left;width:50px;margin-top:10px;text-align: center;">至</div>
+        <div style="float: left;" >
+          <select ng-model="activitiesstep.stdEndTime" class="form-control col-sm-2 wh120" ng-change="activitiesstep.CHANGE_STDEndDate()">
+            <option value="false" selected="selected">不限</option>
+            <option value="true">自定义</option>
+          </select>
+          <div class="wd-date ib" ng-if="activitiesstep.stdEndTime=='true'">
+            <div class="mp-date-time-pick ib" >
+              <wd-date-picker class="ib wh125" date="activitiesstep.stdEndDate"
+                              ng-model="activitiesstep.stdEndDate" format="yyyy-mm-dd">
+              </wd-date-picker>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     </div>
+
+
+
+
+
+    <div class="form-group" style='margin-left:20px' ng-if="!activitiesstep.setSeries">
+       <div class="col-sm-2 col-sm-offset-1" >
+        <input ng-model="activitiesstep.chassisNum" type="text" name="chassisNumber" id="chassisNumber" class="form-control"
+               placeholder="请输入底盘号" ng-pattern="/^[0-9a-zA-Z]{8}$/">
+        <button  class="btn btn-default wh85" type="button"  ng-click="activitiesstep.numberAdd()" ng-disabled="add_form.chassisNumber.$invalid||activitiesstep.chassisNum==''">添加</button>
+        <button  class="btn btn-default wh85" type="button"  ng-click="activitiesstep.openImport()">导入</button>
+        <div style="height:200px;border:1px solid #ccc;overflow-y:scroll;overflow-x:hidden;position: relative;" >
+            <p ng-repeat="obj in activitiesstep.carChassisNumList track by $index">
+            <span class="col-sm-1">{{obj.chassisNum}}</span>
+               <span class="glyphicon glyphicon-remove ml80"
+                     ng-click="activitiesstep.numberDelete($index,obj.chassisNum)"></span>
+            <span>，</span>
+          </p>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="form-group" ng-if="activitiesstep.setSeries" style='margin-left:20px'>
+      <div class="Hfilter" style="float:left;margin: -20px 100px;font-size: 15px;">所选车型：</div>
+      <br>
+      <div  class="col-sm-7 col-sm-offset-1 activeScroll">
+        <table>
+          <tbody>
+          <tr ng-repeat="obj in activitiesstep.selectedSeries">
+            <td class="col-sm-1">{{ $index + 1 }}&nbsp;&nbsp;&nbsp;{{obj.seriesName}}</td>
+            <td class="col-sm-1">{{obj.modelName}}</td>
+            <!--<td class="col-sm-1">车辆下线日期：{{obj.carOfflineStartDateName}}{{obj.carOfflineEndDateName}}</td>-->
+            <td class="col-sm-1">车辆下线日期：
+              <span  ng-if="obj.carOfflineStartDateName!=undefined&&obj.carOfflineStartDateName!=''">{{obj.carOfflineStartDateName}}</span>
+              <span  ng-if="obj.carOfflineStartDateName==undefined||obj.carOfflineStartDateName==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.carOfflineEndDateName==undefined||obj.carOfflineEndDateName==''">不限</span>
+              <span ng-if="obj.carOfflineEndDateName!=undefined&&obj.carOfflineEndDateName!=''">{{obj.carOfflineEndDateName}}</span></td>
+            <td class="col-sm-1">车辆销售日期：
+              <span ng-if="obj.carSellingStartDateName!=undefined&&obj.carSellingStartDateName!=''">{{obj.carSellingStartDateName}}</span>
+              <span ng-if="obj.carSellingStartDateName==undefined||obj.carSellingStartDateName==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.carSellingEndDateName==undefined||obj.carSellingEndDateName==''">不限</span>
+              <span ng-if="obj.carSellingEndDateName!=undefined&&obj.carSellingEndDateName!=''">{{obj.carSellingEndDateName}}</span></td>
+            <td class="col-sm-1">STD日期：
+              <span ng-if="obj.stdStartDateName!=undefined&&obj.stdStartDateName!=''">{{obj.stdStartDateName}}</span>
+              <span ng-if="obj.stdStartDateName==undefined||obj.stdStartDateName==''">不限</span>&nbsp&nbsp至&nbsp&nbsp<span ng-if="obj.stdEndDateName==undefined||obj.stdEndDateName==''">不限</span>
+              <span ng-if="obj.stdEndDateName!=undefined&&obj.stdEndDateName!=''">{{obj.stdEndDateName}}</span></td>
+            <td class="col-sm-1">
+            <span class="glyphicon glyphicon-remove"
+                  ng-click="activitiesstep.seriesDelete($index,obj.seriesId,obj.modelId,obj.carOfflineStartDateName,obj.carOfflineEndDateName,obj.carSellingStartDateName,obj.carSellingEndDateName)"></span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <!--------------------------------------车型选择end-------------------------------------------->
+
+
+    <div class="form-group" style="margin-top:50px;">
+      <div class="col-sm-offset-2">
+         <button ng-disabled="add_form.$invalid || activitiesstep.list.address=='' || activitiesstep.list.address2==''"
+                class="btn btn-primary" type="submit" style="width: 85px;">下一步
+        </button>
+        <button ng-click="activitiesstep.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">取消
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+

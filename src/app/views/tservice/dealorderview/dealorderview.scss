@@ -1,0 +1,85 @@
+.tservice-dealorderview-small-picture .modal-dialog{width:780px;}
+.tservice-dealorderview-small-picture .modal-dialog img{max-height:700px;max-width:100%;margin:0 auto;display: block;}
+.serve-info{
+   background: #d6def0;
+  line-height: 40px;
+  text-indent:10px;
+}
+//时间轴的绿色标志
+.green-circle{
+  width: 15px;
+  height: 15px;
+  background-color: #00DD00;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right:5px;
+}
+dl{
+   position: relative;
+   left:7px;
+   border-left:1px solid #ccc;
+}
+dt{
+  position: absolute;
+  top:40%;
+  left:-50px;
+  height:15px;
+  width:100px;
+  background-color: #fff;
+  text-align:center;
+ }
+dd{
+   margin-left: 60px;
+}
+.orderTime{
+  padding: 10px 0 20px 0;
+}
+.content-info{
+  margin-left: 15px;
+}
+//闹钟
+.clock{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height:28px;
+  border: 2px solid #999;
+  border-radius: 50%;
+}
+.clock:before{
+  content: "";
+  width: 10px;
+  height: 8px;
+  border: 2px solid #999;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transform:rotate(-45deg);
+  -moz-transform:rotate(-45deg); 	/* Firefox */
+  -webkit-transform:rotate(-45deg); /* Safari 和 Chrome */
+  -moz-border-radius-topleft:10px;
+  -moz-border-radius-topright:10px;
+  position: absolute;
+  left: -8px;
+  top: 1px;
+}
+.clock:after{
+  content: "";
+  width: 10px;
+  height:8px;
+  border: 2px solid #999;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  transform:rotate(26deg);
+  -moz-transform:rotate(26deg); 	/* Firefox */
+  -webkit-transform:rotate(26deg); /* Safari 和 Chrome */
+  -moz-border-radius-topleft:10px;
+  -moz-border-radius-topright:10px;
+  position: absolute;
+  right: -4px;
+  top: -4px;
+}
+.titleEnd{
+  color: red;
+  margin-top: -7px;
+}

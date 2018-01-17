@@ -1,0 +1,77 @@
+<div class="content-padding">
+  <div class="content-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th colspan="10" class="tlr">
+          <div class="rule-div">
+            <span class="rule-title">部门管理</span>
+          </div>
+            <button class="btn btn-default btn-small" ng-click="dptcontrol.add()">新增</button>
+            <div class="ib appSearch">
+              <input style="width:200px;" type="text" class="ml5 ib form-control width-100"
+                     ng-model="vm.query.keyword" placeholder="请输入部门名称"/>
+              <span class="glyphicon glyphicon-search"  ng-click="dptcontrol.pageIndex=1;dptcontrol.searchList(dptcontrol.createDateStart,dptcontrol.createDateEnd,'',vm.query.keyword,'',false,true)"></span>
+            </div>
+            <button class="btn btn-default btn-small" ng-click="dptcontrol.formoreobj()">高级筛选</button>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr ng-show="dptcontrol.moreobject">
+        <th colspan="10" style="text-align: left;">
+          <div class="wd-date ib col-sm-5">
+            <div class="ib Hfilter col-sm-3">创建时间：</div>
+            <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+              <wd-date-picker class="ib col-sm-5"  date="dptcontrol.createDateStart"
+                              ng-model="dptcontrol.createDateStart" end-date="dptcontrol.nowTime"
+                              ng-change="dptcontrol.pageIndex=1;dptcontrol.searchList(dptcontrol.createDateStart,dptcontrol.createDateEnd,vm.query.creatorId,vm.query.keyword,'',false,false)" >
+              </wd-date-picker> <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+              <wd-date-picker class="ib col-sm-5"  date="dptcontrol.createDateEnd"
+                              ng-model="dptcontrol.createDateEnd"
+                              ng-change="dptcontrol.pageIndex=1;dptcontrol.searchList(dptcontrol.createDateStart,dptcontrol.createDateEnd,vm.query.creatorId,vm.query.keyword,'',false,false)" >
+              </wd-date-picker>
+            </div>
+          </div>
+
+          <div class="obj col-sm-3 ml20">
+            <div class="col-sm-3 ib Hfilter">创建人：</div>
+            <div class="col-sm-8">
+              <select ng-change="dptcontrol.pageIndex=1;dptcontrol.searchList(dptcontrol.createDateStart,dptcontrol.createDateEnd,vm.query.creatorId,vm.query.keyword,'',false,false)"
+                      class="form-control"  ng-model="vm.query.creatorId" name="creatorIdList" id="creatorIdList"
+                      class="col-sm-8 form-control ib ng-pristine ng-untouched ng-valid Hfilter" ng-options="item.id as item.name for item in dptcontrol.CREATOR_ID">
+                <option value="" selected="selected">全部</option>
+              </select>
+            </div>
+          </div>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr>
+        <th>部门</th>
+        <th>上级部门</th>
+        <th>创建人</th>
+        <th>创建时间 <span class="glyphicon glyphicon-circle-arrow-{{dptcontrol.updown}}"  ng-click="dptcontrol.searchList(dptcontrol.createDateStart,dptcontrol.createDateEnd,dptcontrol.query.creatorId,dptcontrol.query.keyword,'',true,false)"></span></th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="obj in dptcontrol.mydata">
+        <td>{{obj.name}}</td>
+        <td>{{obj.pName}}</td>
+        <td>{{obj.creatorName}}</td>
+        <td>{{obj.createTime}}</td>
+        <td>
+          <a ng-click="dptcontrol.edit(obj.id,obj.name,obj.pid,obj.pName)">编辑</a>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <a ng-click="dptcontrol.remove(obj.id,obj.name)">删除</a>
+        </td>
+      </tr>
+      <tr ng-if="dptcontrol.mydata.length === 0">
+        <td colspan="10" style="text-align: center;">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    <wd-page-number  total="dptcontrol.total" page-size="dptcontrol.pageSize"  page-index="dptcontrol.pageIndex" query="dptcontrol.flip"></wd-page-number>
+
+</div>

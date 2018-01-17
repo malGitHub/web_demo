@@ -1,0 +1,412 @@
+<div class="modal-body">
+   <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="supplysourcecheckhcb.submit($event,add_form)" novalidate="">
+    <!--------------------------------------身份信息认证-------------------------------------------->
+    <h5 class="h5title">身份信息认证 <button type="button" class="btn btn-default btn-small ml15"  ng-click="supplysourcecheckhcb.personRecordUp()">人工补录</button></h5>
+     <div class="ml80">
+      <div class="form-group">
+        <label  class="col-sm-1 control-label" style="text-align: left;min-width:80px;">提交申请时间：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.commitTime}}</label>
+        <label  class="col-sm-3 control-label pa"  style="left: 300px; top: 30px;">头像：</label>
+        <label  class="col-sm-1 control-label"><img src="{{supplysourcecheckhcb.realPhoto}}" ng-click="supplysourcecheckhcb.openImg(supplysourcecheckhcb.realPhoto)" onerror="this.style.display='none'" class="pa wh80 ht80" style="left: 450px; top: 10px;z-index:99" >
+          <!--<span class="pa fred" style="left: 550px; top:40px;" ng-show="supplysourcecheckhcb.memberPhotoIsNew=='1'?true:false" >(新提交)</span>-->
+        </label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">用户姓名：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.realName}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">身份证号：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.identityNo}}</label>
+      </div>
+     <!-- <div class="form-group" ng-show="supplysourcecheckhcb.addrecordup">
+        <label  class="col-sm-1 control-label"  style="text-align: left;min-width:100px;">身份证失效日期：</label>
+        <div class="obj wd-date col-sm-5">
+          <div class="mp-date-time-pick ib col-sm-9">
+            <wd-date-picker class="ib col-sm-5" format="yyyy-mm-dd" ng-model="supplysourcecheckhcb.inforecord.idCardInvalidDate" style="width: 182px;">
+            </wd-date-picker>
+           </div>
+        </div>
+       </div>-->
+      <!--<div class="form-group">-->
+        <!--<div class="col-sm-4" style="text-align: left;">-->
+          <!--<label  class=" control-label"  style="text-align: left;">身份证正面照：-->
+            <!--<span class="fred" ng-show="supplysourcecheckhcb.idcardIsNew=='1'?true:false">(新提交)</span></label>-->
+          <!--<div class="col-sm-offset-3" style="text-align: left;">-->
+            <!--<label  class="control-label" style="text-align: left"><img ng-src="{{supplysourcecheckhcb.idFrontPhoto}}"  onerror="this.style.display='none'" class="wh260"></label>-->
+           <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-6" style="text-align: left;">-->
+          <!--<label  class="control-label"  style="text-align: left;">身份证反面照：-->
+            <!--<span class="fred" ng-show="supplysourcecheckhcb.idcardIsNew=='1'?true:false">(新提交)</span></label>-->
+          <!--<div class="col-sm-offset-2" style="text-align: left;">-->
+            <!--<label  class="col-sm-6  control-label" style="text-align: left"><img ng-src="{{supplysourcecheckhcb.idBackPhoto}}" onerror="this.style.display='none'" class="wh260"></label>-->
+          <!--</div>-->
+
+        <!--</div>-->
+        <!--<div style="clear: both"></div>-->
+       <!--</div>-->
+      <div class="form-group">
+        <div  style="text-align: left;">
+          <label  class="control-label"  style="text-align: left;">驾驶证照片：
+            <!--<span class="fred" ng-show="supplysourcecheckhcb.drivingLicenseIsNew=='1'?true:false">(新提交)</span>-->
+          </label>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1" style="min-width: 280px;">
+          <label  class="control-label"><img ng-src="{{supplysourcecheckhcb.drivingLicensePhoto}}" ng-click="supplysourcecheckhcb.openImg(supplysourcecheckhcb.drivingLicensePhoto)" onerror="this.style.display='none'" class="wh260" style="max-height: 300px;"></label>
+         </div>
+        <div class="col-sm-6" ng-show="supplysourcecheckhcb.addrecordup">
+          <div class="form-group">
+            <label for="drivecard" class="col-sm-2 control-label" style="text-align: left;min-width: 94px;">驾驶证号：</label>
+               <div class="col-sm-2  wh182">
+                 <input ng-model="supplysourcecheckhcb.inforecord.drivingLicenseNo" type="text" id="drivecard" class="form-control" name="drivecard" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/"  >
+                 <div wd-messages="drivecard">
+                   <div wd-message="pattern">驾驶证号同身份证号规则 15或18位</div>
+                 </div>
+               </div>
+           </div>
+          <div class="form-group" >
+            <label  class="col-sm-2 control-label" style="text-align: left;min-width: 94px;">准驾车型：</label>
+            <div  class="col-sm-2 control-label"  >
+              <select  ng-model="supplysourcecheckhcb.inforecord.drivingLicenseClass" name="modelNumber" id="modelNumber" class="form-control wh182" ng-options="item.key as item.value for item in supplysourcecheckhcb.modelType" >
+                <option value="" selected="selected">请选择</option>
+              </select>
+            </div>
+            </div>
+          <div class="form-group">
+            <label  for="drivelicense" class="col-sm-2 control-label" style="text-align: left;min-width: 94px;" >驾驶证档案编号：</label>
+            <div class="col-sm-2  wh182">
+              <input ng-model="supplysourcecheckhcb.inforecord.drivingLicenseRecordNo" type="text" id="drivelicense" class="form-control" name="drivelicense"  ng-pattern="/^[0-9]{12}$/" >
+              <div wd-messages="drivelicense">
+                  <div wd-message="pattern">驾驶证档案编号为12位阿拉伯数字</div>
+              </div>
+            </div>
+           </div>
+          <div class="form-group">
+            <label  class="col-sm-2 control-label" style="text-align: left;min-width:94px;">驾驶证过期时间：</label>
+            <div class="obj wd-date col-sm-4">
+              <div class="mp-date-time-pick ib col-sm-9" style="margin-left: -3px;">
+                <wd-date-picker class="ib col-sm-8 wh182" format="yyyy-mm-dd" ng-model="supplysourcecheckhcb.inforecord.drivingLicenseExpireDate" >
+                </wd-date-picker>
+              </div>
+            </div>
+           </div>
+        </div>
+
+      </div>
+    </div>
+    <!--------------------------------------车辆信息-------------------------------------------->
+    <h5 class="h5title">车辆信息 <button type="button" class="btn btn-default btn-small ml15"  ng-click="supplysourcecheckhcb.personRecordDown()">人工补录</button></h5>
+    <div class="ml80">
+      <div class="form-group">
+             <div  style="text-align: left;">
+               <label  class="control-label"  style="text-align: left;">行驶证照片：
+                 <!--<span class="fred" ng-show="supplysourcecheckhcb.vehicleLicenseIsNew=='1'?true:false">(新提交)</span>-->
+               </label>
+             </div>
+          <div class="col-sm-offset-1"><img ng-src="{{supplysourcecheckhcb.vehicleLicensePhoto}}" ng-click="supplysourcecheckhcb.openImg(supplysourcecheckhcb.vehicleLicensePhoto)"  onerror="this.style.display='none'" style="max-width:450px;min-width:400px;max-height:450px;min-height: 400px;"></label>
+          </div>
+      </div>
+      <div>
+        <div>
+          <div class="col-sm-4">
+            <div>
+              <div class="form-group" >
+                <label  class="col-sm-3 control-label"  style="text-align: left;min-width:138px;">车牌号：</label>
+                <div class="col-sm-4" style="margin-top: 5px;">{{supplysourcecheckhcb.carNumber}}</div>
+              </div>
+              <div class="form-group" >
+                <label  class="col-sm-3 control-label"  style="text-align: left;min-width:138px;">车牌类型：</label>
+                <div class="col-sm-4" style="margin-top: 5px;">{{supplysourcecheckhcb.plateNumberType}}</div>
+              </div>
+            </div>
+            <div ng-show="supplysourcecheckhcb.addrecorddown">
+              <div class="form-group">
+                <label for="vehicleidentify" class="col-sm-3 control-label"  style="text-align: left;min-width:138px;">车辆识别代码（后6位）：</label>
+                <div class="col-sm-4">
+                  <input ng-model="supplysourcecheckhcb.inforecord.vehicleIdentity" type="text" id="vehicleidentify" class="form-control col-sm-11" name="vehicleidentify" ng-pattern="/^[a-zA-Z0-9]{6}$/">
+                  <div wd-messages="vehicleidentify">
+                    <div wd-message="pattern">车辆识别代码为6位英文字母和阿拉伯数字</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="engine" class="col-sm-3 control-label"  style="text-align: left;min-width:138px;">发动机号（后6位）：</label>
+                <div class="col-sm-4">
+                  <input ng-model="supplysourcecheckhcb.inforecord.engineNo" type="text" id="engine" class="form-control col-sm-11" name="engine" ng-pattern="/^[a-zA-Z0-9]{6}$/" >
+                  <div wd-messages="engine">
+                    <div wd-message="pattern">发动机号为6位英文字母和阿拉伯数字</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label  class="col-sm-3 control-label"  style="text-align: left;min-width:138px;">行驶证过期时间：</label>
+                <div class="obj wd-date col-sm-4">
+                  <div class="mp-date-time-pick ib col-sm-9" style="margin-left: -3px;">
+                    <wd-date-picker class="ib col-sm-8" style="width: 135%;" format="yyyy-mm-dd" ng-model="supplysourcecheckhcb.inforecord.vehicleLicenseExpireDate">
+                    </wd-date-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div >
+              <div class="form-group">
+                <label class="col-sm-3 control-label" style="text-align: left;min-width:138px;">车型：</label>
+                <div class="col-sm-4" style="margin-top: 5px;">{{supplysourcecheckhcb.carType}}</div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label" style="text-align: left;min-width:138px;">车厢长(米)：</label>
+                <div class="col-sm-4" style="margin-top: 5px;" ng-if="supplysourcecheckhcb.carLength!=null">{{supplysourcecheckhcb.carLength}}m</div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label" style="text-align: left;min-width:138px;">核定载质量(吨)：</label>
+                <div class="col-sm-4" style="margin-top: 5px;" ng-if="supplysourcecheckhcb.vehicleLoad!=null">{{supplysourcecheckhcb.vehicleLoad}}</div>
+              </div>
+            </div>
+
+            <div  ng-show="supplysourcecheckhcb.addrecorddown">
+
+              <div class="form-group">
+                <label for="carwidth" class="col-sm-3 control-label" style="text-align: left;min-width:138px;">车宽/mm：</label>
+                <div class="col-sm-4">
+                  <input ng-model="supplysourcecheckhcb.inforecord.vehicleWidth" type="text" id="carwidth" class="form-control col-sm-11" name="carwidth" ng-pattern="/^[0-9]*$/">
+                  <div wd-messages="carwidth">
+                    <div wd-message="pattern">车宽只能为阿拉伯数字</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <div style="clear: both"></div>
+      </div>
+   </div>
+
+    <!--------------------------------------第三方审核意见-------------------------------------------->
+    <h5 class="h5title">第三方审核意见</h5>
+    <div class="ml80">
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核时间：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.reviewTime}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.reviewResult}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核意见：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdReason}}</label>
+      </div>
+      <!--<div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">身份证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdIdCardValidStatus}}</label>
+        <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdIdCardValidReason}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">驾驶证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdDrivingLicenseValidStatus}}</label>
+        <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdDrivingLicenseValidReason}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">行驶证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdVehicleLicenseValidStatus}}</label>
+        <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdVehicleLicenseValidReason}}</label>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">真实头像</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdMemberPhotoValidStatus}}</label>
+        <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.thirdMemberPhotoValidReason}}</label>
+      </div>-->
+    </div>
+
+     <!--------------------------------------人工审核-------------------------------------------->
+    <!--<h5 class="h5title" ng-if="supplysourcecheckhcb.manualSwitch!=0">人工审核：</h5>
+      <div  class="ml80" ng-if="supplysourcecheckhcb.manualSwitch!=0&&supplysourcecheckhcb.showselview">
+         <div class="form-group">
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;min-width: 85px;" >身份证实名认证</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.realNameValidResult=="4"?'通过':"不通过"}}</label>
+          <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.realNameValidReason}}</label>
+        </div>
+        <div class="form-group">
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">身份证</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.idCardValidResult=="4"?'通过':"不通过"}}</label>
+          <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.idCardValidReason}}</label>
+        </div>
+        <div class="form-group">
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">驾驶证</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.drivingLicenseResult=="4"?'通过':"不通过"}}</label>
+          <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.drivingLicenseReason}}</label>
+        </div>
+        <div class="form-group">
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">行驶证</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.vehicleLicenseResult=="4"?'通过':"不通过"}}</label>
+          <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.vehicleLicenseReason}}</label>
+        </div>
+        <div class="form-group">
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">真实头像</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">审核结论：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.memberValidResult=="4"?'通过':"不通过"}}</label>
+          <label  class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+          <label  class="col-sm-1 control-label"  style="text-align: left;">{{supplysourcecheckhcb.inforecord.memberValidReason}}</label>
+        </div>
+      </div>-->
+    <!--------------------------------------分割线-------------------------------------------->
+     <!--<div class="ml80" ng-if="supplysourcecheckhcb.manualSwitch!=0&&supplysourcecheckhcb.selview">
+      <div class="form-group" >
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left; min-width:85px;">身份证实名认证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">*审核结论：</label>
+        <label for="firstConclusion" class="col-sm-1 control-label wh100"  style="text-align: left;">
+          <select  ng-model="supplysourcecheckhcb.inforecord.realNameValidResult"  name="firstConclusion" id="firstConclusion" class="form-control"  ng-options="item.key as item.value for item in supplysourcecheckhcb.auditconclusion" required >
+            <option value="" selected="selected" >请选择</option>
+           </select>
+          <div wd-messages="firstConclusion">
+            <div wd-message="required">审核结论为必填项</div>
+          </div>
+        </label>
+        <label for="auditOpinionOne" class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <div class="col-sm-4">
+          <textarea ng-model="supplysourcecheckhcb.inforecord.realNameValidReason" id="auditOpinionOne" rows="1" name="auditOpinionOne" class="form-control ng-pristine ng-valid" placeholder="最多支持50个汉字" ng-disabled="supplysourcecheckhcb.inforecord.realNameValidResult=='4'?true:false"  ng-required="supplysourcecheckhcb.inforecord.realNameValidResult=='3'?true:false"
+                    ng-pattern="/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,50}$/"></textarea>
+          <div wd-messages="auditOpinionOne">
+            <div wd-message="required">审核意见在审核结论为不通过时为必填项</div>
+            <div wd-message="pattern">最多支持50个汉字</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">身份证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">*审核结论：</label>
+        <label for="secConclusion" class="col-sm-1 control-label wh100"  style="text-align: left;">
+          <select ng-model="supplysourcecheckhcb.inforecord.idCardValidResult"  name="secConclusion" id="secConclusion" class="form-control"  ng-options="item.key as item.value for item in supplysourcecheckhcb.auditconclusion" required>
+            <option value="" selected="selected">请选择</option>
+           </select>
+          <div wd-messages="secConclusion">
+            <div wd-message="required">审核结论为必填项</div>
+          </div>
+        </label>
+        <label for="auditOpinionTwo" class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <div class="col-sm-4">
+          <textarea ng-model="supplysourcecheckhcb.inforecord.idCardValidReason" id="auditOpinionTwo" rows="1" name="auditOpinionTwo" class="form-control ng-pristine ng-valid" placeholder="最多支持50个汉字" ng-disabled="supplysourcecheckhcb.inforecord.idCardValidResult=='4'?true:false"  ng-required="supplysourcecheckhcb.inforecord.idCardValidResult=='3'?true:false" ng-pattern="/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,50}$/"></textarea>
+          <div wd-messages="auditOpinionTwo">
+            <div wd-message="required">审核意见在审核结论为不通过时为必填项</div>
+            <div wd-message="pattern">最多支持50个汉字</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">驾驶证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">*审核结论：</label>
+        <label for="thirdConclusion" class="col-sm-1 control-label wh100"  style="text-align: left;">
+          <select  ng-model="supplysourcecheckhcb.inforecord.drivingLicenseResult"  name="thirdConclusion" id="thirdConclusion" class="form-control"  ng-options="item.key as item.value for item in supplysourcecheckhcb.auditconclusion" required>
+            <option value="" selected="selected">请选择</option>
+          </select>
+          <div wd-messages="thirdConclusion">
+            <div wd-message="required">审核结论为必填项</div>
+          </div>
+        </label>
+        <label for="auditOpinionThr" class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <div class="col-sm-4">
+          <textarea  ng-model="supplysourcecheckhcb.inforecord.drivingLicenseReason" id="auditOpinionThr" rows="1" name="auditOpinionThr" class="form-control ng-pristine ng-valid" placeholder="最多支持50个汉字"
+                    ng-required="supplysourcecheckhcb.inforecord.drivingLicenseResult=='3'?true:false"
+                     ng-disabled="supplysourcecheckhcb.inforecord.drivingLicenseResult=='4'?true:false"
+                    ng-pattern="/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,50}$/"></textarea>
+          <div wd-messages="auditOpinionThr">
+            <div wd-message="required">审核意见在审核结论为不通过时为必填项</div>
+            <div wd-message="pattern">最多支持50个汉字</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">行驶证</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">*审核结论：</label>
+        <label for="fourthConclusion" class="col-sm-1 control-label wh100"  style="text-align: left;">
+          <select ng-model="supplysourcecheckhcb.inforecord.vehicleLicenseResult" name="fourthConclusion" id="fourthConclusion" class="form-control"  ng-options="item.key as item.value for item in supplysourcecheckhcb.auditconclusion" required>
+            <option value="" selected="selected">请选择</option>
+          </select>
+          <div wd-messages="fourthConclusion">
+            <div wd-message="required">审核结论为必填项</div>
+          </div>
+        </label>
+        <label for="auditOpinionFour" class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <div class="col-sm-4">
+          <textarea ng-model="supplysourcecheckhcb.inforecord.vehicleLicenseReason" id="auditOpinionFour" rows="1" name="auditOpinionFour" class="form-control ng-pristine ng-valid" placeholder="最多支持50个汉字"
+                    ng-required="supplysourcecheckhcb.inforecord.vehicleLicenseResult=='3'?true:false"
+                    ng-disabled="supplysourcecheckhcb.inforecord.vehicleLicenseResult=='4'?true:false"
+                    ng-pattern="/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,50}$/"></textarea>
+          <div wd-messages="auditOpinionFour">
+            <div wd-message="required">审核意见在审核结论为不通过时为必填项</div>
+            <div wd-message="pattern">最多支持50个汉字</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-1 control-label"  style="text-align: left;">审核类型：</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">真实头像</label>
+        <label  class="col-sm-1 control-label"  style="text-align: left;">*审核结论：</label>
+        <label for="fifthConclusion" class="col-sm-1 control-label wh100"  style="text-align: left;">
+          <select ng-model="supplysourcecheckhcb.inforecord.memberValidResult" name="fifthConclusion" id="fifthConclusion" class="form-control"  ng-options="item.key as item.value for item in supplysourcecheckhcb.auditconclusion" required>
+            <option value="" selected="selected">请选择</option>
+          </select>
+          <div wd-messages="fifthConclusion">
+            <div wd-message="required">审核结论为必填项</div>
+          </div>
+        </label>
+        <label for="auditOpinionFive" class="col-sm-1 control-label ml7"  style="text-align: left;">审核意见：</label>
+        <div class="col-sm-4">
+          <textarea ng-model="supplysourcecheckhcb.inforecord.memberValidReason" id="auditOpinionFive" rows="1" name="auditOpinionFive" class="form-control ng-pristine ng-valid" placeholder="最多支持50个汉字"
+                    ng-required="supplysourcecheckhcb.inforecord.memberValidResult=='3'?true:false"
+                    ng-disabled="supplysourcecheckhcb.inforecord.memberValidResult=='4'?true:false"
+                    ng-pattern="/^[a-zA-Z0-9_\u4e00-\u9fa5]{1,50}$/"></textarea>
+          <div wd-messages="auditOpinionFive">
+            <div wd-message="required">审核意见在审核结论为不通过时为必填项</div>
+            <div wd-message="pattern">最多支持50个汉字</div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    <!--------------------------------------按钮-------------------------------------------->
+      <div class="form-group">
+      <div class="col-sm-offset-2" >
+        <button class="btn btn-primary" type="submit" style="width: 85px;" ng-submit="supplysourcecheckhcb.submit($event,add_form)" ng-if="supplysourcecheckhcb.sureButton">确定</button>
+        <button class="btn btn-primary" type="submit" style="width: 85px;" ng-submit="supplysourcecheckhcb.submit($event,add_form)" ng-if="supplysourcecheckhcb.saveButton" ng-show="supplysourcecheckhcb.addrecordup || supplysourcecheckhcb.addrecorddown">保存</button>
+        <button ng-click="supplysourcecheckhcb.closeRecord()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+      </div>
+    </div>
+  </form>
+</div>

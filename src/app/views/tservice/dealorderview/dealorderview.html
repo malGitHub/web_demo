@@ -1,0 +1,200 @@
+<div class="content-padding">
+  <div class="content-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+          novalidate="">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">工单信息：</h5>
+        </div>
+
+        <label class="col-sm-2 control-label">工单号:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.woCode}}</label></div>
+        <label for="misson400" class="col-sm-2 control-label">400工单号:</label>
+        <div class="col-sm-2" ng-show="dealorderview.modifyFlg">
+          <input type="text" value="dealorderview.order.csWoCode" id="misson400" ng-model="dealorderview.order.csWoCode" class="form-control col-sm-10" name="misson400" ng-pattern="/^[0-9]{20}$/"/>
+          <div wd-messages="misson400">
+            <div wd-message="pattern">400工单号为20位数字</div>
+          </div>
+        </div>
+        <div class="col-sm-4" ng-show="dealorderview.queryFlg"><label class="control-label">{{dealorderview.order.csWoCode}}</label></div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">工单类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.woTypeStr}}</label></div>
+        <label class="col-sm-2 control-label">预约类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.modeCodeStr}}</label></div>
+        <div style="clear: both"></div>
+
+
+        <label class="col-sm-2 control-label">当前状态:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.woStatusStr}}</label></div>
+        <label class="col-sm-2 control-label">服务站:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.stationName}}<span  ng-if="dealorderview.order.serviceCode!=null&&dealorderview.order.serviceCode!=''">(</span>{{dealorderview.order.serviceCode}}<span  ng-if="dealorderview.order.serviceCode!=null&&dealorderview.order.serviceCode!=''">)</span></label></div>
+
+        <div style="clear: both"></div>
+
+        <!--<label class="col-sm-2 control-label">二级网点名称:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.secName}}</label></div>-->
+        <label class="col-sm-2 control-label">司机预约服务:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.serviceType}}</label></div>
+
+        <label class="col-sm-2 control-label">服务站电话:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.stationTel}}<span ng-if="dealorderview.order.phone!=null&&dealorderview.order.phone!=''">/</span>{{dealorderview.order.phone}}</label></div>
+        <div style="clear: both"></div>
+
+
+
+        <label class="col-sm-2 control-label">当前业务员:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.counterman}}</label></div>
+        <label class="col-sm-2 control-label">司机APP注册手机号:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.phone}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">预约到站时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.orderTime}}</label></div>
+        <label class="col-sm-2 control-label">维修项目:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.items}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">建立时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.createTime}}</label></div>
+        <label class="col-sm-2 control-label">保养项目:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.maintenanceItem}}</label></div>
+        <div style="clear: both"></div>
+
+         <label class="col-sm-2 control-label" ng-if="dealorderview.woType!=1">报修司机:</label>
+        <div class="col-sm-4" ng-if="dealorderview.woType!=1"><label class="control-label">{{dealorderview.order.repairName}}</label></div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label" ng-if="dealorderview.woType!=1">报修电话:</label>
+        <div class="col-sm-4" ng-if="dealorderview.woType!=1"><label class="control-label">{{dealorderview.order.repairTel}}</label></div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label" ng-if="dealorderview.woType!=1">报修地址:</label>
+        <div class="col-sm-4" ng-if="dealorderview.woType!=1"><label class="control-label">{{dealorderview.order.repairAdd}}</label></div>
+        <div style="clear: both"></div>
+        <label class="col-sm-2 control-label">用户反馈:</label>
+        <!---------------------------------media start---------------------------------------------->
+        <div class="col-sm-4 missFile">
+          <div class="col-sm-12">
+            <label class="control-label" style="float:left;">
+              <span class="whspnor" style="text-align: left!important;">{{dealorderview.order.driverContent}}</span>
+            </label>
+            <label class="control-label" style="float:left;">
+              <img ng-if="dealorderview.ContentImg!=''" ng-repeat="imgpath in dealorderview.ContentImg" ng-click="dealorderview.openImg(dealorderview.ContentImg,$index)" width="50" height="50" ng-src="{{imgpath}}">
+            </label>
+            <label class="control-label" style="float:left;">
+              <div class="ib" ng-repeat="sound in dealorderview.ContentMusic">
+                <audio  ng-if="dealorderview.ContentMusic!=''" controls="controls" ng-src="{{dealorderview.sce(sound)}}"  style="float:left;"></audio>
+                <!--<a  ng-if="dealorderview.ContentMusic!=''" ng-href="{{sound}}"><span class="glyphicon glyphicon-download-alt"></span></a>-->
+              </div>
+            </label>
+          </div>
+        </div>
+        <!-------------------------------------media end------------------------------------------------>
+        <div class="col-xs-12">
+          <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">用户信息：</h5>
+        </div>
+
+        <label class="col-sm-2 control-label">车牌号:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.carNumber}}</label></div>
+        <label class="col-sm-2 control-label">用户姓名:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.userName}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">发动机类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.engine}}</label></div>
+        <label class="col-sm-2 control-label">联系电话:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.userPhone}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">底盘号:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.carVin}}</label></div>
+        <label class="col-sm-2 control-label">联系电话2:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.repairTel}}</label></div>
+        <div style="clear: both"></div>
+
+
+        <label class="col-sm-2 control-label">行驶公里数:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.mile}}</label></div>
+        <label class="col-sm-2 control-label">驾驶室类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.carType}}</label></div>
+        <div style="clear: both"></div>
+
+
+        <label class="col-sm-2 control-label">购车时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{dealorderview.order.buyTime}}</label></div>
+
+        <div style="clear: both"></div>
+
+         <div ng-if="dealorderview.serveInformation">
+          <div class="col-xs-12">
+            <h5 class="serve-info">服务信息：</h5>
+          </div>
+           <div  class="ml100" >
+             <div class="col-sm-offset-1">
+               <ul>
+                 <li ng-repeat="timemsg in dealorderview.serveInfo.record">
+                   <h5 ng-if="timemsg.state==0 || timemsg.state==3"><span class="green-circle"></span>{{timemsg.title}}</h5>
+                   <dl ng-if="timemsg.state==0 || timemsg.state==3">
+                     <dt ng-if="timemsg.useTime!=null">{{timemsg.useTime}}</dt>
+                     <dd>
+                       <p ng-if="timemsg.state==3"><label class="control-label">预约时间:</label><span class="content-info">{{timemsg.orderTime}}</span></p>
+                       <p ng-if="timemsg.state==0" class=" orderTime"><label class="control-label" >预约时间:</label><span class="content-info">{{timemsg.orderTime}}</span></p>
+                       <p ng-if="timemsg.state==3"><label class="control-label">客服分派时间:</label><span class="content-info">{{timemsg.serviceSetOrder}}</span></p>
+                       <p ng-if="timemsg.state==3"><label class="control-label">处理账号:</label><span class="content-info">{{timemsg.handleAccount}}</span></p>
+                      </dd>
+                   </dl>
+                  </li>
+               </ul>
+             </div>
+           </div>
+           <div style="margin-left:90px;" ng-if="!dealorderview.serveTime">
+             <label  class="col-sm-2 col-sm-offset-1 clock">时</label>
+             <div class="col-sm-9 ml20"><label class="control-label" style="color: red;">用时{{dealorderview.serveInfo.serviceTime}}</label></div>
+             <div style="clear: both"></div>
+            </div>
+            <div  class="ml100">
+              <div class="col-sm-offset-1">
+                 <ul>
+                  <li ng-repeat="timemsg in dealorderview.serveInfo.record">
+                    <h5 ng-if="timemsg.state!=0&&timemsg.state!=3"><span class="green-circle"></span>{{timemsg.title}}</h5>
+                    <dl ng-if="timemsg.state!=0&&timemsg.state!=3">
+                      <dt ng-if="timemsg.useTime!=null">{{timemsg.useTime}}</dt>
+                      <dd>
+                        <p ng-if="timemsg.state!=0&&timemsg.state!=4&&timemsg.state!=5&&timemsg.state!=8&&timemsg.state!=11"><label class="control-label">处理账号:</label><span class="content-info">{{timemsg.handleAccount}}</span></p>
+                        <p ng-if="timemsg.state!=0&&timemsg.state!=3&&timemsg.state!=4&&timemsg.state!=5&&timemsg.state!=8"><label class="control-label">处理时间:</label><span class="content-info">{{timemsg.handleTime}}</span></p>
+                        <p ng-if="timemsg.state==2||timemsg.state==6||timemsg.state==7||timemsg.state==11||timemsg.state==14"><label class="control-label">处理说明:</label><span class="content-info">{{timemsg.handleDes}}</span></p>
+                        <p ng-if="timemsg.state==6||timemsg.state==7||timemsg.state==10||timemsg.state==11||timemsg.state==12"><label class="control-label">处理方式:</label><span class="content-info">{{timemsg.handleWay}}</span></p>
+                        <!--<p ng-if="timemsg.state==3"><label class="control-label">预约时间:</label><span class="content-info">{{timemsg.orderTime}}</span></p>
+                        <p ng-if="timemsg.state==0" class=" orderTime"><label class="control-label" >预约时间:</label><span class="content-info">{{timemsg.orderTime}}</span></p>
+                        <p ng-if="timemsg.state==3"><label class="control-label">客服分派时间:</label><span class="content-info">{{timemsg.serviceSetOrder}}</span></p>-->
+                        <p ng-if="timemsg.state==4"><label class="control-label">进站时间:</label><span class="content-info">{{timemsg.arriveTime}}</span></p>
+                        <p ng-if="timemsg.state==4"><label class="control-label">进站服务站:</label><span class="content-info">{{timemsg.stationName}}</span></p>
+                        <p ng-if="timemsg.state==5"><label class="control-label">接站时间:</label><span class="content-info">{{timemsg.recTime}}</span></p>
+                        <p ng-if="timemsg.state==5"><label class="control-label">扫描账号:</label><span class="content-info">{{timemsg.scanAccount}}</span></p>
+                        <p ng-if="timemsg.state==5"><label class="control-label">接站位置 :</label><span class="content-info">{{dealorderview.address}}</span></p>
+                        <p ng-if="timemsg.state==8"><label class="control-label">关闭说明:</label><span class="content-info">{{timemsg.closeDesc}}</span></p>
+                        <p ng-if="timemsg.state==8"><label class="control-label">申请账号:</label><span class="content-info">{{timemsg.applelyAccount}}</span></p>
+                        <p ng-if="timemsg.state==8"><label class="control-label">申请时间:</label><span class="content-info">{{timemsg.applelyTime}}</span></p>
+                        <p ng-if="timemsg.state==9"><label class="control-label">审核结果:</label><span class="content-info">{{timemsg.approved}}</span></p>
+                        <p ng-if="timemsg.state==9"><label class="control-label">服务站说明:</label><span class="content-info">{{timemsg.stationDesc}}</span></p>
+                        <p ng-if="timemsg.state==9"><label class="control-label">司机取消说明:</label><span class="content-info">{{timemsg.driverDesc}}</span></p>
+                      </dd>
+                    </dl>
+                    <h5 ng-if="timemsg.state==11" class="titleEnd">系统关闭</h5>
+                    <h5 ng-if="timemsg.state==12" class="titleEnd">出站</h5>
+                    </li>
+                 </ul>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-sm-offset-4">
+          <button ng-disabled="edit_form.$invalid || dealorderview.requesting" class="btn btn-primary" type="submit" ng-show="dealorderview.modifyFlg"  ng-click="dealorderview.submit($event)" style="width: 85px;">确认</button>
+          <button  class="btn btn-default" type="reset" style="width: 85px;" ng-click="dealorderview.closeWin()">返回</button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</div>
+
+

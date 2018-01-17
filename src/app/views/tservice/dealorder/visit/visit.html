@@ -1,0 +1,40 @@
+<div class="dealorder_visit">
+<div class="modal-header">
+  <h3 class="modal-title" ng-click="vm.clickstart()">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="visit_form" ng-submit="vm.submit($event, visit_form)" novalidate="">
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-3 control-label">用户评价：</label>
+      <span uib-rating ng-model="vm.rate" max="vm.max" readonly="vm.isReadonly" on-hover="vm.hoveringOver(value)" class="rateStar ib mt7" ng-class="{true: '', false: 'allow'}[vm.isReadonly]"></span>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-3 control-label">用户说明：</label>
+      <label  class="col-sm-7 control-label col-sm-offset-1 tll fs12 fw500">联系方式：{{vm.rateInfo.rateUserPhone}}</label>
+      <div class="cl"></div>
+      <div class="col-sm-7 col-sm-offset-3">
+      <textarea rows="5" ng-model="vm.rateInfo.rateContent" maxlength="500" style="width:100%"  ng-disabled="vm.isReadonly">{{vm.rateInfo.rateContent}}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-3 control-label">用户回访内容：</label>
+      <div class="cl"></div>
+      <div class="col-sm-7 col-sm-offset-3">
+        <textarea rows="5" ng-model="vm.content" maxlength="500" style="width:100%" id="content" name="content" required></textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-8 col-sm-offset-3" >
+        <button ng-disabled="visit_form.$invalid||vm.requesting" class="btn btn-primary" type="submit" style="width: 85px;">确认</button>
+        <button ng-click="vm.close()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+</div>
+

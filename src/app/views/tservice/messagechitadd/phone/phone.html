@@ -1,0 +1,20 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">非法电话号码 <a ng-click="vm.showCauseAll()"><img src="..\..\assets\images\tishi.png" class="wh30 ml10" ></a></h3>
+     <div id="instructionDetail"  style="font-size:12px;border: 1px solid #ccc; width:160px; height:50px;position: absolute;left:210px; top:20px; z-index:5;background-color: #fff; text-align: left;padding:5px 10px 20px 5px; line-height:14px;" ng-show="vm.illegalCause">
+      <p>非法电话号码说明：<span style="float: right;width: 20px;height: 20px; background-color: #DDDDDD; color: #2e2e2e; text-align: center; line-height: 20px;" ng-click="vm.closeCauseAll()">X</span></p>
+      <p>号码非法或重复</p>
+     </div>
+  </div>
+     <div class="modal-body">
+       <div style="padding:5px 27px;max-height:500px;overflow-y: scroll;overflow-x: hidden; ">
+          <span ng-repeat="obj in vm.data.userPhoneNumbersErr track by $index">
+            <span>{{obj}},</span>
+          </span>
+      </div>
+     </div>
+    <div class="modal-footer">
+       <button type="button" class="btn btn-primary wh85" ng-click="vm.deleList()">确定</button>
+      <!--<button ng-click="vm.cancel()" type="reset" class="btn btn-default wh85" >取消</button>-->
+    </div>
+ </div>

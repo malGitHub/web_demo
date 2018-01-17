@@ -1,0 +1,11 @@
+<div class="wd-dropdown-select">
+    <span>地域：</span>
+    <div class="btn-group" uib-dropdown>
+        <button type="button" class="btn btn-default" uib-dropdown-toggle>
+            {{select.province}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+            <li role="menuitem" ng-repeat="area in areaList"  ng-click="selectArea(area)">{{area.province}}</li>
+        </ul>
+    </div>
+</div>

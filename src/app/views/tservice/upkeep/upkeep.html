@@ -1,0 +1,103 @@
+<div class="content-padding">
+    <uib-tabset >
+        <uib-tab heading="基础保养表" ng-click="upkeep.firstTab()">
+            <div class="content-body" id="upkeepScroll" style="width:100%;overflow-y:auto;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="{{upkeep.totalTwo+4}}" style="text-align: right;height:50px;">
+                            <button class="btn btn-default btn-small" ng-click="upkeep.add()"  id="carbrandquery" style="position: absolute;right: 90px;top: 15px;">新增</button>
+                            <button class="btn btn-default btn-small" ng-click="upkeep.formoreobj()" style="position: absolute;right: 20px;top: 15px;">高级筛选</button>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr ng-show="upkeep.moreobject"><!---->
+                        <th colspan="{{upkeep.upkeepLength}}" style="text-align: right;">
+                            <div class="obj" style="width:350px;margin-left:30px;float:left;">
+                                <div class="col-sm-3 ib Hfilter">车辆品牌:</div>
+                                <div class="col-sm-9 ib">
+                                    <select ng-change="upkeep.pageIndex=1;upkeep.changeSelect(upkeep.query.brand)"  ng-model="upkeep.query.brand" name="brandList" id="brandList" class="col-sm-8 form-control ib" ng-options="item.brandId as item.brandName for item in upkeep.CAR_TYPE" style="max-width:263px;">
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="obj" style="width:350px;margin-left:30px;float:left;">
+                                <div class="col-sm-3 ib Hfilter">系列:</div>
+                                <div class="col-sm-9 ib">
+                                    <select ng-change="upkeep.pageIndex=1;upkeep.changeSelectType(upkeep.query.serise)" ng-model="upkeep.query.serise" name="seriseList" id="seriseList" class="col-sm-8 form-control" ng-options="item.seriseId as item.seriseName for item in upkeep.CAR_SERIES"  style="max-width:263px;">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="obj" style="width:350px;margin-left:30px;float:left;">
+                                <div class="col-sm-3 ib Hfilter">车型:</div>
+                                <div class="col-sm-9">
+                                    <select  ng-change="upkeep.pageIndex=1;upkeep.changeSelectModel(upkeep.query.modelNameList)"  ng-model="upkeep.query.modelNameList" name="modelName" id="modelName" class="col-sm-8 form-control" ng-options="item.modelId as item.modelName for item in upkeep.CAR_Model"  style="max-width:263px;"><option value="" selected="selected">请选择车辆车型</option></select>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>车系</th>
+                        <th>车型</th>
+                        <th>公里设定</th>
+                        <th ng-repeat="obj in upkeep.itemList2" data-value="{{obj.maintainItemId}}" style="white-space: pre-line;min-width:200px;">{{obj.maintainItemName}}</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in upkeep.mydata2">
+                        <td>{{obj.series}}</td>
+                        <td style="white-space: nowrap">{{obj.modelName}}</td>
+                        <td>{{obj.mileage}}</td>
+                        <td ng-repeat="objUpkeep in obj.temps" class="forItemList"><span ng-show="objUpkeep.isOrNo" class="pointer glyphicon glyphicon-ok"></span></td>
+                        <td>
+                            <a ng-click="upkeep.edit(obj.modelNameList,obj.mileage,obj.modelName)">编辑</a>
+                            <a ng-click="upkeep.remove(obj.modelNameList,obj.mileage,obj.seriesId,obj.series,obj.modelName)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="upkeep.mydata2.length === 0">
+                        <td colspan="10" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="upkeep.total" page-size="upkeep.pageSize"  page-index="upkeep.pageIndex" query="upkeep.flip"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="保养项">
+            <div class="content-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: right;">
+                            <button class="btn btn-default btn-small" ng-click="upkeep.itemadd()">新增</button>
+                            <div class="ib Searchfor">
+                                <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="upkeep.inputText" placeholder="请输入保养条目"/>
+                                <span class="glyphicon glyphicon-search" ng-click="upkeep.pageIndexTwo=1;upkeep.changeInput()"></span>
+                            </div>
+                        </th>   <!--第一行th用于新建等按钮-->
+                    </tr>
+                    <tr>
+                        <th >保养条目</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in upkeep.mydata">
+                        <td>{{obj.maintainItemName}}</td>
+                        <td>
+                            <a ng-click="upkeep.item(obj.maintainItemId,obj.maintainItemName)">编辑</a>
+                            <a ng-click="upkeep.removeItem(obj.maintainItemId,obj.maintainItemName)">删除</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="upkeep.mydata.length === 0">
+                        <td colspan="2" style="text-align: center;">无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <wd-page-number  total="upkeep.totalTwo" page-size="upkeep.pageSizeTwo"  page-index="upkeep.pageIndexTwo" query="upkeep.flipTwo"></wd-page-number>
+        </uib-tab>
+    </uib-tabset >
+</div>
+
+
+

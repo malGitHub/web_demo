@@ -1,0 +1,19 @@
+.frame-content .content-padding .content-header.mt0{margin-top:0}
+th,td{text-align: center;}
+.Searchfor{position:relative;margin:0 5px;}
+.Searchfor input{padding-right:30px;}
+.Searchfor span{position: absolute;top: 7px;right: 7px;display: inline-block;cursor: pointer;font-size: 18px;}
+.distance{position:relative;}
+.distance i{position:absolute;right:-2px;top:-2px;}
+.forwarn{position:absolute;bottom:40px;right:10px;width:200px;height:auto;border:2px #ddd solid;background:#fff;z-index: 100;}
+.forwarn p{text-overflow:ellipsis;white-space: initial;padding:0 5px;}
+.forwarn p.head{background:#CBD3E5;height:30px;line-height: 30px;}
+button.Hfilter{line-height: 24px;}
+.mp-date-time-pick input{}
+.tservice-user-small-useradd.modal-dialog {
+  width: 400px;
+}
+.tservice-user-small-useredit.modal-dialog {
+  width: 400px;
+}
+

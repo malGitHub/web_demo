@@ -1,0 +1,71 @@
+<div>
+<div class="modal-header">
+  <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body assign">
+  <div class="form-group">
+    <div class="col-sm-2 mb10">
+      <select ng-change="vm.changeProvince()" ng-model="vm.province" class="form-control" id="pName"
+              ng-options="item.name for item in vm.AreaList">
+        <option value="" selected="selected">全选</option>
+      </select>
+    </div>
+
+    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+
+    <div class="col-sm-2 mb10">
+      <select ng-change="vm.changeCity()" ng-model="vm.city" class="form-control" id="cName"
+              ng-options="item.name for item in vm.CityList">
+        <option value="" selected="selected">全选</option>
+      </select>
+    </div>
+    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+  </div>
+  <div class="form-horizontal">
+    <div class="mb20 mapWH">
+      <div class="mapbg" ng-if="vm.mapbg"></div>
+      <div mapbar-map map-id="bmap"></div>
+    </div>
+    <div style="clear: both;"></div>
+    <label class="col-sm-2 control-label">用户当前位置：</label>
+    <div class="col-sm-10"><label class="control-label userAddressTxt">{{vm.address}}</label></div>
+    <div style="clear: both"></div>
+    <div class="col-sm-12">
+      <label class="col-sm-2 control-label">服务编码：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.serviceCode}}</label></div>
+      <label class="col-sm-2 control-label">服务类型：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.serviceType}}</label></div>
+    </div>
+    <div class="col-sm-12">
+      <label  class="col-sm-2 control-label">选择的服务站：</label>
+      <div class="col-sm-4"><label class="control-label" style="color: red">{{vm.stationName}}</label></div>
+      <label class="col-sm-2 control-label">用户姓名：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.userName}}</label></div>
+    </div>
+    <div class="col-sm-12">
+      <label class="col-sm-2 control-label">用户电话：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.userPhone}}</label></div>
+      <label class="col-sm-2 control-label">车牌号码：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.carNumber}}</label></div>
+    </div>
+    <div class="col-sm-12">
+      <label class="col-sm-2 control-label">底盘号：</label>
+      <div class="col-sm-4"><label class="control-label">{{vm.info.carVin}}</label></div>
+    </div>
+
+
+
+    <br>
+    <div class="form-group">
+      <div class="col-sm-8 col-sm-offset-4" >
+          <button class="btn btn-primary" ng-click="vm.submit()" ng-disabled="vm.requesting" style="width: 85px;">确认</button>
+          <button ng-click="vm.close()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+</div>
+

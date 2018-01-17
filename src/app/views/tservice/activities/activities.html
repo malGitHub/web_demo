@@ -1,0 +1,167 @@
+<div class="content-padding">
+  <uib-tabset >
+    <uib-tab heading="活动创建" ng-click="activities.clearTab(0)" ng-if="userInfo.funcs.tserviceActivitiesCreat == 1">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="13">
+                    <div class="search-div">
+                      <button class="btn btn-default btn-small" ui-sref="tservice.activitiesadd()">新增</button>
+                        <div class="ib Searchfor">
+                            <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="activities.query.keyWord" placeholder="请输入活动名称关键字"/>
+                            <span class="glyphicon glyphicon-search" ng-click="activities.pageIndexOne=1;activities.getData()"></span>
+                        </div>
+                        <button class="btn btn-default btn-small" ng-click="activities.formoreobj()">高级筛选
+                        </button>
+                    </div>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="activities.moreobject">
+                <th colspan="13" style="text-align: right;">
+                  <div class="obj col-sm-2">
+                    <div class="col-sm-4 ib Hfilter">活动状态：</div>
+                    <div class="ib col-sm-8">
+                      <select ng-model="activities.query.activitStatus" name="activitStatus" id="activitStatus" class="form-control" ng-options="item.key as item.value for item in activities.activit" ng-change="activities.pageIndexOne=1;activities.getData()">
+                        <option value="" selected="selected">全部</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="wd-date ib col-sm-5">
+                    <div class="ib Hfilter col-sm-3">创建时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="activities.query.createTimeStart" format="yyyy-mm-dd" ng-model="activities.query.createTimeStart" ng-change="activities.pageIndexOne=1;activities.getData()"> </wd-date-picker>
+                      <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="activities.query.createTimeEnd" format="yyyy-mm-dd" ng-model="activities.query.createTimeEnd" ng-change="activities.pageIndexOne=1;activities.getData()"> </wd-date-picker>
+                    </div>
+                  </div>
+                  <div class="obj col-sm-2">
+                    <div class="col-sm-4 ib Hfilter">审核结果：</div>
+                    <div class="ib col-sm-8">
+                      <select ng-model="activities.query.reviewResult" name="reviewResult" id="reviewResult" class="form-control" ng-options="item.key as item.value for item in activities.review" ng-change="activities.pageIndexOne=1;activities.getData()">
+                        <option value="" selected="selected">全部</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="obj col-sm-3">
+                    <div class="col-sm-4 ib Hfilter">优惠券状态：</div>
+                    <div class="ib col-sm-7">
+                      <select ng-model="activities.query.couponStatus" name="couponStatus" id="couponStatus" class="form-control" ng-options="item.key as item.value for item in activities.coupon"  ng-change="activities.pageIndexOne=1;activities.getData()">
+                        <option value="" selected="selected">全部</option>
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr>
+                <th>活动名称</th>
+                <th>活动状态</th>
+                <th>优惠券</th>
+                <th>优惠券内容</th>
+                <th>优惠券状态</th>
+                <th>审核状态</th>
+                <th>创建时间</th>
+                <th colspan="5">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in activities.InfoList">
+                <td>{{obj.activityName}}</td>
+                <td>{{obj.activityStatusStr}}</td>
+                <td>{{obj.couponName}}</td>
+                <td>{{obj.couponContent}}</td>
+                <td>{{obj.couponStatus}}</td>
+                <td>{{obj.reviewStatus}}</td>
+                <td>{{obj.createTime}}</td>
+                <td><a ui-sref="tservice.activitiesnew({id:obj.activityId,status:obj.activityStatus,cancel:activities.cancelBtn})">详情</a></td>
+                <td><a ng-if="obj.reviewStatus=='通过' && obj.sendType==0 && obj.offlineType==0" ng-click="activities.sendactive(obj.activityName,obj.activityId)">下发</a></td>
+                <td><a ng-if="obj.reviewStatus=='通过' && obj.offlineType==0" ng-click="activities.offlineactive(obj.activityName,obj.activityId)">下架</a>
+                 <span ng-if="obj.offlineType==1">已下架</span>
+                </td>
+              <td><a ng-if="obj.sendType==1" ng-click="activities.freezeActivity(obj.activityName,obj.activityId)">冻结</a>
+                <span ng-if="obj.sendType==0&&obj.stopType==1">冻结</span>
+              </td>
+              <td><a ng-if="obj.reviewStatus=='待提交' || obj.reviewStatus=='未通过'" ng-click="activities.remove(obj.activityName,obj.activityId)">删除</a></td>
+            </tr>
+            <tr ng-if="activities.InfoList.length === 0">
+                <td colspan="13" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="activities.totalOne" page-size="activities.pageSizeOne" page-index="activities.pageIndexOne"
+                    query="activities.flipOne"></wd-page-number>
+      </uib-tab>
+    <uib-tab heading="活动审核" ng-click="activities.clearTab(1)" ng-if="userInfo.funcs.tserviceActivitiesExamine == 1">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="9">
+              <div class="search-div">
+                <div class="ib Searchfor">
+                  <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="activities.query.keyWord" placeholder="请输入活动名称/优惠券名称关键字"/>
+                  <span class="glyphicon glyphicon-search" ng-click="activities.pageIndex=1;activities.getExamineData()"></span>
+                </div>
+                <button class="btn btn-default btn-small" ng-click="activities.formoreobj()">高级筛选
+                </button>
+              </div>
+            </th>
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr ng-show="activities.moreobject">
+            <th colspan="12" style="text-align: right;">
+              <div class="obj col-sm-2">
+                <div class="col-sm-4 ib Hfilter">审核状态：</div>
+                <div class="ib col-sm-8">
+
+                  <select ng-model="activities.query.reviewResult" name="creatorList" id="creatorList" class="form-control" ng-options="item.key as item.value for item in activities.review" ng-change="activities.pageIndex=1;activities.getExamineData()">
+                    <option value="" selected="selected">全部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="wd-date ib col-sm-5">
+                <div class="ib Hfilter col-sm-3">创建时间：</div>
+                <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                  <wd-date-picker class="ib col-sm-5"  date="activities.query.createTimeStart" ng-model="activities.query.createTimeStart" ng-change="activities.pageIndex=1;activities.getExamineData()" format="yyyy-mm-dd"> </wd-date-picker>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                  <wd-date-picker class="ib col-sm-5"  format="yyyy-mm-dd" date="activities.query.createTimeEnd" ng-model="activities.query.createTimeEnd" ng-change="activities.pageIndex=1;activities.getExamineData()"> </wd-date-picker>
+                </div>
+              </div>
+            </th>
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>审核状态</th>
+            <th>活动名称</th>
+            <th>优惠券</th>
+            <th>优惠券内容</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="Info in activities.examineList">
+            <td>{{Info.reviewStatus}}</td>
+            <td>{{Info.activityName}}</td>
+            <td>{{Info.couponName}}</td>
+            <td>{{Info.couponContent}}</td>
+            <td>{{Info.creatorName}}</td>
+            <td>{{Info.createTime}}</td>
+            <td><a ui-sref="tservice.activitiescheck({id:Info.activityId,ischeck:Info.reviewStatus})">{{Info.reviewStatus=='审核中'||Info.reviewStatus=='冻结中' ? '审核' : '查看'}}</a></td>
+          </tr>
+          <tr ng-if="activities.examineList.length === 0">
+            <td colspan="9" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="activities.total" page-size="activities.pageSize" page-index="activities.pageIndex"
+                      query="activities.flip"></wd-page-number>
+    </uib-tab>
+  </uib-tabset>
+</div>
+

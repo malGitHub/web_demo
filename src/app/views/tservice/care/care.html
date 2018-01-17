@@ -1,0 +1,71 @@
+
+<div class="content-padding">
+        <div class="content-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th colspan="10" style="text-align: right;">
+                <div class="rule-div">
+                  <span class="rule-title">一键呼救</span>
+                </div>
+                <div class="ib Searchfor">
+                  <input ng-model="care.filter.userTel" style="width:200px;" type="text" class="ml15 ib form-control width-100"  placeholder="请输入手机号"/>
+                  <span ng-click="care.pageIndexTwo=1;care.changeInput()" class="glyphicon glyphicon-search"></span>
+                </div>
+                <button class="btn btn-default btn-small" ng-click="care.formoreobj2()">高级筛选</button>
+              </th>   <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="care.moreobject2">
+              <th colspan="10" style="text-align: right;">
+                <div class="obj wd-date col-sm-5">
+                  <span class="ib col-sm-3 Hfilter">上报时间：</span>
+                  <div class="mp-date-time-pick ib col-sm-9">
+                    <wd-date-picker class="ib col-sm-5" ng-change="care.pageIndexTwo=1;care.changeTime()" ng-model="care.filter.uploadTimeStart">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5" ng-change="care.pageIndexTwo=1;care.changeTime()" ng-model="care.filter.uploadTimeEnd">
+                    </wd-date-picker>
+                  </div>
+                </div>
+                <div class="ib col-sm-3">
+                  <span class="ib col-sm-3 Hfilter">系列：</span>
+                  <div class="ib col-sm-8">
+                    <select ng-change="care.pageIndexTwo=1;care.changeSelectType(care.filter.carSerise)" ng-model="care.filter.carSerise" name="seriseListCare" id="seriseListCare" class="col-sm-8 form-control" ng-options="item.seriseId as item.seriseName for item in care.CAR_SERIES">
+                      <option value="" selected="selected">请选择车辆系列</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib col-sm-3">
+                  <span class="ib col-sm-3 Hfilter">车型：</span>
+                  <div class="ib col-sm-8">
+                    <select  ng-change="care.pageIndexTwo=1;care.changeSelectModel(care.filter.carModel)"  ng-model="care.filter.carModel" name="modelNameCare" id="modelNameCare" class="col-sm-8 form-control" ng-options="item.modelId as item.modelName for item in care.CAR_Model"><option value="" selected="selected">请选择车辆车型</option></select>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <th>用户账号</th>
+              <th>车系</th>
+              <th>车型</th>
+              <th>上报时间 <span class="ib glyphicon glyphicon-circle-arrow-{{care.updown}}" ng-click="care.toUpDown()"></span></th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in care.careData">
+              <td>{{obj.userTel}}</td>
+              <td>{{obj.carSerise}}</td>
+              <td>{{obj.carModel}}</td>
+              <td>{{obj.uploadTime}}</td>
+              <td>
+                <a ui-sref="tservice.carecall({id:obj.callId,tel:obj.userTel})">查看</a>
+              </td>
+            </tr>
+            <tr ng-if="care.careData.length === 0">
+              <td colspan="10" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <wd-page-number  total="care.totalTwo" page-size="care.pageSizeTwo"  page-index="care.pageIndexTwo" query="care.flipTwo"></wd-page-number>
+</div>

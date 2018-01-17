@@ -1,0 +1,122 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{vm.title}}</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form" ng-submit="vm.submit($event, edit_form)" style="height:auto;">
+      <div class="col-sm-7">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">申请时间:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.applyDate" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">申请人账户:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.applyUserPhone" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">购车发票号:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.invoiceNo" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">车辆VIN:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.carVin" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">车系:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.seriesName" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">车型:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.modelName" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">所属省:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.provinceName" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">所属市:</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.cityName" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">身份证(组织机构代码):</label>
+
+          <div class="col-sm-8">
+            <input ng-model="vm.examine.identityCard" type="text" class="form-control" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label"> 购车发票(行驶证)照片:</label>
+
+          <div class="col-sm-8">
+            <image class="col-sm-10"  src="../../assets/images/car.jpg"/>
+          </div>
+        </div>
+      </div>
+
+      <!--右侧-->
+      <div class="col-sm-5" style="margin-top:80px;">
+        <div class="form-group">
+          <label for="views" class="col-sm-3 control-label"> 审核意见:</label>
+          <div class="col-sm-8">
+            <textarea id="views" name="views" ng-model="vm.examine.reviewView" ng-disabled="vm.reviewViewDis" class="form-control" ng-maxlength=50></textarea>
+            <div wd-messages="views">
+                <div wd-message="maxlength">最多50个字符</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">审核结论:</label>
+
+          <div class="col-sm-8">
+            <select ng-model="vm.examine.reviewResult" ng-disabled="vm.reviewViewDis" class="form-control"
+                    ng-options="item.key as item.value for item in vm.EX_RESULTS">
+              <option value="" selected="selected">请选择</option>
+              <!--<option value={{vm.examine.reviewResult}} selected="selected"></option>-->
+            </select>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-8 col-sm-offset-3">
+            <button ng-if="vm.save" ng-disabled="edit_form.$invalid || vm.requesting" class="btn btn-primary"
+                    type="submit"
+                    style="width: 85px;">提交
+            </button>
+            <button ng-if="vm.toEdit" class="btn btn-primary" ng-click="vm.edit()"
+                    style="width: 85px;">编辑
+            </button>
+            <button ng-click="vm.closeEdit()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+            <input type="hidden" ng-model="vm.examine.userId">
+          </div>
+        </div>
+      </div>
+<div style="clear:both;"></div>
+    </form>
+  </div>
+
+</div>
+

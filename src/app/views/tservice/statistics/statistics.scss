@@ -1,0 +1,13 @@
+.statistics .all{width:68px;height:60px;margin-top:10px;float:left;padding-top:15px;margin-right:30px;border-right:1px #9E9E9E solid;}
+.statistics .circle{float:left;}
+.statistics .circle li{float:left;width:50px;text-align: center;margin-right:3%;}
+.statistics .circle li div{border:2px #09f solid;border-radius:50px;width:50px;height:50px;line-height:50px;margin:0 auto 5px;}
+.statistics .circle li.totalHour{width:115px;}
+.statistics .circle li div.red{border:2px #f00 solid}
+.statistics .fontRed{color:#f00}
+.statistics .nav.nav-tabs li:not(:nth-child(1),:nth-child(2),:nth-child(3)){height:24px;margin-top:15px;margin-right:2px;}
+.statistics .nav.nav-tabs li:not(:nth-child(1),:nth-child(2),:nth-child(3)) a{line-height:7px;padding-right:20px;margin-right:0}
+.statistics .nav.nav-tabs li:not(:nth-child(1),:nth-child(2),:nth-child(3)).active a{line-height:7px;}
+.statistics .nav.nav-tabs li:not(:nth-child(1),:nth-child(2),:nth-child(3)).active a.active{color: #555555;background-color: #fff;border: 1px solid #ddd;border-bottom-color: transparent;cursor: default;}
+.statistics .nav.nav-tabs li:not(:nth-child(1),:nth-child(2),:nth-child(3)) span{position: absolute;bottom: 2px;right: 9px;font-size:13px;cursor: default;}
+.statistics .nav.nav-tabs .addtab li.active a{color: #555555;background-color: #fff;border: 1px solid #ddd;border-bottom-color: transparent;cursor: default;width:100%;}

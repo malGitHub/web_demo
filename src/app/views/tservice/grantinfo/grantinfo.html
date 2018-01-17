@@ -1,0 +1,101 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table activities">
+            <thead>
+            <tr>
+                <th colspan="5" class="tlr">
+                    <div class="grant-div">
+                        <span class="grant-title">发放详情:</span>
+                    </div>
+                  <button style="float: right;margin:3px;" ng-click="grantinfo.cancel()" class="btn btn-default btn-small" type="reset">返回</button>
+                   <button style="float: right;margin:3px;" ng-click="grantinfo.getExecl()" class="btn btn-default btn-small" type="button">导出</button>
+                    <div class="ib Searchfor" style="float: right;">
+                        <input style="width:200px;" type="text" class="ml5 ib form-control" ng-keyup="grantinfo.pageIndex=1;grantinfo.queryKeyUp($event)" ng-model="grantinfo.keyWord" placeholder="请输入车辆VIN"/>
+                      <span class="glyphicon glyphicon-search" ng-click="grantinfo.pageIndex=1;grantinfo.grantList()"></span>                           </div>
+                     <div class="obj col-sm-4" style="float: right;">
+                    <div class="wd-date ib col-sm-12" >
+                      <div class="ib Hfilter col-sm-2">发放时间：</div>
+                      <div class="mp-date-time-pick col-sm-10 ib authenticationTime">
+                        <wd-date-picker class="ib col-sm-5"  date="grantinfo.grantStartTime"
+                                        end-date="grantinfo.nowDate"
+                                        ng-model="grantinfo.grantStartTime"
+                                        ng-change="grantinfo.pageIndex=1;grantinfo.grantList();" format="yyyy-mm-dd">
+                        </wd-date-picker>
+                        <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                        <wd-date-picker class="ib col-sm-5"  date="grantinfo.grantEndTime"
+                                        end-date="grantinfo.nowDate"
+                                        ng-model="grantinfo.grantEndTime"
+                                        ng-change="grantinfo.pageIndex=1;grantinfo.grantList();"  format="yyyy-mm-dd" >
+                        </wd-date-picker>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </th>
+            </tr>
+            </thead>
+        </table>
+
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">网点名称:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.stationName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">所属省:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.provinceName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">所属市:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.cityName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">优惠券名称:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.preferentialTitle}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">发放限额:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.quantity}}<span ng-if="grantinfo.unitTool(grantinfo.query.quantity+'')">{{grantinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">已发放数量:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.sendQuantity}}<span ng-if="grantinfo.unitTool(grantinfo.query.sendQuantity+'')">{{grantinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">过期未发出数量:</label>
+            <div class="col-sm-4"><label class="control-label">{{grantinfo.query.restQuantity}}<span ng-if="grantinfo.unitTool(grantinfo.query.restQuantity+'')">{{grantinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">已发放车辆列表:</label>
+
+            <div class="col-sm-6">
+              <table class="table" border="0">
+                <tbody>
+                <tr>
+                  <th>车辆VIN</th>
+                  <th>发放时间</th>
+                  <th>发放数量</th>
+                  <th>物品单位</th>
+                </tr>
+                <tr ng-repeat="obj in grantinfo.query.list">
+                  <td>{{obj.vin}}</td>
+                  <td>{{obj.sendTime}}</td>
+                  <td>{{obj.singleQuantity}}</td>
+                  <td>{{grantinfo.query.unit}}</td>
+                </tr>
+                <tr ng-if="grantinfo.query.list.length === 0">
+                  <td colspan="4" style="text-align: center;">无数据</td>
+                </tr>
+                </tbody>
+              </table>
+              <wd-page-number total="grantinfo.query.total" page-size="grantinfo.pageSize" page-index="grantinfo.pageIndex"
+                              query="grantinfo.flip"></wd-page-number>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+

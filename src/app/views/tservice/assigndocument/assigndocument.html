@@ -1,0 +1,104 @@
+<div class="content-padding">
+  <div class="content-body">
+    <table class="table table-format">
+      <thead>
+      <tr>
+        <th colspan="12" style="text-align: right;">
+          <button class="btn btn-default btn-small" ng-if="assigndocument.masterFlg==1" ng-click="assigndocument.toBatchMore()">批量分单</button>
+          <div class="ib Searchfor">
+            <input style="width:200px;" type="text" class="ml5 ib form-control width-100"
+                   ng-model="assigndocument.filter.woId" placeholder="请输入工单编号/底盘号"/>
+            <span class="glyphicon glyphicon-search" ng-click="assigndocument.pageIndex=1;assigndocument.toSearch()"></span>
+          </div>
+          <button class="btn btn-default btn-small" ng-click="assigndocument.getExecl()">导出</button>
+          <button class="btn btn-default btn-small" ng-click="assigndocument.moreSearch=!assigndocument.moreSearch">高级筛选
+          </button>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr ng-show="assigndocument.moreSearch">
+        <th colspan="12" style="text-align: right;">
+          <div class="obj col-sm-6">
+              <div class="col-sm-2 ib Hfilter">服务站：</div>
+              <div class="col-sm-2 ib"  >
+                <select ng-change="assigndocument.changeProvince()" ng-model="assigndocument.provinceId" class="form-control" id="pName"
+                        ng-options="item.id as item.name for item in assigndocument.AreaList" >
+                  <option value="" selected="selected">全选</option>
+                </select>
+              </div>
+            <span class="ib Hfilter fl wh30" style="text-align: center;">省</span>
+              <div class="col-sm-2 ib" >
+                <select ng-change="assigndocument.changeCity()" ng-model="assigndocument.cityId" class="form-control" id="cName"
+                        ng-options="item.id as item.name for item in assigndocument.CityList">
+                  <option value="" selected="selected">全选</option>
+                </select>
+              </div>
+            <span class="ib Hfilter fl wh30" style="text-align: center;">市</span>
+              <div class="col-sm-3 ib" >
+                <select ng-change="assigndocument.changeStore()" ng-model="assigndocument.storeId" class="form-control" id="sName"
+                        ng-options="item.stationId as item.stationName for item in assigndocument.StoreList">
+                  <option value="" selected="selected">请选择服务站</option>
+                </select>
+              </div>
+          </div>
+          <div class="obj col-sm-2">
+            <div class="ib col-sm-5 ib Hfilter">工单类型：</div>
+            <div class="col-sm-7 ib">
+              <select class="form-control" ng-model="assigndocument.filter.woType"
+                      ng-options="item.key as item.value for item in assigndocument.MISSTYPE" ng-change="assigndocument.pageIndex='1';assigndocument.toSearch()">
+                <option value="">全部</option>
+              </select>
+            </div>
+          </div>
+          <div class="obj col-sm-2">
+            <div class="ib col-sm-5 ib Hfilter">预约方式：</div>
+            <div class="col-sm-7 ib">
+              <select class="form-control" ng-model="assigndocument.filter.orderWay" ng-options="item.key as item.value for item in assigndocument.ORDER" ng-change="assigndocument.pageIndex='1';assigndocument.toSearch()">
+                <option value="">全部</option>
+              </select>
+            </div>
+          </div>
+        </th>
+        <!--第一行th用于新建等按钮-->
+      </tr>
+      <tr>
+        <th>序号</th>
+        <th ng-if="assigndocument.masterFlg==1">批量</th>
+        <th>操作</th>
+        <th>工单号</th>
+        <th>400工单号</th>
+        <!--<th>发动机型号</th>-->
+        <th>驾驶室类型</th>
+        <th>预约服务站</th>
+        <th>车牌号</th>
+        <th>车辆行驶里程</th>
+        <th>工单类型</th>
+        <th>预约方式</th>
+        <th>服务类型</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="obj in assigndocument.list">
+        <td>{{$index+1}}</td>
+        <td ng-if="assigndocument.masterFlg==1"><input type="checkbox" ng-checked="assigndocument.result.indexOf(obj.woCode)!=-1"  ng-click="assigndocument.select(obj.woCode,$event)"></td>
+        <td class="nowrapwork"><a ng-click='assigndocument.handle(obj)'>我要处理</a>  <a ng-if="assigndocument.masterFlg==1" ng-click='assigndocument.toBatch(obj.woCode)'>分单</a></td>
+        <td>{{obj.woCode}}</td>
+        <td>{{obj.csWoCode}}</td>
+        <!--<td>{{obj.engineCode}}</td>-->
+        <td>{{obj.carModel}}</td>
+        <td><p class="mb0" title="{{obj.serviceStationName}}">{{obj.serviceStationName | cut:true:10:' ...'}}</p></td>
+        <td>{{obj.carCph}}</td>
+        <td>{{obj.carMileage}}</td>
+        <td>{{obj.woTypeName}}</td>
+        <td>{{obj.orderWayName}}</td>
+        <td>{{obj.serviceTypeName}}</td>
+      </tr>
+      <tr ng-if="assigndocument.list.length === 0">
+        <td colspan="12" style="text-align: center;">无数据</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <wd-page-number total="assigndocument.total" page-size="assigndocument.pageSize" page-index="assigndocument.pageIndex" query="assigndocument.flip"></wd-page-number>
+</div>
+

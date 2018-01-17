@@ -1,0 +1,191 @@
+<div class="content-padding">
+  <uib-tabset>
+    <uib-tab heading="推送消息">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ui-sref="tservice.messageadd()">新增</button>
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100"
+                       ng-model="message.query.keyWord"
+                       placeholder="请输入标题关键字"/>
+                <span class="glyphicon glyphicon-search" ng-click="message.pageIndex=1;message.advSearch()"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="message.formoreobj()">高级选项</button>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr ng-show="message.moreobject">
+            <th colspan="10" style="text-align: right;">
+              <div class="obj col-sm-3">
+                <div class="col-sm-3 ib Hfilter">时间：</div>
+                <div class="col-sm-8 ib">
+                  <select ng-change="message.pageIndex=1;message.advSearch()"
+                          ng-model="message.query.timeRange" name="timeRange" id="timeRange"
+                          class="col-sm-8 form-control ib"
+                          ng-options="item.name as item.shade for item in message.TIME_RANGE">
+                  </select>
+                </div>
+
+              </div>
+              <div class="obj col-sm-3">
+                <div class="col-sm-3 ib Hfilter">目标用户：</div>
+                <div class="col-sm-8 ib">
+                  <select ng-change="message.pageIndex=1;message.advSearch()"
+                          ng-model="message.query.targetType" name="seriseList" id="targetType"
+                          class="col-sm-8 form-control"
+                          ng-options="item.name as item.shade for item in message.TARGET_TYPE">
+                      <option value="">请选择</option>
+                  </select>
+                </div>
+              </div>
+              <div class="obj col-sm-3">
+                <div class="col-sm-3 ib Hfilter">通知方式：</div>
+                <div class="col-sm-8">
+                  <select ng-change="message.pageIndex=1;message.advSearch()"
+                          ng-model="message.query.noticeType" name="modelName" id="modelName"
+                          class="col-sm-8 form-control"
+                          ng-options="item.name as item.shade for item in message.NOTICE_TYPE">
+                  </select>
+                </div>
+              </div>
+            </th>
+          </tr>
+
+          <tr>
+            <th>标题</th>
+            <th>创建人</th>
+            <th>目标用户</th>
+            <th>创建时间</th>
+            <th>操作</th>
+          </tr>
+
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in message.sendMsgData">
+            <td>{{obj.title}}</td>
+            <td>{{obj.creatorName}}</td>
+            <td>{{obj.targetType}}</td>
+            <td>{{obj.createTime}}</td>
+            <td>
+              <a ui-sref="tservice.messageresend({id:obj.id})">重发</a>
+            </td>
+          </tr>
+          <tr ng-if="message.sendMsgData.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="message.total" page-size="message.pageSize" page-index="message.pageIndex"
+                      query="message.flip"></wd-page-number>
+    </uib-tab>
+
+    <uib-tab heading="消息模板">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml15 ib form-control width-100" ng-model="message.query1.searchKey"
+                       placeholder="请输入标题关键字"/>
+                <span class="glyphicon glyphicon-search" ng-click="message.pageIndex1=1;message.searchModel()"></span>
+              </div>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>消息内容</th>
+            <th>标题</th>
+            <th>分类</th>
+            <th>发送端</th>
+            <th>修改时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in message.msgModelData">
+            <td>{{obj.content | cut:true:50:' ...'}}</td>
+            <td>{{obj.title}}</td>
+            <td>{{obj.typeName}}</td>
+            <td>{{obj.receiveTypeName}}</td>
+            <td>{{obj.createTime}}</td>
+            <td>
+
+              <a ng-click="message.editor(obj)">编辑</a>
+              <a ng-click="message.removeModel(obj.id)">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="message.msgModelData.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="message.total1" page-size="message.pageSize1" page-index="message.pageIndex1"
+                      query="message.flip1"></wd-page-number>
+    </uib-tab>
+
+    <uib-tab heading="短信息" active="message.msg_active">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+               <button class="btn btn-default btn-small" ui-sref="tservice.messagechitadd()">新增</button>
+              <div class="ib Searchfor">
+                <input type="text" class="ml5 ib form-control wh200"
+                       ng-model="message.query2.title"
+                       placeholder="请输入标题关键字"/>
+                <span class="glyphicon glyphicon-search" ng-click="message.pageIndex2=1;message.getChitList()"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="message.chooseChit()">高级选项</button>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr ng-show="message.chitObject">
+            <th colspan="10" style="text-align: right;">
+              <div class="obj col-sm-3">
+                <div class="col-sm-3 ib Hfilter">时间：</div>
+                <div class="col-sm-8 ib">
+                  <select ng-change="message.pageIndex2=1;message.getChitList()"
+                          ng-model="message.query2.timeRange" name="timeChange" id="timeChange"
+                          class="col-sm-8 form-control ib"
+                          ng-options="item.name as item.shade for item in message.TIME_CHANGE">
+                  </select>
+                </div>
+
+              </div>
+
+            </th>
+          </tr>
+
+          <tr>
+            <th>标题</th>
+            <th>创建人</th>
+             <th>创建时间<span ng-if="!message.controlSort" class="glyphicon glyphicon-circle-arrow-up ml3" ng-click="message.orderCheck()"></span><span style="margin-left: 2px;" ng-if="message.controlSort" class="glyphicon glyphicon-circle-arrow-down" ng-click="message.orderCheck()"></span></th>
+            <th>操作</th>
+          </tr>
+
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in message.chitData">
+            <td>{{obj.title}}</td>
+            <td>{{obj.name}}</td>
+            <td>{{obj.createTime}}</td>
+            <td>
+              <a ui-sref="tservice.messagechitsend({id:obj.id})">重发</a>
+            </td>
+          </tr>
+          <tr ng-if="message.chitData.length === 0">
+            <td colspan="10" class="tlc" >无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="message.total2" page-size="message.pageSize2" page-index="message.pageIndex2"
+                      query="message.flip2"></wd-page-number>
+    </uib-tab>
+  </uib-tabset>
+</div>
+

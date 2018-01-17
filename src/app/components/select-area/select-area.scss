@@ -1,0 +1,21 @@
+.select-area{
+  text-align: left;
+  margin-bottom: 10px;
+  padding-top: 2px;
+  >span{font-size: 14px;}
+  color: #767676;
+
+  ul{
+    max-width: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    li{
+      padding: 5px;
+      cursor: pointer;
+      &:hover{background-color: #5d9beb;color: #fff;}
+    }
+    li.active{
+      background-color: #5d9beb;color: #fff;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="10" class="tlr">
+                    <div class="rule-div">
+                        <span class="rule-title">用户管理</span>
+                    </div>
+                    <button class="btn btn-default btn-small" ng-click="user.add()">新增</button>
+                    <div class="ib Searchfor">
+                        <input style="width:200px;" type="text" class="ml5 ib form-control width-100"
+                                ng-model="user.inputText" placeholder="请输入用户名称"/>
+                        <span class="glyphicon glyphicon-search" ng-click="user.pageIndex=1;user.search()"></span>
+                    </div>
+                    <button class="btn btn-default btn-small" ng-click="user.formoreobj();user.change()">高级筛选</button>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="user.moreobject">
+                <th colspan="10" style="text-align: left;">
+                  <div class="wd-date ib col-sm-5">
+                    <div class="ib Hfilter col-sm-3">创建时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="user.datePickTimeStart"
+                                      ng-model="user.datePickTimeStart" end-date="user.nowTime"
+                                      ng-change="user.pageIndex=1;user.search()" >
+                      </wd-date-picker> <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="user.datePickTimeEnd"
+                                      ng-model="user.datePickTimeEnd"
+                                      ng-change="user.pageIndex=1;user.search()" >
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                    <div class="obj col-sm-3">
+                        <div class="col-sm-3 ib Hfilter">创建人：</div>
+                        <div class="ib col-sm-8">
+                          <select ng-change="user.pageIndex=1;user.search()" ng-model="user.creator" name="creatorList" id="creatorList"
+                                  class="form-control"
+                                  ng-options="item.id as item.name for item in user.CREATOR">
+                            <option value="" selected="selected">全部</option>
+                          </select>
+                        </div>
+                    </div>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr>
+                <th>账号名称</th>
+                <th>联系方式</th>
+                <th>角色类型</th>
+                <th>部门</th>
+                <th>创建人</th>
+                <th>创建时间 <span ng-click="user.onSort()" class="glyphicon glyphicon-circle-arrow-{{user.direction}}"></span></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in user.mydata">
+                <td>{{obj.name}}</td>
+                <td>{{obj.telephone}}</td>
+                <td>{{obj.roleName}}</td>
+                <td>{{obj.departName}}</td>
+                <td>{{obj.creatorName}}</td>
+                <td>{{obj.createTime}}</td>
+                <td>
+                    <a ng-click="user.edit(obj)">编辑</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a ng-if="!(obj.id==userInfo.userId)" ng-click="user.del(obj.id,obj.name)">删除</a>
+                    <!--绑定数据时合并成一个方法 根据权限判断-->
+                </td>
+            </tr>
+            <tr ng-if="user.mydata.length === 0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+  <wd-page-number  total="user.total" page-size="user.pageSize"  page-index="user.pageIndex" query="user.flip"></wd-page-number>
+</div>
+
+

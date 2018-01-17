@@ -1,0 +1,102 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+              <th colspan="8" class="tlr">
+                <div class="grant-div">
+                  <span class="grant-title">详情查看:</span>
+                </div>
+                <div class="ib Searchfor">
+                  <input style="width:300px;" type="text" class="ml5 ib form-control" ng-keyup="cashdit.pageIndex=1;cashdit.queryKeyUp($event)" ng-model="cashdit.inputText" placeholder="请输入兑换单位关键字/VIN/手机号/网点代码"/>
+                  <span class="glyphicon glyphicon-search" ng-click="cashdit.pageIndex=1;cashdit.changeDate()"></span>
+                </div>
+                <button ng-click="cashdit.getExecl()" class="btn btn-default btn-small" type="button">导出</button>
+                <button ng-click="cashdit.cancel()" class="btn btn-default btn-small" type="reset">返回</button>
+              </th>
+            </tr>
+            <tr>
+              <th colspan="10">
+                <div class="obj wh70 fl Hfilter">地域：</div>
+                <div class="obj col-sm-4">
+                  <div class="col-sm-4 ib">
+                    <select ng-change="cashdit.changeProvince()" ng-model="cashdit.provinceId" class="form-control" id="pName"
+                            ng-options="item.id as item.name for item in cashdit.AreaList" >
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">省</span>
+                  <div class="col-sm-4 ib">
+                    <select ng-change="cashdit.changeCity()" ng-model="cashdit.cityId" class="form-control" id="cName"
+                            ng-options="item.id as item.name for item in cashdit.CityList">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">市</span>
+                </div>
+
+                <div class="obj wh85 fl Hfilter">已兑换数量：</div>
+                <div class="obj col-sm-4">
+                  <div class="col-sm-2 ib" >
+                    <input type="text" id="cashNumberSmall" class="form-control"  ng-blur="cashdit.cashNumberList()"   ng-model="cashdit.exchangeQuotaSmall"  >
+                   </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                  <div class="col-sm-2 ib">
+                    <input type="text" id="cashNumberBig"  class="form-control" ng-blur="cashdit.cashNumberList()" ng-model="cashdit.exchangeQuotaBig"  >
+                   </div>
+                </div>
+
+              </th>
+             </tr>
+            <tr>
+                <th>兑换网点</th>
+                <th>网点代码</th>
+                <th>所属省</th>
+                <th>所属市</th>
+                <th>可兑换数量</th>
+                <th>已兑换数量<span style="margin-left: 3px;"  ng-if="!cashdit.controlOrderLeft" class="glyphicon glyphicon-circle-arrow-up" ng-click="cashdit.orderCheck()"></span><span style="margin-left: 3px;" ng-if="cashdit.controlOrderLeft" class="glyphicon glyphicon-circle-arrow-down" ng-click="cashdit.orderCheck()"></span></th>
+                <th>过期未兑换数量<span style="margin-left: 3px;"  ng-if="!cashdit.controlOrderRight" class="glyphicon glyphicon-circle-arrow-up" ng-click="cashdit.orderCheckRight()"></span><span style="margin-left: 3px;"  ng-if="cashdit.controlOrderRight" class="glyphicon glyphicon-circle-arrow-down" ng-click="cashdit.orderCheckRight()"></span></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in cashdit.cashditData">
+                <td>{{obj.stationName}}</td>
+                <td>{{obj.stationId}}</td>
+                <td>{{obj.provinceName}}</td>
+                 <td>{{obj.cityName}}</td>
+                <td>{{obj.quantity}}<span ng-if="cashdit.unitTool(obj.quantity)">{{obj.unit}}</span></td>
+                <td>{{obj.exchangeQuantity}}<span ng-if="cashdit.unitTool(obj.exchangeQuantity+'')">{{obj.unit}}</span></td>
+                <td>{{obj.restQuantity}}<span ng-if="cashdit.unitTool(obj.restQuantity)">{{obj.unit}}</span></td>
+                <td>
+                    <a ui-sref="tservice.cashinfo({id:obj.stationId,actId:cashdit.id,sType:obj.stationType})" >详情</a>
+                </td>
+            </tr>
+            <tr ng-if="cashdit.cashditData.length === 0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="cashdit.total" page-size="cashdit.pageSize" page-index="cashdit.pageIndex"
+                    query="cashdit.flip"></wd-page-number>
+</div>
+<!--<script>
+  var cashNumberSmall = document.getElementById('cashNumberSmall');
+  cashNumberSmall.onkeyup=function (event) {
+    var value = this.value;
+      if(value=='') {
+      this.value = value.substring(0, value.length-1);
+    }
+  };
+  var cashNumberBig = document.getElementById('cashNumberBig');
+  cashNumberBig.onkeyup=function (event) {
+    var value = this.value;
+     if(value=='') {
+      this.value = value.substring(0, value.length-1);
+    }
+  };
+
+</script>-->
+
+

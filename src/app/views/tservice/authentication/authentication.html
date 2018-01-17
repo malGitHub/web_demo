@@ -1,0 +1,294 @@
+<div class="content-padding" ng-controller="TserviceAuthenticationController">
+  <uib-tabset>
+    <uib-tab heading="人工审核" select="authentication.changeTab(1)">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="14" style="text-align: right;">
+              <div class="ib authenticationSearch">
+                <input style="width:200px;" type="text" class="ml15 ib form-control width-100"
+                        ng-model="authentication.tab1.applyUser" placeholder="请输入申请人账户"/>
+                <span class="glyphicon glyphicon-search" ng-click="authentication.tab1.pageIndex=1;authentication.tab1.onSearch()"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="authentication.getExcelManual()">导出</button>
+              <button class="btn btn-default btn-small" ng-click="authentication.tab1.formoreobj()">高级筛选</button>
+            </th>
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr ng-show="authentication.tab1.moreobject">
+            <th colspan="14" style="text-align: left;">
+              <div class="col-sm-12">
+                <div class="ib col-sm-2">
+                  <div class="ib Hfilter col-sm-6">审核状态：</div>
+                  <div class="ib  col-sm-6">
+                    <select class="form-control  col-sm-8" ng-change="authentication.tab1.pageIndex=1;authentication.tab1.onStatusFilter()"
+                            ng-model="authentication.tab1.reviewStatus"
+                            ng-options="item.key as item.value for item in authentication.EX_STATUSES">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="wd-date ib col-sm-5">
+                  <div class="ib Hfilter col-sm-3">申请时间：</div>
+                  <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"
+                                    ng-change="authentication.tab1.pageIndex=1;authentication.tab1.onTimeFilterStart()"
+                                    ng-model="authentication.tab1.applyDateStart" format="yyyy.mm.dd"></wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"
+                                    ng-change="authentication.tab1.pageIndex=1;authentication.tab1.onTimeFilterEnd()"
+                                    ng-model="authentication.tab1.applyDateEnd"  format="yyyy.mm.dd"></wd-date-picker>
+                  </div>
+                </div>
+                <div class="ib col-sm-2">
+                  <div class="ib Hfilter col-sm-6" >审核结果：</div>
+                  <div class="ib  col-sm-6">
+                    <select class="form-control" ng-change="authentication.tab1.pageIndex=1;authentication.tab1.onResultFilter()"
+                            ng-model="authentication.tab1.reviewResult"
+                            ng-options="item.key as item.value for item in authentication.EX_RESULTS">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib col-sm-3">
+                  <div class="ib col-sm-4 Hfilter">VIN：</div>
+                  <div class="ib  col-sm-8 authenticationSearch" style="margin:0">
+                    <input type="text" class="ib form-control width-100"
+                           ng-model="authentication.tab1.carVin" placeholder="请输入VIN"/>
+                    <span class="glyphicon glyphicon-search" ng-click="authentication.tab1.pageIndex=1;authentication.tab1.onVinFilter()"></span>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-sm-12 mt5">
+                <div class="ib col-sm-2">
+                  <div class="ib Hfilter col-sm-6">系列：</div>
+                  <div class="ib  col-sm-6">
+                    <select ng-change="authentication.tab1.pageIndex=1;authentication.changeSelectType(authentication.serise)" ng-model="authentication.serise"  class="form-control" ng-options="item.seriseId as item.seriseName for item in authentication.CAR_SERIES"  style="max-width:263px;">
+                      <option value="" selected="selected">请选择系列</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib col-sm-5">
+                  <div class="ib Hfilter col-sm-3">车型：</div>
+                  <div class="ib  col-sm-9">
+                    <div class="ib col-sm-5 ml3">
+                      <select  ng-change="authentication.tab1.pageIndex=1;authentication.changeSelectModel()"  ng-model="authentication.modelNameList" class="form-control" ng-options="item.modelId as item.modelName for item in authentication.CAR_Model"  style="max-width:263px;"><option value="" selected="selected">请选择车型</option></select>
+                    </div>
+
+                  </div>
+                </div>
+                 <div class="obj col-sm-4">
+                   <div class="ib Hfilter col-sm-3" >地域：</div>
+                  <div class="col-sm-3 ib">
+                    <select ng-change="authentication.changetab1Province()" ng-model="authentication.provinceIdOne" class="form-control" id="pNameOne"
+                            ng-options="item.id as item.name for item in authentication.AreaListOne" >
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">省</span>
+                  <div class="col-sm-3 ib">
+                    <select ng-change="authentication.changetab1City()" ng-model="authentication.cityIdOne" class="form-control" id="cNameOne"
+                            ng-options="item.id as item.name for item in authentication.CityListOne">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">市</span>
+                </div>
+
+               </div>
+
+            </th>
+          </tr>
+          <tr>
+            <th>审核状态</th>
+            <th>申请人账户</th>
+            <th>VIN</th>
+            <th>车系</th>
+            <th>车型</th>
+            <th>所属省</th>
+            <th>所属市</th>
+            <th>申请时间 <span ng-click="authentication.tab1.onSort()" class="glyphicon glyphicon-circle-arrow-{{authentication.tab1.direction}}"></span></th>
+            <th>审核结果</th>
+            <th>审核人</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in authentication.tab1.list">
+            <td>{{obj.reviewStatus}}</td>
+            <td>{{obj.applyUserPhone}}</td>
+            <td>{{obj.carVin}}</td>
+            <td>{{obj.seriesName}}</td>
+            <td>{{obj.modelName}}</td>
+            <td>{{obj.provinceName}}</td>
+            <td>{{obj.cityName}}</td>
+            <td>{{obj.applyDate}}</td>
+            <td>{{obj.reviewResult?obj.reviewResult:'无'}}</td>
+            <td>{{obj.reviewUserName?obj.reviewUserName:'无'}}</td>
+            <td>
+              <span ng-if="obj.reviewStatus==='未审核'">
+                <a ng-click="authentication.tab1.see(obj)">审核</a>
+              </span>
+              <span ng-if="obj.reviewStatus==='已审核'">
+                <a ng-click="authentication.tab1.see(obj)">查看</a>
+              </span>
+            </td>
+          </tr>
+          <tr ng-if="authentication.tab1.list.length === 0">
+            <td colspan="14" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="authentication.tab1.total" page-size="authentication.tab1.pageSize"
+                      page-index="authentication.tab1.pageIndex" query="authentication.tab1.query"></wd-page-number>
+    </uib-tab>
+    <uib-tab heading="系统审核" select="authentication.changeTab(2)">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="14" style="text-align: right;">
+              <div class="ib authenticationSearch">
+                <input style="width:200px;" type="text" class="ml15 ib form-control width-100"
+                        ng-model="authentication.tab2.keyWord" placeholder="请输入申请人账户"/>
+                <span class="glyphicon glyphicon-search" ng-click="authentication.tab2.pageIndex=1;authentication.tab2.onSearch()"></span>
+              </div>
+              <button class="btn btn-default btn-small" ng-click="authentication.getExcelSystem()">导出</button>
+              <button class="btn btn-default btn-small" ng-click="authentication.tab2.formoreobj()">高级筛选</button>
+            </th>
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr ng-show="authentication.tab2.moreobject">
+            <th colspan="10" style="text-align: left;">
+              <div class="col-sm-12 mt5">
+                <div class="ib col-sm-2">
+                  <span class="ib col-sm-6 Hfilter">审核状态：</span>
+                  <div class="ib col-sm-6">
+                    <select class="form-control" ng-change="authentication.tab2.pageIndex=1;authentication.tab2.onStatusFilter()"
+                            ng-model="authentication.tab2.reviewStatus"
+                            ng-options="item.key as item.value for item in authentication.EX_SYS_STATUSES">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib wd-date col-sm-5">
+                  <span class="ib col-sm-3 Hfilter">申请时间：</span>
+          <div class="mp-date-time-pick ib  col-sm-9 authenticationTime">
+                    <wd-date-picker class="ib col-sm-5"
+                                    ng-change="authentication.tab2.pageIndex=1;authentication.tab2.onTimeFilterStart()"
+                                    ng-model="authentication.tab2.applyDateStart" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                    <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                    <wd-date-picker class="ib col-sm-5"
+                                    ng-change="authentication.tab2.pageIndex=1;authentication.tab2.onTimeFilterEnd()"
+                                    ng-model="authentication.tab2.applyDateEnd" format="yyyy-mm-dd">
+                    </wd-date-picker>
+                  </div>
+                </div>
+                <div class="ib col-sm-2">
+                  <div class="ib col-sm-6 Hfilter">审核结果：</div>
+                  <div class="ib  col-sm-6">
+                    <select class="form-control" ng-change="authentication.tab2.pageIndex=1;authentication.tab2.onResultFilter()"
+                            ng-model="authentication.tab2.reviewResult"
+                            ng-options="item.key as item.value for item in authentication.EX_SYS_RESULTS">
+                      <option value="">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib col-sm-3">
+                  <div class="ib col-sm-4 Hfilter">VIN：</div>
+                  <div class="ib  col-sm-8 authenticationSearch" style="margin:0">
+                    <input type="text" class="ib form-control width-100"
+                           ng-model="authentication.tab2.carVin" placeholder="请输入VIN"/>
+                    <span class="glyphicon glyphicon-search" ng-click="authentication.tab2.pageIndex=1;authentication.tab2.onVinFilter()"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mt5">
+                <div class="ib col-sm-2">
+                  <div class="ib Hfilter col-sm-6">系列：</div>
+                  <div class="ib  col-sm-6">
+                    <select ng-change="authentication.tab2.pageIndex=1;authentication.changeSelectType2(authentication.serise2)" ng-model="authentication.serise2"  class="form-control" ng-options="item.seriseId as item.seriseName for item in authentication.CAR_SERIES"  style="max-width:263px;">
+                      <option value="" selected="selected">请选择系列</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ib col-sm-5">
+                  <div class="ib Hfilter col-sm-3">车型：</div>
+                  <div class="ib  col-sm-9 ">
+                    <div class="ib col-sm-5 ml3">
+                      <select  ng-change="authentication.tab2.pageIndex=1;authentication.changeSelectModel2()"  ng-model="authentication.modelNameList2" class="form-control" ng-options="item.modelId as item.modelName for item in authentication.CAR_Model2"  style="max-width:263px;"><option value="" selected="selected">请选择车型</option></select>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="obj col-sm-4">
+                  <div class="ib Hfilter col-sm-3" >地域：</div>
+                  <div class="col-sm-3 ib">
+                    <select ng-change="authentication.changetab2Province()" ng-model="authentication.provinceIdTwo" class="form-control" id="pNameTwo"
+                            ng-options="item.id as item.name for item in authentication.AreaListTwo" >
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">省</span>
+                  <div class="col-sm-3 ib">
+                    <select ng-change="authentication.changetab2City()" ng-model="authentication.cityIdTwo" class="form-control" id="cNameTwo"
+                            ng-options="item.id as item.name for item in authentication.CityListTwo">
+                      <option value="" selected="selected">全选</option>
+                    </select>
+                  </div>
+                  <span class="ib Hfilter col-sm-1" style="text-align: center;">市</span>
+                </div>
+
+              </div>
+
+            </th>
+            <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>审核状态</th>
+            <th>申请人账户</th>
+            <th>VIN</th>
+            <th>车系</th>
+            <th>车型</th>
+            <th>所属省</th>
+            <th>所属市</th>
+            <th>申请时间 <span ng-click="authentication.tab2.onSort()" class="glyphicon glyphicon-circle-arrow-{{authentication.tab2.direction}}"></span></th>
+            <th>审核结果</th>
+            <th>审核人</th>
+            <th>审核时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in authentication.tab2.list">
+            <td>{{obj.status===0?'未审核':'已审核'}}</td>
+            <td>{{obj.userPhone}}</td>
+            <td>{{obj.carVin}}</td>
+            <td>{{obj.seriesName}}</td>
+            <td>{{obj.modelName}}</td>
+            <td>{{obj.provinceName}}</td>
+            <td>{{obj.cityName}}</td>
+            <td>{{obj.applyDate}}</td>
+            <td>{{obj.result===0?'无':obj.result===1?'未通过':'通过'}}</td>
+            <td>{{obj.reviewer}}</td>
+            <td>{{obj.reviewDate}}</td>
+            <td>
+              <a ng-click="authentication.tab2.see(obj)">查看</a>
+            </td>
+          </tr>
+          <tr ng-if="authentication.tab2.list.length === 0">
+            <td colspan="14" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number total="authentication.tab2.total" page-size="authentication.tab2.pageSize"
+                      page-index="authentication.tab2.pageIndex" query="authentication.tab2.query"></wd-page-number>
+    </uib-tab>
+  </uib-tabset>
+</div>
+

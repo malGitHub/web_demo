@@ -1,0 +1,48 @@
+<div class="whp100 homewhp100">
+    <div class="homeTitle">
+      <img src="/assets/images/yun.jpg" alt="解放行">
+      <!--<p>云服务平台运营支撑系统</p>-->
+      <!--<p>云服务平台系统demo</p>-->
+    </div>
+    <div class="homeTop">
+        <div class="homeLeft">
+            <div class="homeBody "><i class="greenHome"></i>用户登录</div>
+            <div class="bodyFooter">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="homeInput">
+                            <input ng-model="home.loginName" placeholder="请填写用户名" ng-change="home.clearErrorMsg()" type="text" id="username" class="form-control " name="username" required>
+                            <span class="inputBg username"><img src="/assets/images/userBg.png" alt="用户名"></span>
+                            <div wd-messages="username">
+                                <div wd-message="required">请填写用户名</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <div class="homeInput">
+                            <input ng-model="home.loginPwd" placeholder="请填写登录密码" ng-change="home.clearErrorMsg()" ng-keyup="home.enterKeyup($event)" type="password" id="password" class="form-control " name="password" required>
+                            <span class="inputBg password"><img src="/assets/images/psdBg.jpg" alt="密码"></span>
+                            <div wd-messages="password">
+                                <div wd-message="required">请填写密码</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="homeWarn">
+                      {{loginErrorMsg| cut:true:20:' ...'}}
+                    </div>
+
+                </form>
+                <div class="form-group loginBtn" >
+                    <a class="homeLogin btn" ng-click="home.doLogin()">登录</a>
+                </div>
+                <!--<a class="homeRegister btn" href="http://wdpassport.mapbar.com/#/registerM" target="_blank">还没有账号，立即注册</a>-->
+            </div>
+            <!--<a  class="col-sm-12 aboutusBox" ui-sref="aboutus">联系我们</a>-->
+        </div>
+
+    </div>
+    <div class="homeFooter">
+            <!--<div class="col-sm-12">一汽解放官网：<a target="_blank" href="http://www.fawjiefang.com.cn/">http://www.fawjiefang.com.cn/</a></div>-->
+            <!--<div class="col-sm-12">COPYRIGHT©2014 FAW GROUP CORPORRTION     吉CIP备8971282719</div>-->
+    </div>
+</div>

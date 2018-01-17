@@ -1,0 +1,102 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{activitiesnewone.title}}</h3>
+</div>
+<div class="modal-body activitiesnewone">
+  <div class="bggray"></div>
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="form_one" ng-submit="activitiesnewone.submit($event,form_one)" novalidate="">
+    <h5 class="h5title">活动信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnewone.list.activityName" type="text" id="activityName" class="form-control col-sm-10" name="activityName" required ng-maxlength="100" ng-readonly="activitiesnewone.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px;'>
+      <i class="col-sm-12 disabledTime" ng-if="activitiesnewone.read"></i>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动开始日期</label>
+      <div class="mp-date-time-pick col-sm-4 ib">
+        <wd-date-picker class="col-sm-5"  start-date="activitiesnewone.nowTime" format="yyyy-mm-dd" ng-model="activitiesnewone.list.activityStartDate" data="activitiesnewone.list.activityStartDate" required></wd-date-picker>
+      </div>
+      <label  class="control-label"><span style="color:red">*</span>活动结束日期</label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="0" ng-click="activitiesnewone.list.activityEndDate=''" ng-model="activitiesnewone.aciveTimeInput" required>
+        送完为止
+      </label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="-1" ng-model="activitiesnewone.aciveTimeInput" required ng-disabled="activitiesnewone.read">
+        自定义
+      </label>
+      <div class="mp-date-time-pick ib"  style="max-width: 200px;" ng-if="activitiesnewone.aciveTimeInput=='-1'">
+        <wd-date-picker ng-model="activitiesnewone.list.activityEndDate"  start-date="activitiesnewone.nowTime" format="yyyy-mm-dd" data="activitiesnewone.list.activityEndDate" required></wd-date-picker>
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>发放数量</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnewone.list.activityQuota" type="number" id="activityQuota" class="form-control wh100" name="activityQuota" required ng-maxlength="60" ng-readonly="activitiesnewone.pathRead&&activitiesnewone.overdue">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单车发放限额</label>
+      <select ng-model="activitiesnewone.queryInfo.singleQuota" ng-change="activitiesnewone.singleFunc()" name="singleQuota" id="singleQuota" class="form-control" style="max-width:100px;" ng-disabled="activitiesnewone.read">
+        <option value='1'>1</option>
+        <option value='-1'>自定义</option>
+      </select>
+      <input class="form-control wh100" type="number" ng-if="activitiesnewone.queryInfo.singleQuota=='-1'" ng-model="activitiesnewone.list.singleQuota" placeholder="请输入赠送物品数量" ng-readonly="activitiesnewone.read" required>
+    </div>
+    <h5 class="h5title">优惠券信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnewone.list.couponName" type="text" id="couponName" class="form-control col-sm-10" name="couponName" required ng-maxlength="60" ng-readonly="activitiesnewone.read">
+      </div>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>内容</label>
+      <div class="col-sm-3">
+        <textarea ng-model="activitiesnewone.list.couponContent" id="couponContent" rows="1" name="couponContent" class="form-control ng-pristine ng-valid" placeholder="请输入优惠券内容" required  ng-maxlength=200 ng-readonly="activitiesnewone.read"></textarea>
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单位</label>
+      <div class="col-sm-3 wh60">
+        <input ng-model="activitiesnewone.list.couponUnit" type="text" id="couponUnit" class="form-control" name="couponUnit" required ng-maxlength="20" ng-readonly="activitiesnewone.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <i class="col-sm-12 disabledTime" ng-if="activitiesnewone.read"></i>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>优惠券有效期</label>
+      <!--<div class="control-label" style="text-align: left;float:left;">-->
+      <label class="radio-inline txtalLeft">
+        <input name="Validity" type="radio" ng-value="0" ng-click="activitiesnewone.list.expirationDays='';activitiesnewone.list.expirationStartDate='';activitiesnewone.list.expirationEndDate=''" ng-model="activitiesnewone.list.expirationStatus" required ng-disabled="activitiesnewone.read">
+        不限
+      </label>
+      <label class="radio-inline txtalLeft">
+        <input name="Validity" type="radio" ng-value="1" ng-click="activitiesnewone.list.expirationStartDate='';activitiesnewone.list.expirationEndDate=''" ng-model="activitiesnewone.list.expirationStatus" required ng-disabled="activitiesnewone.read" >
+        领取之后一定周期内
+      </label>
+      <div class="ib" ng-if="activitiesnewone.list.expirationStatus=='1'">
+        <input ng-model="activitiesnewone.list.expirationDays" type="number" id="expirationDays" class="form-control  ng-pristine ng-valid ib wh100" name="expirationDays" required placeholder="限制天数" ng-readonly="activitiesnewone.read"> <span class="ib wh20 mr5" style="vertical-align: bottom;margin-bottom: 3px;">/天</span>
+      </div>
+      <label class="radio-inline txtalLeft">
+        <input name="Validity" type="radio" ng-value="2" ng-click="activitiesnewone.list.expirationDays=''" ng-model="activitiesnewone.list.expirationStatus" required ng-disabled="activitiesnewone.read">
+        自定义
+      </label>
+      <div class="mp-date-time-pick ib" ng-if="activitiesnewone.list.expirationStatus=='2'">
+        <wd-date-picker class="ib"  start-date="activitiesnewone.nowTime" date="activitiesnewone.list.expirationStartDate"
+                        ng-model="activitiesnewone.list.expirationStartDate"
+                        ng-change="activitiesnewone.changeDate()"  format="yyyy-mm-dd" required>
+        </wd-date-picker><span class="ib Hfilter" style="text-align: center;">至</span>
+        <wd-date-picker class="ib"  start-date="activitiesnewone.nowTime" date="activitiesnewone.list.expirationEndDate"
+                        ng-model="activitiesnewone.list.expirationEndDate"
+                        ng-change="activitiesnewone.changeDate()"  format="yyyy-mm-dd" required>
+        </wd-date-picker>
+      </div>
+     </div>
+    <div class="form-group">
+         <div class="col-sm-offset-3" >
+           <button class="btn btn-primary"  ng-if="(activitiesnewone.activeStatus==1 ||activitiesnewone.activeStatus==3 ||activitiesnewone.activeStatus==4||activitiesnewone.activeStatus==5)" type="button" style="width: 85px;" ng-click="activitiesnewone.editConfirm()">编辑</button>
+            <button ng-disabled="form_one.$invalid" ng-click="activitiesnewone.submit('1')" class="btn btn-primary" type="button" style="width: 85px;">下一步</button>
+            <button ng-disabled="activitiesnewone.isCancel==1" ng-click="activitiesnewone.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+        </div>
+      </div>
+   </form>
+</div>

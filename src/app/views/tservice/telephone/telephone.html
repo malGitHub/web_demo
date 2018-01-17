@@ -1,0 +1,130 @@
+<div class="content-padding">
+  <uib-tabset>
+    <uib-tab heading="常用" select="telephone.changeused(1)">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ng-click="telephone.new1()">新增</button>
+              <div class="ib Searchfor">
+
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100"  ng-model="telephone.query2.name" placeholder="请输入联系人名称"/>
+                <span class="glyphicon glyphicon-search" ng-click="telephone.pageIndex=1;telephone.changeU()"></span>
+              </div>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>联系方式</th>
+            <th>名称</th>
+            <th>系列</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr ng-repeat="obj in telephone.mydata">
+            <td>{{obj.tel}}</td>
+            <td>{{obj.name}}</td>
+            <!--<td>{{obj.carType===1?'全部车系':obj.carType===2?'JH6':obj.carType===3?'非JH6':''}}</td>carTypeName-->
+            <td>{{obj.carTypeName}}</td>
+            <td>
+              <a  ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-up', false: 'glyphicon glyphicon-arrow-up'}[$index==0]" ng-click="telephone.up(obj.id,obj.sort,obj.type)"></a>
+              <a ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-down'}[$index==(telephone.mydata.length-1)]" ng-click="telephone.down(obj.id,obj.sort,obj.type)"></a>
+              <a ng-click="telephone.edit1(obj.id,obj.tel,obj.carType,obj.name)">编辑</a>
+              <a ng-click="telephone.delItem(obj.id)">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="telephone.mydata.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="telephone.total" page-size="telephone.pageSize"  page-index="telephone.pageIndex" query="telephone.pageU"></wd-page-number>
+    </uib-tab>
+
+    <uib-tab heading="救援" select="telephone.changeResuce(2)">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ng-click="telephone.new2()">新增</button>
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100"  ng-model="telephone.query1.name" placeholder="请输入联系人名称"/>
+                <span class="glyphicon glyphicon-search" ng-click="telephone.pageIndexone=1;telephone.changeR()"></span>
+              </div>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>联系方式</th>
+            <th>名称</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in telephone.mydata1">
+            <td>{{obj.tel}}</td>
+            <td>{{obj.name}}</td>
+            <td>
+              <a ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-up', false: 'glyphicon glyphicon-arrow-up'}[$index==0]" ng-click="telephone.uprescue(obj.id,obj.sort,obj.type)"></a>
+              <a ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-down'}[$index==(telephone.mydata1.length-1)]" ng-click="telephone.downrescue(obj.id,obj.sort,obj.type)"></a>
+              <a ng-click="telephone.edit2(obj.id,obj.tel,obj.name)">编辑</a>
+              <a ng-click="telephone.delRescue(obj.id)">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="telephone.mydata1.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+        </table>
+      </div>
+      <wd-page-number  total="telephone.totalR" page-size="telephone.pageSizeone"  page-index="telephone.pageIndexone" query="telephone.pageR"></wd-page-number>
+    </uib-tab>
+
+
+    <uib-tab heading="保险公司" select="telephone.changeTab(3)">
+      <div class="content-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="10" style="text-align: right;">
+              <button class="btn btn-default btn-small" ng-click="telephone.new3()">新增</button>
+              <div class="ib Searchfor">
+                <input style="width:200px;" type="text" class="ml5 ib form-control width-100" ng-model="telephone.query.name" placeholder="请输入联系人名称"/>
+                <span class="glyphicon glyphicon-search" ng-click="telephone.pageIndextwo=1;telephone.changeI()"></span>
+
+              </div>
+            </th>   <!--第一行th用于新建等按钮-->
+          </tr>
+          <tr>
+            <th>联系方式</th>
+            <th>名称</th>
+            <th>图片</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="obj in telephone.mydata2">
+            <td>{{obj.tel}}</td>
+            <td>{{obj.name}}</td>
+            <td><img ng-src="{{obj.imgPath}}" alt="{{obj.name}}" width="50"></td>
+            <td>
+              <a ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-up', false: 'glyphicon glyphicon-arrow-up'}[$index==0]" ng-click="telephone.upInsurance(obj.id,obj.sort,obj.type)"></a>
+              <a ng-class="{true: 'glyphiconGray glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-down'}[$index==(telephone.mydata2.length-1)]" ng-click="telephone.downInsurance(obj.id,obj.sort,obj.type)"></a>
+              <a ng-click="telephone.edit(obj.id,obj.tel,obj.name,obj.imgPath)">编辑</a>
+              <a ng-click="telephone.delSafest(obj.id,obj.name)">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="telephone.mydata2.length === 0">
+            <td colspan="10" style="text-align: center;">无数据</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <wd-page-number  total="telephone.totalI" page-size="telephone.pageSizetwo"  page-index="telephone.pageIndextwo" query="telephone.pageI"></wd-page-number>
+    </uib-tab>
+  </uib-tabset>
+</div>

@@ -1,0 +1,185 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建活动</h3>
+</div>
+<div class="modal-body activitiesnew">
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="activitiesend.submit($event, add_form)" novalidate="">
+    <!--------------------------------------兑换设置start-------------------------------------------->
+    <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">兑换设置</h5>
+    <div class="col-sm-1" style="line-height: 40px;text-indent:10px;font-size:14px;">兑换网点</div>
+    <div class="content-padding col-sm-8">
+      <uib-tabset>
+        <uib-tab heading="全部网点">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeProvinceOne()" ng-model="activitiesend.query1.provinceId" class="form-control" id="pNameAll"
+                              ng-options="item.id as item.name for item in activitiesend.AreaList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeCityOne()" ng-model="activitiesend.query1.cityId" class="form-control" id="cNameAll"
+                              ng-options="item.id as item.name for item in activitiesend.CityList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeStoreTypeOne()" ng-model="activitiesend.query1.stationType" id="storeTypeAll" class="form-control">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeStoreOne()" ng-model="activitiesend.query1.stationId" class="form-control" id="sNameAll"
+                              ng-options="item.stationId as item.stationName for item in activitiesend.StoreList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesend.query1.flag='';activitiesend.query1.page_number=1;activitiesend.getAllList()" class="form-control wh100" >查询</button>
+                    <div style="clear:both"></div>
+                       <!-- <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesend.query1.keyWord" type="text" class="form-control col-sm-2 wh182" placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesend.query1.page_number=1;activitiesend.query1.flag=1;activitiesend.getAllList();activitiesend.addBtn==false;" class="glyphicon glyphicon-search"></span>
+                      </div>
+                       <div class="col-sm-5"  >
+                        <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                        <div class="col-sm-3">
+                          <select class="form-control" ng-model="activitiesend.limitif"
+                                   ng-change="activitiesend.changeLimit()">
+                            <option value="false" selected="selected">不限</option>
+                            <option value="true">自定义</option>
+                          </select>
+                        </div>
+                         <input class="form-control" style="width:150px;" type="number" min="1" ng-if="activitiesend.limitif=='true'"
+                               ng-model="activitiesend.limit"
+                               placeholder="请填写数量" required>
+                      </div>-->
+                      <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                      <select class="form-control" ng-model="activitiesend.limitif"
+                              ng-change="activitiesend.changeLimit()" style="float: left;width: 95px;">
+                        <option value="false" selected="selected">不限</option>
+                        <option value="true">自定义</option>
+                      </select>
+                      <div class="Hfilter" style="float:left;margin: 0 12px;"></div>
+                      <input class="form-control" style="float: left;width:150px;" type="number" min="1" ng-if="activitiesend.limitif=='true'"
+                             ng-model="activitiesend.limit"
+                             placeholder="请填写数量" required>
+                     <button type="button" style="float: right;" ng-click="activitiesend.addshop();" class="form-control wh100" ng-disabled="activitiesend.addBtn||activitiesend.requesting2">添加至活动</button>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesend.allStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+               </tr>
+              <tr ng-if="activitiesend.allStationList === 0 || activitiesend.noData==true;">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number ng-if="!activitiesend.noData" total="activitiesend.total1" page-size="activitiesend.query1.page_size"  page-index="activitiesend.query1.page_number" query="activitiesend.flip1"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="已添加网点" select="activitiesend.clearTab2();activitiesend.getAddedList()">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeProvince()" ng-model="activitiesend.query2.provinceId" class="form-control" id="pNameAdded"
+                              ng-options="item.id as item.name for item in activitiesend.AreaList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeCity()" ng-model="activitiesend.query2.cityId" class="form-control" id="cNameAdded"
+                              ng-options="item.id as item.name for item in activitiesend.CityList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeStoreType()" ng-model="activitiesend.query2.stationType" id="storeTypeAdded" class="form-control">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesend.changeStore()" ng-model="activitiesend.query2.stationId" class="form-control" id="sNameAdded"
+                              ng-options="item.stationId as item.stationName for item in activitiesend.StoreList">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesend.query2.flag='';activitiesend.query2.page_number=1;activitiesend.getAddedList()" class="form-control wh100" >查询</button>
+                    <div style="clear:both"></div>
+
+                    <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesend.query2.keyWord" type="text" class="form-control col-sm-2 wh178 " placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesend.query2.page_number=1;activitiesend.query2.flag=1;activitiesend.getAddedList()" class="glyphicon glyphicon-search"></span>
+                      </div>
+                      <div class="Hfilter" style="float:left;margin:0 12px;"></div>
+                    </div>
+                    <button type="button" style="float: right;" ng-click="activitiesend.clearStation()" class="form-control wh100" >清除网点</button>
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesend.addedStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <!--<td class="col-sm-1" ng-if="obj.quantity==0">发放限额：不限</td>-->
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+                <td class="col-sm-1">
+                  <span class="glyphicon glyphicon-remove" ng-click="activitiesend.storeDelete($index)"></span>
+                </td>
+              </tr>
+              <tr ng-if="activitiesend.addedStationList.length ===0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  total="activitiesend.total2" page-size="activitiesend.query2.page_size"  page-index="activitiesend.query2.page_number" query="activitiesend.flip2"></wd-page-number>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div style="clear: both;"></div>
+     <!--------------------------------------兑换设置end-------------------------------------------->
+    <div class="form-group" style="margin-top:50px;">
+      <div class="col-sm-offset-2" >
+        <button ng-disabled="add_form.$invalid || activitiesend.requesting" class="btn btn-primary" type="submit" style="width: 85px;">提交</button>
+        <button ng-disabled="add_form.$invalid || activitiesend.requesting" ng-click="activitiesend.save()" class="btn btn-primary" type="button" style="width: 85px;" >保存</button>
+        <button ng-click="activitiesend.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">取消</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+

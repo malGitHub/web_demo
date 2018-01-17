@@ -1,0 +1,176 @@
+<div class="content-padding">
+  <div class="content-body">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+          novalidate="">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">工单信息：</h5>
+        </div>
+
+        <label class="col-sm-2 control-label">工单号:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.woCode}}</label></div>
+        <label class="col-sm-2 control-label">工单类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.woTypeStr}}</label></div>
+        <div style="clear: both"></div>
+
+        <label for="misson400" class="col-sm-2 control-label">400工单号:</label>
+        <div class="col-sm-4" ng-show="closeview.modifyFlg">
+          <input type="text" value="closeview.order.csWoCode" id="misson400" ng-model="closeview.order.csWoCode" class="form-control col-sm-10" name="misson400" required ng-pattern="/^[0-9]{20}$/"/>
+          <div wd-messages="misson400">
+            <div wd-message="required">400工单号必须填写</div>
+            <div wd-message="pattern">400工单号为20位数字</div>
+          </div>
+        </div>
+        <div class="col-sm-4" ng-show="closeview.queryFlg"><label class="control-label">{{closeview.order.csWoCode}}</label></div>
+        <label class="col-sm-2 control-label">当前状态:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.woStatusStr}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">服务站:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.stationName}}</label></div>
+        <label class="col-sm-2 control-label">服务站电话:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.stationTel}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">服务类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.serviceType}}</label></div>
+        <label class="col-sm-2 control-label">司机APP注册手机号:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.phone}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">当前业务员:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.counterman}}</label></div>
+        <label class="col-sm-2 control-label">维修项目:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.items}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">预约到站时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.orderTime}}</label></div>
+        <label class="col-sm-2 control-label">保养项目:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.maintenanceItem}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">建立时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.createTime}}</label></div>
+        <div style="clear: both"></div>
+
+
+        <div class="col-xs-12">
+          <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">用户信息：</h5>
+        </div>
+
+        <label class="col-sm-2 control-label">车牌号:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.carNumber}}</label></div>
+        <label class="col-sm-2 control-label">用户姓名:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.userName}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">发动机类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.engine}}</label></div>
+        <label class="col-sm-2 control-label">联系电话:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.userPhone}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">底盘号:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.carVin}}</label></div>
+        <label class="col-sm-2 control-label">联系电话2:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.repairTel}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">驾驶室类型:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.carType}}</label></div>
+        <label class="col-sm-2 control-label">报修司机:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.repairName}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">行驶公里数:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.mile}}</label></div>
+        <label class="col-sm-2 control-label">报修电话:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.repairTel}}</label></div>
+        <div style="clear: both"></div>
+
+
+        <label class="col-sm-2 control-label">购车时间:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.buyTime}}</label></div>
+        <label class="col-sm-2 control-label">报修地址:</label>
+        <div class="col-sm-4"><label class="control-label">{{closeview.order.repairAdd}}</label></div>
+        <div style="clear: both"></div>
+
+        <label class="col-sm-2 control-label">用户反馈:</label>
+        <!--<div class="col-sm-10"><label class="control-label">{{closeview.order.driverContent}}</label></div>-->
+<!---------------------------------media start---------------------------------------------->
+        <div class="col-sm-4 missFile">
+          <div class="col-sm-12">
+            <label class="control-label" style="float:left;">
+              <span>{{closeview.order.driverContent}}</span>
+            </label>
+            <label class="control-label" style="float:left;">
+              <img ng-if="closeview.ContentImg!=''" ng-repeat="imgpath in closeview.ContentImg" ng-click="closeview.openImg(closeview.ContentImg,$index)" width="50" height="50" ng-src="{{imgpath}}">
+            </label>
+            <label class="control-label" style="float:left;">
+              <audio  ng-if="closeview.ContentMusic!=''" controls="controls" ng-repeat="sound in closeview.ContentMusic" ng-src="{{closeview.sce(sound)}}"  style="float:left;"></audio>
+            </label>
+          </div>
+        </div>
+<!-------------------------------------media end------------------------------------------------>
+        <div ng-show=closeview.serviceInfoFlg>
+          <div class="col-xs-12">
+            <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">服务信息：</h5>
+          </div>
+
+          <label class="col-sm-2 control-label">预约时间:</label>
+          <div class="col-sm-10"><label class="control-label">{{closeview.serviceProcess.bookTime}}</label></div>
+          <div style="clear: both"></div>
+
+          <label class="col-sm-2 control-label">接车时间:</label>
+          <div class="col-sm-10"><label class="control-label">{{closeview.serviceProcess.scanTime}}</label></div>
+          <div style="clear: both"></div>
+
+          <label class="col-sm-2 control-label">扫码位置:</label>
+          <div class="col-sm-10"><label class="control-label">{{closeview.address}}</label></div>
+          <div style="clear: both"></div>
+
+          <label class="col-sm-2 control-label">扫描账号:</label>
+          <div class="col-sm-10"><label class="control-label">{{closeview.serviceProcess.scanUserId}}</label></div>
+          <div style="clear: both"></div>
+
+          <div id="process"></div>
+
+          <label class="col-sm-2 control-label">备注:</label>
+          <div class="col-sm-4" ng-show="closeview.queryFlg"><label class="control-label">{{closeview.serviceProcess.content}}</label></div>
+          <div class="col-sm-10" ng-show="closeview.modifyFlg">
+            <textarea  rows="5" class="form-control" maxlength="500" ng-model="closeview.serviceProcess.content">{{closeview.serviceProcess.content}}</textarea>
+          </div>
+        </div>
+
+        <div ng-show=closeview.rateInfoFlg>
+          <div class="col-xs-12">
+            <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">服务评价：</h5>
+          </div>
+
+          <label class="col-sm-2 control-label">用户评价:</label>
+          <div class="col-sm-10" id="rateStar"></div>
+          <!--<div class="col-sm-10"><label class="control-label">{{closeview.rate.rateScore}}</label></div>-->
+
+
+          <label class="col-sm-2 control-label">用户评价说明:</label>
+          <div class="col-sm-10"><label class="control-label">{{closeview.rate.rateContent}}</label></div>
+
+          <label class="col-sm-2 control-label">用户回访内容:</label>
+          <div class="col-sm-10">
+            <textarea  rows="5" class="form-control" maxlength="500">{{closeview.rate.feedback}}</textarea>
+          </div>
+
+        </div>
+        <div class="col-sm-8 col-sm-offset-4">
+          <button ng-disabled="edit_form.$invalid || closeview.requesting" class="btn btn-primary" type="submit" ng-show="closeview.modifyFlg"  ng-click="closeview.submit($event)" style="width: 85px;">确认</button>
+          <button  class="btn btn-default" type="reset" style="width: 85px;" ng-click="closeview.closeWin()">返回</button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</div>
+
+

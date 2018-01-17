@@ -1,0 +1,78 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="4" class="tlr">
+                    <div class="rule-div">
+                        <span class="rule-title">角色管理</span>
+                    </div>
+                    <button class="btn btn-default btn-small" ng-click="role.add()">新增</button>
+                    <div class="ib Searchfor">
+                        <input type="text" style="width: 200px;" class="ml5 ib form-control width-100" ng-model="role.inputText" placeholder="请输入角色名称"/>
+                        <span class="glyphicon glyphicon-search" ng-click="role.pageIndex=1;role.changeDate()"></span>
+                    </div>
+                    <button class="btn btn-default btn-small" ng-click="role.formoreobj();role.change()">高级筛选
+                    </button>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="role.moreobject">
+                <th colspan="10" style="text-align: left;">
+                  <div class="wd-date ib col-sm-5">
+                    <div class="ib Hfilter col-sm-3">创建时间：</div>
+                    <div class="mp-date-time-pick col-sm-9 ib authenticationTime">
+                      <wd-date-picker class="ib col-sm-5"  date="role.roleDateStart"
+                                      ng-model="role.roleDateStart" end-date="role.nowTime"
+                                      ng-change="role.pageIndex=1;role.changeDate()">
+                      </wd-date-picker> <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                      <wd-date-picker class="ib col-sm-5"  date="role.roleDateEnd"
+                                      ng-model="role.roleDateEnd"  end-date="role.nowTime"
+                                      ng-change="role.pageIndex=1;role.changeDate()">
+                      </wd-date-picker>
+                    </div>
+                  </div>
+                    <div class="obj col-sm-3">
+                        <div class="col-sm-3 ib Hfilter">创建人：</div>
+                        <div class="ib col-sm-8">
+
+                            <select ng-model="role.creator" name="creatorList" id="creatorList"
+                                    class="form-control"
+                                    ng-options="item.id as item.name for item in role.CREATOR"
+                                    ng-change="role.pageIndex=1;role.changeDate()">
+                                <option value="" selected="selected">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr>
+                <th>角色名称</th>
+                <th>创建人</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="obj in role.ruleData">
+                <td>{{obj.name}}</td>
+                <td>{{obj.creatorName}}</td>
+                <td>{{obj.createTime}}</td>
+                <td>
+                    <a ng-click="role.edit(obj)">编辑</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a ng-click="role.del(obj.id,obj.name)">删除</a>
+                    <!--绑定数据时合并成一个方法 根据权限判断-->
+                </td>
+            </tr>
+            <tr ng-if="role.ruleData.length === 0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="role.total" page-size="role.pageSize" page-index="role.pageIndex"
+                    query="role.flip"></wd-page-number>
+</div>
+

@@ -1,0 +1,91 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="15">
+                   <button class="btn btn-default btn-small fr mt6" ng-click="build.formoreobj()">高级筛选</button>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr ng-show="build.moreobject">
+                <th colspan="15" style="text-align: right;">
+                    <div class="obj col-sm-2">
+                        <div class="col-sm-5 ib Hfilter">底盘号：</div>
+                        <div class="col-sm-7 ib">
+                            <input type="text" class="ib form-control width-100" ng-model="build.query.chassisCode"/>
+                        </div>
+                    </div>
+
+                    <div class="obj col-sm-2">
+                      <div class="col-sm-5 ib Hfilter">客户姓名：</div>
+                      <div class="col-sm-7 ib">
+                        <input type="text" class="ib form-control" ng-model="build.query.customNm"/>
+                      </div>
+                    </div>
+                    <div class="obj col-sm-2">
+                        <div class="col-sm-5 ib Hfilter">发动机型号：</div>
+                        <div class="ib col-sm-7">
+                            <input type="text" class="ib form-control" ng-model="build.query.engineCode" placeholder="发动机型号"/>
+                        </div>
+                    </div>
+                    <div class="obj col-sm-2">
+                        <div class="col-sm-5 ib Hfilter">驾驶室类型：</div>
+                        <div class="ib col-sm-7">
+                            <input type="text" class="ib form-control width-100" ng-model="build.query.carModel" placeholder="驾驶室类型"/>
+                        </div>
+                    </div>
+                    <div class="obj col-sm-2">
+                        <div class="col-sm-5 ib Hfilter">车牌号：</div>
+                        <div class="ib col-sm-7">
+                            <input type="text" class="ib form-control width-100" ng-model="build.query.carCph" placeholder="车牌号"/>
+                        </div>
+                    </div>
+                    <button  class="btn btn-primary" ng-click="build.pageIndex='1';build.getData()" style="width: 85px;">搜索</button>
+                </th>
+                <!--第一行th用于新建等按钮-->
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>操作</th>
+                <th>底盘号</th>
+                <th>发动机型号</th>
+                <th>驾驶室类型</th>
+                <th>车牌号</th>
+                <!--<th>进行中工单</th>-->
+                <th>车辆行驶里程</th>
+                <th>首保里程</th>
+                <th>购车时间</th>
+                <th>用户姓名</th>
+                <th>客户姓名</th>
+                <th>联系电话</th>
+                <th>产品代码</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="carInfo in build.carInfoList">
+                <td>{{$index + 1}}</td>
+                <td><a ui-sref="tservice.buildnew({chassisNum:carInfo.chassisNum})" ng-if="carInfo.isOn==2">新建工单</a></td>
+                <td>{{carInfo.chassisNum}}</td>
+                <td>{{carInfo.engineModel}}</td>
+                <td>{{carInfo.cabinType}}</td>
+                <td>{{carInfo.carCode}}</td>
+                <!--<td>{{carInfo.isOn==1 ? '是' : '否'}}</td>-->
+                <td>{{carInfo.mileage}}</td>
+                <td>{{carInfo.firstMileage}}</td>
+                <td>{{carInfo.buyTime}}</td>
+                <td>{{carInfo.userName}}</td>
+                <td>{{carInfo.customName}}</td>
+                <td>{{carInfo.phone}}</td>
+                <td>{{carInfo.productCode}}</td>
+            </tr>
+            <tr ng-if="build.carInfoList.length === 0">
+                <td colspan="12" style="text-align: center;">无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <wd-page-number total="build.total" page-size="build.pageSize" page-index="build.pageIndex"
+                      query="build.flip"></wd-page-number>
+</div>
+

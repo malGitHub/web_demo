@@ -1,0 +1,97 @@
+﻿.frame-sidebar {
+  a{
+    color: $color-text;
+  }
+  width: 150px;
+  min-width: 150px;
+  min-height: 100%;
+  background: #EFF2F8;
+  border-right: 1px solid $color-border;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 1;
+  padding-top:50px;
+  .sidebar-divider {
+    height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    margin: 0 5px;
+  }
+  .sidebar-navi {
+    font-size: $font-size-title;
+    a {
+      display: block;
+      line-height: 35px;
+      text-decoration: none;
+    }
+    li {
+      a{
+        &:hover {
+          background-color: #d6def0;
+        }
+        .glyphicon {
+          color: $color-icon;
+        }
+      }
+      cursor: pointer;
+    }
+    //选中
+
+    li.active{
+      background-color: #CBD3E5;
+    }
+
+    .glyphicon{
+      font-size: 10px;
+    }
+
+    //默认左箭头
+    .glyphicon-menu-dorl{
+      &:before { content: "\e258"; }
+    }
+    //默认隐藏子菜单
+    .sidebar-navi-s{
+      display: none;
+    }
+
+    li.active2{
+      .glyphicon-menu-dorl{
+        &:before { content: "\e259"; }
+      }
+      .sidebar-navi-s{
+        display: block;
+      }
+    }
+
+    .active a, .active .glyphicon {
+      color: $color-base;
+    }
+  }
+
+  //下拉菜单
+  .btn-group {
+    width: 90%;
+    position: inherit;
+    margin: 5px auto;
+    display: block;
+    height: 34px;
+
+    .dropdown-menu{
+      max-width: 178px;
+    }
+
+    .btn {
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background-color: #fff;
+
+      &:nth-child(1){
+        width: 80%;
+      }
+      &:nth-child(2){
+        width: 20%;
+      }
+    }
+  }
+}
+

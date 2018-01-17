@@ -1,0 +1,627 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{activitiesnew.title}}</h3>
+</div>
+<div class="modal-body activitiesnew">
+  <div class="bggray"></div>
+  <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="add_form" ng-submit="activitiesnew.submit($event, add_form)" novalidate="">
+    <h5 class="h5title">活动信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnew.list.activityName" type="text" id="activityName" class="form-control col-sm-10" name="activityName" required ng-maxlength="100" ng-readonly="activitiesnew.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px;'>
+      <i class="col-sm-12 disabledTime" ng-if="activitiesnew.read"></i>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>活动开始日期</label>
+      <div class="mp-date-time-pick col-sm-4 ib">
+        <wd-date-picker class="col-sm-5"  start-date="activitiesnew.nowTime" format="yyyy-mm-dd" ng-model="activitiesnew.list.activityStartDate" data="activitiesnew.list.activityStartDate" required></wd-date-picker>
+      </div>
+      <label  class="control-label"><span style="color:red">*</span>活动结束日期</label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="0" ng-click="activitiesnew.list.activityEndDate=''" ng-model="activitiesnew.aciveTimeInput" required>
+        送完为止
+      </label>
+      <label class="radio-inline" style="padding-top:0">
+        <input name="Time" type="radio" ng-value="-1" ng-model="activitiesnew.aciveTimeInput" required ng-disabled="activitiesnew.read">
+        自定义
+      </label>
+      <div class="mp-date-time-pick ib"  style="max-width: 200px;" ng-if="activitiesnew.aciveTimeInput=='-1'">
+        <wd-date-picker ng-model="activitiesnew.list.activityEndDate"  start-date="activitiesnew.nowTime" format="yyyy-mm-dd" data="activitiesnew.list.activityEndDate" required></wd-date-picker>
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>发放数量</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnew.list.activityQuota" type="number" id="activityQuota" class="form-control wh100" name="activityQuota" required ng-maxlength="60" ng-readonly="true">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单车发放限额</label>
+      <select ng-model="activitiesnew.query.singleQuota" ng-change="activitiesnew.singleFunc()" name="singleQuota" id="singleQuota" class="form-control" style="max-width:100px;" ng-disabled="true">
+        <option value='1'>1</option>
+        <option value='-1'>自定义</option>
+      </select>
+      <input class="form-control wh100" type="number" ng-if="activitiesnew.query.singleQuota=='-1'" ng-model="activitiesnew.list.singleQuota" placeholder="请输入赠送物品数量" ng-readonly="activitiesnew.read" required>
+    </div>
+    <h5 class="h5title">优惠券信息</h5>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>名称</label>
+      <div class="col-sm-3">
+        <input ng-model="activitiesnew.list.couponName" type="text" id="couponName" class="form-control col-sm-10" name="couponName" required ng-maxlength="60" ng-readonly="activitiesnew.read">
+      </div>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>内容</label>
+      <div class="col-sm-3">
+        <textarea ng-model="activitiesnew.list.couponContent" id="couponContent" rows="1" name="couponContent" class="form-control ng-pristine ng-valid" placeholder="请输入优惠券内容" required  ng-maxlength=200 ng-readonly="activitiesnew.read"></textarea>
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>单位</label>
+      <div class="col-sm-3 wh60">
+        <input ng-model="activitiesnew.list.couponUnit" type="text" id="couponUnit" class="form-control" name="couponUnit" required ng-maxlength="20" ng-readonly="activitiesnew.read">
+      </div>
+    </div>
+    <div class="form-group" style='margin-left:20px'>
+      <i class="col-sm-12 disabledTime" ng-if="activitiesnew.read"></i>
+      <label  class="col-sm-1 control-label"><span style="color:red">*</span>优惠券有效期</label>
+         <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="0" ng-click="activitiesnew.list.expirationDays='';activitiesnew.list.expirationStartDate='';activitiesnew.list.expirationEndDate=''" ng-model="activitiesnew.list.expirationStatus" required ng-disabled="activitiesnew.read">
+          不限
+        </label>
+        <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="1" ng-click="activitiesnew.list.expirationStartDate='';activitiesnew.list.expirationEndDate=''" ng-model="activitiesnew.list.expirationStatus" required ng-disabled="activitiesnew.read" >
+          领取之后一定周期内
+        </label>
+        <div class="ib" ng-if="activitiesnew.list.expirationStatus=='1'">
+            <input ng-model="activitiesnew.list.expirationDays" type="number" id="expirationDays" class="form-control  ng-pristine ng-valid ib wh100" name="expirationDays" required placeholder="限制天数" ng-readonly="activitiesnew.read"> <span class="ib wh20 mr5" style="vertical-align: bottom;margin-bottom: 3px;">/天</span>
+        </div>
+        <label class="radio-inline txtalLeft">
+          <input name="Validity" type="radio" ng-value="2" ng-click="activitiesnew.list.expirationDays=''" ng-model="activitiesnew.list.expirationStatus" required ng-disabled="activitiesnew.read">
+          自定义
+        </label>
+        <div class="mp-date-time-pick ib" ng-if="activitiesnew.list.expirationStatus=='2'">
+          <wd-date-picker class="ib"  start-date="activitiesnew.nowTime" date="activitiesnew.list.expirationStartDate"
+                          ng-model="activitiesnew.list.expirationStartDate"
+                          ng-change="activitiesnew.changeDate()"  format="yyyy-mm-dd" required>
+          </wd-date-picker><span class="ib Hfilter" style="text-align: center;">至</span>
+          <wd-date-picker class="ib"  start-date="activitiesnew.nowTime" date="activitiesnew.list.expirationEndDate"
+                          ng-model="activitiesnew.list.expirationEndDate"
+                          ng-change="activitiesnew.changeDate()"  format="yyyy-mm-dd" required>
+          </wd-date-picker>
+        </div>
+      <!--</div>-->
+     </div>
+<!--------------------------------------发放网点start-------------------------------------------->
+    <h5 class="h5title">发放设置</h5>
+    <div class="col-sm-1" style="line-height: 40px;text-indent:10px;font-size:14px;">发放网点</div>
+    <div class="content-padding col-sm-8" ng-readonly="activitiesnew.read">
+      <uib-tabset>
+        <uib-tab heading="全部网点" select="activitiesnew.clearTab1()">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeProvinceOne()" ng-model="activitiesnew.query1.provinceId" class="form-control" id="pNameAll"
+                              ng-options="item.id as item.name for item in activitiesnew.AreaList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeCityOne()" ng-model="activitiesnew.query1.cityId" class="form-control" id="cNameAll"
+                              ng-options="item.id as item.name for item in activitiesnew.CityList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreTypeOne()" ng-model="activitiesnew.query1.stationType" id="storeTypeAll" class="form-control" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreOne()" ng-model="activitiesnew.query1.stationId" class="form-control" id="sNameAll"
+                              ng-options="item.stationId as item.stationName for item in activitiesnew.StoreList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesnew.addshop()" class="form-control wh100" ng-disabled="activitiesnew.addBtn||activitiesnew.requesting2">添加至活动</button>
+
+<!--
+                    <button type="button" style="float: right;" ng-click="activitiesnew.query1.flag='';activitiesnew.getAllList()" class="form-control wh100" ng-disabled="activitiesnew.pathRead">查询</button>
+-->
+                    <div style="clear:both"></div>
+
+                    <!--<div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;" >
+                        <input ng-model="activitiesnew.query1.keyWord" type="text" class="form-control col-sm-2 wh182" ng-readonly="activitiesnew.pathRead" placeholder="输入网点关键字"/>
+                        <span ng-click="activitiesnew.query1.page_number=1;activitiesnew.query1.flag=1;activitiesnew.getAllList()" class="glyphicon glyphicon-search" ></span>
+                      </div>
+                       <div class="col-sm-5"  >
+                        <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                        <div class="col-sm-3" >
+                          <select class="form-control" ng-model="activitiesnew.limitif"
+                                  ng-change="activitiesnew.changeLimit()" ng-disabled="activitiesnew.pathRead">
+                            <option value="false" selected="selected">不限</option>
+                            <option value="true">自定义</option>
+                          </select>
+                        </div>
+                         <input class="form-control" style="width:140px;" type="number" min="1" ng-if="activitiesnew.limitif=='true'"
+                               ng-model="activitiesnew.limit"
+                               placeholder="请填写数量" required>
+                      </div>
+                     </div>-->
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesnew.allStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+               </tr>
+              <tr ng-if="activitiesnew.allStationList === 0 || activitiesnew.noData==true;">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  ng-if="!activitiesnew.noData" total="activitiesnew.total1" page-size="activitiesnew.query1.page_size"  page-index="activitiesnew.query1.page_number" query="activitiesnew.flip1"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="已添加网点" select="activitiesnew.clearTab2();activitiesnew.getAddedList()" active="true">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeProvince()" ng-model="activitiesnew.query2.provinceId" class="form-control" id="pNameAdded"
+                              ng-options="item.id as item.name for item in activitiesnew.AreaList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeCity()" ng-model="activitiesnew.query2.cityId" class="form-control" id="cNameAdded"
+                              ng-options="item.id as item.name for item in activitiesnew.CityList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreType()" ng-model="activitiesnew.query2.stationType" id="storeTypeAdded" class="form-control" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStore()" ng-model="activitiesnew.query2.stationId" class="form-control" id="sNameAdded"
+                              ng-options="item.stationId as item.stationName for item in activitiesnew.StoreList" ng-disabled="activitiesnew.pathRead">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesnew.query2.page_number=1;activitiesnew.query2.flag='';activitiesnew.getAddedList()" class="form-control wh100" ng-disabled="activitiesnew.pathRead">查询</button>
+                    <div style="clear:both"></div>
+
+                    <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <i class="col-sm-12 disabledTime" ng-if="activitiesnew.pathRead"></i>
+                         <input ng-model="activitiesnew.query2.keyWord" type="text" class="form-control col-sm-2 wh178 " placeholder="请输入网点全称"/>
+                        <span  ng-click="activitiesnew.query2.page_number=1;activitiesnew.query2.flag=1;activitiesnew.getAddedList()" class="glyphicon glyphicon-search"></span>
+                      </div>
+                      <div class="Hfilter" style="float:left;margin:0 12px;"></div>
+                    </div>
+                    <!--<button type="button" ng-if="activitiesnew.stopType==0" style="float: right;" ng-click="activitiesnew.clearStation()" class="form-control wh100" ng-disabled="activitiesnew.pathRead">清除网点</button>
+                    <button type="button" ng-if="activitiesnew.stopType==1" style="float: right;" ng-click="activitiesnew.clearStation_send()" class="form-control wh100" ng-disabled="activitiesnew.pathRead">清除网点</button>-->
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesnew.addedStationList">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+                 <td class="col-sm-1" ng-if="!activitiesnew.pathRead">
+                  <span ng-if="activitiesnew.stopType==0"  class="glyphicon glyphicon-remove" ng-click="activitiesnew.storeDelete($index)"></span>
+                  <span ng-if="activitiesnew.stopType==1" class="glyphicon glyphicon-remove" ng-click="activitiesnew.storeDelete_send($index)"></span>
+                </td>
+              </tr>
+              <tr ng-if="activitiesnew.addedStationList.length ===0 ">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  total="activitiesnew.total2" page-size="activitiesnew.query2.page_size"  page-index="activitiesnew.query2.page_number" query="activitiesnew.flip2"></wd-page-number>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div style="clear: both;"></div>
+
+<!--------------------------------------发放网点end-------------------------------------------->
+<!--------------------------------------车型选择start------------------------------------------>
+    <h4 style="line-height: 40px;text-indent:10px;font-size:14px;">车型选择</h4>
+
+    <div class="form-group" style='margin-left:20px' ng-if="activitiesnew.selSeries">
+      <div class="col-sm-2 control-label col-sm-offset-1" style="width:98px;text-align: right;">系列</div>
+      <div style="float: left;min-width:455px;">
+        <div style="float: left;">
+          <select ng-change="activitiesnew.changeSeries()" ng-model="activitiesnew.series" id="series" class="form-control col-sm-2 wh120"
+                  ng-options="item.seriseId as item.seriseName for item in activitiesnew.CAR_SERIES" ng-disabled="activitiesnew.read">
+            <option value="" selected="selected">全选</option>
+          </select>
+        </div>
+        <div style="float: left;width: 50px;margin-top:10px;text-align: center;">车型</div>
+        <div class="col-sm-1">
+          <select ng-model="activitiesnew.model" id="model" class="form-control  col-sm-2 wh120"
+                  ng-options="item.modelId as item.modelName for item in activitiesnew.CAR_Model" ng-disabled="activitiesnew.read">
+            <option value="" selected="selected">全选</option>
+          </select>
+        </div>
+      </div>
+
+
+      <button type="button" ng-click="activitiesnew.addshop2()"  class="form-control col-sm-1 wh90" ng-disabled="activitiesnew.read||activitiesnew.requesting3">添加</button>
+    </div>
+    <div class="form-group" style='margin-left:20px' ng-if="activitiesnew.selSeries">
+      <div>
+          <div class="col-sm-2 control-label col-sm-offset-1" style="width:98px;text-align: right;">车辆下线日期：</div>
+           <div style="float: left;">
+            <select ng-model="activitiesnew.offStartDate" class="form-control col-sm-2 wh120" ng-change="activitiesnew.changeOffStartDate()" ng-disabled="activitiesnew.read">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib"  ng-if="activitiesnew.offStartDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesnew.carOfflineStartDateClick"
+                                ng-model="activitiesnew.carOfflineStartDateClick" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+          <div style="float: left;width: 50px;margin-top:10px;text-align: center;">至</div>
+          <div style="float: left;" >
+            <select ng-model="activitiesnew.offEndDate" class="form-control col-sm-2 wh120" ng-change="activitiesnew.changeOffEndDate()" ng-disabled="activitiesnew.read">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib" ng-if="activitiesnew.offEndDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesnew.carOfflineEndDateClick"
+                                ng-model="activitiesnew.carOfflineEndDateClick" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+     </div>
+    </div>
+    <div class="form-group" style='margin-left:20px' ng-if="activitiesnew.selSeries">
+      <div>
+           <div class="col-sm-2 control-label col-sm-offset-1" style="width:98px;text-align: right;">车辆销售日期:</div>
+          <div style="float: left;">
+            <select ng-model="activitiesnew.sellStartDate" class="form-control col-sm-2 wh120" ng-change="activitiesnew.changeSellStartDate()" ng-disabled="activitiesnew.read">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib"  ng-if="activitiesnew.sellStartDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesnew.carSellingStartDateClick"
+                                ng-model="activitiesnew.carSellingStartDateClick" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+          <div style="float: left;width:50px;margin-top:10px;text-align: center;">至</div>
+          <div style="float: left;" >
+            <select ng-model="activitiesnew.sellEndDate" class="form-control col-sm-2 wh120" ng-change="activitiesnew.changeSellEndDate()" ng-disabled="activitiesnew.read">
+              <option value="false" selected="selected">不限</option>
+              <option value="true">自定义</option>
+            </select>
+            <div class="wd-date ib" ng-if="activitiesnew.sellEndDate=='true'">
+              <div class="mp-date-time-pick ib" >
+                <wd-date-picker class="ib wh125" date="activitiesnew.carSellingEndDateClick"
+                                ng-model="activitiesnew.carSellingEndDateClick" format="yyyy-mm-dd">
+                </wd-date-picker>
+              </div>
+            </div>
+          </div>
+      </div>
+     </div>
+    <div class="form-group" style='margin-left:20px' ng-if="activitiesnew.selSeries">
+      <div>
+    <div class="col-sm-2 control-label  col-sm-offset-1" style="width:98px;text-align:right; ">STD日期:</div>
+    <div style="float: left;">
+      <select ng-model="activitiesnew.stdStartTime" class="form-control col-sm-2 wh120" ng-change="activitiesnew.CHANGE_STDStartDate()" ng-disabled="activitiesnew.read">
+        <option value="false" selected="selected">不限</option>
+        <option value="true">自定义</option>
+      </select>
+      <div class="wd-date ib"  ng-if="activitiesnew.stdStartTime=='true'">
+        <div class="mp-date-time-pick ib" >
+          <wd-date-picker class="ib wh125" date="activitiesnew.stdStartDateClick"
+                          ng-model="activitiesnew.stdStartDateClick" format="yyyy-mm-dd">
+          </wd-date-picker>
+        </div>
+      </div>
+    </div>
+    <div style="float: left;width:50px;margin-top:10px;text-align: center;">至</div>
+    <div style="float: left;" >
+      <select ng-model="activitiesnew.stdEndTime" class="form-control col-sm-2 wh120" ng-change="activitiesnew.CHANGE_STDEndDate()" ng-disabled="activitiesnew.read">
+        <option value="false" selected="selected">不限</option>
+        <option value="true">自定义</option>
+      </select>
+      <div class="wd-date ib" ng-if="activitiesnew.stdEndTime=='true'">
+        <div class="mp-date-time-pick ib" >
+          <wd-date-picker class="ib wh125" date="activitiesnew.stdEndDateClick"
+                          ng-model="activitiesnew.stdEndDateClick" format="yyyy-mm-dd">
+          </wd-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px' ng-if="activitiesnew.selSeries">
+      <div class="Hfilter" style="float:left;margin: -20px 100px;"><span style="color:red">*</span>所选车型：</div>
+      <br>
+      <div class="col-sm-7 col-sm-offset-1 activeScroll">
+          <table>
+            <tbody>
+            <tr ng-repeat="obj in activitiesnew.selectedSeries">
+              <td class="col-sm-1">{{ $index + 1 }}&nbsp;&nbsp;&nbsp;{{obj.seriesName}}</td>
+              <td class="col-sm-1">{{obj.modelName}}</td>
+              <td class="col-sm-1">车辆下线日期：
+                <span  ng-if="obj.carOfflineStartDate!=undefined||obj.carOfflineStartDate!=''">{{obj.carOfflineStartDate}}</span>
+                <span  ng-if="obj.carOfflineStartDate==undefined||obj.carOfflineStartDate==''">不限</span>至
+                <span ng-if="obj.carOfflineEndDate==undefined||obj.carOfflineEndDate==''">不限</span>
+                <span ng-if="obj.carOfflineEndDate!=undefined&&obj.carOfflineEndDate!=''">{{obj.carOfflineEndDate}}</span></td>
+              <td class="col-sm-1">车辆销售日期：
+                <span ng-if="obj.carSellingStartDate!=undefined&&obj.carSellingStartDate!=''">{{obj.carSellingStartDate}}</span>
+                <span ng-if="obj.carSellingStartDate==undefined||obj.carSellingStartDate==''">不限</span>至
+                <span ng-if="obj.carSellingEndDate==undefined||obj.carSellingEndDate==''">不限</span>
+                <span ng-if="obj.carSellingEndDate!=undefined||obj.carSellingEndDate!=''">{{obj.carSellingEndDate}}</span></td>
+              <td class="col-sm-1">STD日期：
+                <span ng-if="obj.stdStartDate!=undefined&&obj.stdStartDate!=''">{{obj.stdStartDate}}</span>
+                <span ng-if="obj.stdStartDate==undefined||obj.stdStartDate==''">不限</span>至
+                <span ng-if="obj.stdEndDate==undefined||obj.stdEndDate==''">不限</span>
+                <span ng-if="obj.stdEndDate!=undefined&&obj.stdEndDate!=''">{{obj.stdEndDate}}</span></td>
+              <td class="col-sm-1" ng-if="!activitiesnew.read">
+                <span class="glyphicon glyphicon-remove" ng-click="activitiesnew.seriesDelete($index,obj.series,obj.model,obj.carOfflineStartDate,obj.carOfflineEndDate,obj.carSellingStartDate,obj.carSellingEndDate)"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+
+    <div class="form-group" style='margin-left:20px'  ng-if="activitiesnew.carSeries">
+      <div class="col-sm-2 col-sm-offset-1" >
+        <input ng-model="activitiesnew.chassisNum" type="text" name="chassisNumber" id="chassisNumber" class="form-control"
+               placeholder="请输入底盘号" ng-pattern="/^[0-9a-zA-Z]{8}$/" ng-disabled="activitiesnew.read">
+        <button  class="btn btn-default wh85" type="button"  ng-click="activitiesnew.numberAdd()" ng-disabled="add_form.chassisNumber.$invalid||activitiesnew.chassisNum==''|| activitiesnew.read">添加</button>
+        <button  class="btn btn-default wh85" type="button"  ng-click="activitiesnew.openImport()" ng-disabled="activitiesnew.read">导入</button>
+        <div style="height:200px;border:1px solid #ccc;overflow-y:scroll;overflow-x:hidden;position: relative;" >
+           <p ng-repeat="obj in activitiesnew.carChassisNumList track by $index">
+            <span class="col-sm-1">{{obj.chassisNum}}</span>
+               <span class="glyphicon glyphicon-remove ml80" ng-if="!activitiesnew.read"
+                     ng-click="activitiesnew.numberDelete($index,obj.chassisNum)"></span>
+            <span class="col-sm-offset-3" style="margin-left:50px;">，</span>
+          </p>
+        </div>
+      </div>
+    </div>
+<!--------------------------------------车型选择end-------------------------------------------->
+<!--------------------------------------兑换设置start-------------------------------------------->
+    <h5 class="h5title">兑换设置</h5>
+    <div class="col-sm-1" style="line-height: 40px;text-indent:10px;font-size:14px;">兑换网点</div>
+    <div class="content-padding col-sm-8">
+      <uib-tabset>
+        <uib-tab heading="全部网点" select="activitiesnew.clearTab3();">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeProvinceOne_ex()" ng-model="activitiesnew.query3.provinceId" class="form-control" id="pNameAll_ex"
+                              ng-options="item.id as item.name for item in activitiesnew.AreaList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeCityOne_ex()" ng-model="activitiesnew.query3.cityId" class="form-control" id="cNameAll_ex"
+                              ng-options="item.id as item.name for item in activitiesnew.CityList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreTypeOne_ex()" ng-model="activitiesnew.query3.stationType" id="storeTypeAll_ex" class="form-control" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreOne_ex()" ng-model="activitiesnew.query3.stationId" class="form-control" id="sNameAll_ex"
+                              ng-options="item.stationId as item.stationName for item in activitiesnew.StoreList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesnew.addshop_ex()" class="form-control wh100" ng-disabled="activitiesnew.addBtn_ex||activitiesnew.requesting4">添加至活动</button>
+                     <!--<button type="button" style="float: right;" ng-click="activitiesnew.query3.flag='';activitiesnew.getAllList_ex()" ng-disabled="activitiesnew.overdue" class="form-control wh100" >查询</button>-->
+                    <div style="clear:both"></div>
+
+                   <!-- <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <input ng-model="activitiesnew.query3.keyWord" type="text" class="form-control col-sm-2 wh182" ng-readonly="activitiesnew.overdue" placeholder="输入网点关键字"/>
+                        <span ng-click="activitiesnew.query3.page_number=1;activitiesnew.query3.flag=1;activitiesnew.getAllList_ex()" class="glyphicon glyphicon-search"></span>
+                      </div>
+                       <div class="col-sm-5"  >
+                        <div class="Hfilter" style="float:left;">设置发放限额：</div>
+                        <div class="col-sm-3">
+                          <select class="form-control" ng-model="activitiesnew.limitif_ex"
+                                   ng-change="activitiesnew.changeLimit_ex()" ng-disabled="activitiesnew.overdue">
+                            <option value="false" selected="selected">不限</option>
+                            <option value="true">自定义</option>
+                          </select>
+                        </div>
+                          <input class="form-control" style="width:140px;" type="number" min="1" ng-if="activitiesnew.limitif_ex=='true'"
+                               ng-model="activitiesnew.limit_ex"
+                               placeholder="请填写数量" required>
+                      </div>
+                     </div>-->
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesnew.allStationList_ex">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+               </tr>
+              <tr ng-if="activitiesnew.allStationList_ex === 0 || activitiesnew.noData_ex==true;">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number ng-if="!activitiesnew.noData_ex" total="activitiesnew.total3" page-size="activitiesnew.query3.page_size"  page-index="activitiesnew.query3.page_number" query="activitiesnew.flip3"></wd-page-number>
+        </uib-tab>
+        <uib-tab heading="已添加网点" select="activitiesnew.clearTab4();activitiesnew.getAddedList_ex()" active="true">
+          <div class="content-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th colspan="10">
+                  <div class="form-group">
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeProvince_ex()" ng-model="activitiesnew.query4.provinceId" class="form-control" id="pNameAdded_e"
+                              ng-options="item.id as item.name for item in activitiesnew.AreaList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">省</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeCity_ex()" ng-model="activitiesnew.query4.cityId" class="form-control" id="cNameAdded_e"
+                              ng-options="item.id as item.name for item in activitiesnew.CityList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:0 5px;">市</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStoreType_ex()" ng-model="activitiesnew.query4.stationType" id="storeTypeAdded_e" class="form-control" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">经销商</option>
+                        <option value="2">服务站</option>
+                      </select>
+                    </div>
+                    <div class="Hfilter" style="float:left;margin:05px;">　</div>
+                    <div class="col-sm-2">
+                      <select ng-change="activitiesnew.changeStore_ex()" ng-model="activitiesnew.query4.stationId" class="form-control" id="sNameAdded_e"
+                              ng-options="item.stationId as item.stationName for item in activitiesnew.StoreList_ex" ng-disabled="activitiesnew.overdue">
+                        <option value="" selected="selected">全选</option>
+                      </select>
+                    </div>
+
+                    <div class="Hfilter" style="float:left;margin:0 5px;"></div>
+                    <button type="button" style="float: right;" ng-click="activitiesnew.query4.page_number=1;activitiesnew.query4.flag='';activitiesnew.getAddedList_ex()" class="form-control wh100" ng-disabled="activitiesnew.overdue">查询</button>
+                    <div style="clear:both"></div>
+
+                    <div style="margin-top: 5px;">
+                      <div class="ib Searchfor" style="float: left; margin: 0;">
+                        <i class="col-sm-12 disabledTime" ng-if="activitiesnew.overdue"></i>
+                         <input ng-model="activitiesnew.query4.keyWord" type="text" class="form-control col-sm-2 wh178 " placeholder="请输入网点全称"/>
+                        <span ng-click="activitiesnew.query4.page_number=1;activitiesnew.query4.flag=1;activitiesnew.getAddedList_ex()" class="glyphicon glyphicon-search searchBtn"></span>
+                      </div>
+                      <div class="Hfilter" style="float:left;margin:0 12px;"></div>
+                    </div>
+<!--
+                    <button type="button" ng-if="activitiesnew.stopType==0" style="float: right;" ng-click="activitiesnew.clearStation_ex()" class="form-control wh100" ng-disabled="activitiesnew.overdue">清除网点</button>
+                    <button type="button" ng-if="activitiesnew.stopType==1" style="float: right;" ng-click="activitiesnew.clearStation_exchange()" class="form-control wh100" ng-disabled="activitiesnew.overdue">清除网点</button>
+-->
+                  </div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="obj in activitiesnew.addedStationList_ex">
+                <td class="col-sm-2">{{obj.provinceName}}</td>
+                <td class="col-sm-2">{{obj.cityName}}</td>
+                <td class="col-sm-2">{{obj.stationTypeName}}</td>
+                <td class="col-sm-2">{{obj.stationName}}</td>
+                <td class="col-sm-1">发放限额：{{obj.quantity==0 ? '不限' :obj.quantity}}</td>
+                 <td class="col-sm-1" ng-if="!activitiesnew.overdue">
+                  <span ng-if="activitiesnew.stopType==0" class="glyphicon glyphicon-remove" ng-click="activitiesnew.storeDelete_ex($index)"></span>
+                  <span ng-if="activitiesnew.stopType==1" class="glyphicon glyphicon-remove" ng-click="activitiesnew.storeDelete_exchange($index)"></span>
+                </td>
+              </tr>
+              <tr ng-if="activitiesnew.addedStationList_ex.length ===0">
+                <td colspan="10" style="text-align: center;">无数据</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <wd-page-number  total="activitiesnew.total4" page-size="activitiesnew.query4.page_size"  page-index="activitiesnew.query4.page_number" query="activitiesnew.flip4"></wd-page-number>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div style="clear: both;"></div>
+ <!--------------------------------------兑换设置end-------------------------------------------->
+    <h5 style="background: #666;height:1px;"></h5>
+    <div ng-if="activitiesnew.views">
+      <div class="form-group" style='margin-left:20px;margin-bottom:5px;'>
+        <div  class="col-sm-1 control-label col-sm-offset-1" style="width:30px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核意见：</div>
+      </div>
+      <div class="form-group" style='margin-left:20px'>
+        <div class="col-sm-9 col-sm-offset-1">
+          <textarea ng-model="activitiesnew.list.reviewContent" name="checkvies" id="checkvies" cols="110" rows="9" ng-readonly=true></textarea>
+        </div>
+      </div>
+      <div class="form-group" style='margin-left:20px'>
+        <div  class="col-sm-1 control-label col-sm-offset-1" style="width:65px;padding-right:5px;text-align: left;"><span style="color:red">*</span>审核结论：</div>
+        <div class="col-sm-2">
+          <select  ng-model="activitiesnew.list.reviewStatus" name="myviews" id="myviews" class="form-control" ng-options="item.viewId as item.viewName for item in activitiesnew.datavies" ng-disabled=true>
+            <option value="" selected="selected">请选择</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-offset-2" >
+        <button ng-disabled="add_form.$invalid ||activitiesnew.addedStationList.length==0||activitiesnew.addedStationList_ex.length==0||(activitiesnew.selectedSeries.length==0&&activitiesnew.carChassisNumList.length==0)||activitiesnew.requesting" class="btn btn-primary" ng-if="activitiesnew.activeStatus==1||activitiesnew.saveBtn" type="button" ng-click="activitiesnew.submit('2')" style="width: 85px;" >提交</button>
+        <button class="btn btn-primary"  ng-if="(activitiesnew.activeStatus==1 ||activitiesnew.activeStatus==3 ||activitiesnew.activeStatus==4||activitiesnew.activeStatus==5)&&activitiesnew.read&&!activitiesnew.saveBtn" type="button" style="width: 85px;" ng-click="activitiesnew.editConfirm()">编辑</button>
+        <button ng-disabled="activitiesnew.requesting" class="btn btn-primary" type="button" style="width: 85px;"   ng-click="activitiesnew.submit('1')" ng-if="activitiesnew.saveBtn" >保存</button>
+        <button ng-click="activitiesnew.closeAdd()" class="btn btn-default" type="reset" style="width: 85px;">返回</button>
+      </div>
+    </div>
+  </form>
+</div>

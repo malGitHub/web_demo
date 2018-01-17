@@ -1,0 +1,106 @@
+<div class="content-padding">
+    <div class="content-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="5" class="tlr">
+                    <div class="grant-div">
+                        <span class="grant-title">兑换详情:</span>
+                    </div>
+
+                  <button style="float: right;margin: 3px;" ng-click="cashinfo.cancel()" class="btn btn-default btn-small" type="reset">返回</button>
+
+                  <button style="float: right;margin: 3px;" ng-click="cashinfo.getExecl()" class="btn btn-default btn-small" type="button">导出</button>
+
+                  <div class="ib Searchfor" style="float: right;">
+                    <input style="width:200px;" type="text" class="ml5 ib form-control" ng-keyup="cashinfo.pageIndex=1;cashinfo.queryKeyUp($event)" ng-model="cashinfo.keyWord" placeholder="请输入车辆VIN/手机号"/>
+                    <span class="glyphicon glyphicon-search" ng-click="cashinfo.pageIndex=1;cashinfo.getGrantditDdata()"></span>                            </div>
+
+                  <div class="obj col-sm-4" style="float: right;">
+                    <div class="wd-date ib col-sm-12" >
+                      <div class="ib Hfilter col-sm-2">兑换时间：</div>
+                      <div class="mp-date-time-pick col-sm-10 ib authenticationTime">
+                        <wd-date-picker class="ib col-sm-5"  date="cashinfo.exchangeStartTime"
+                                         ng-model="cashinfo.exchangeStartTime"
+                                        ng-change="cashinfo.pageIndex=1;cashinfo.getGrantditDdata();" format="yyyy-mm-dd">
+                        </wd-date-picker>
+                        <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                        <wd-date-picker class="ib col-sm-5"  date="cashinfo.exchangeEndTime"
+                                         ng-model="cashinfo.exchangeEndTime"
+                                        ng-change="cashinfo.pageIndex=1;cashinfo.getGrantditDdata();"  format="yyyy-mm-dd" >
+                        </wd-date-picker>
+                      </div>
+                    </div>
+                  </div>
+
+                </th>
+            </tr>
+            </thead>
+        </table>
+
+      <div class="modal-body">
+        <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" action="" name="edit_form"
+              ng-submit="vm.submit($event, edit_form)" novalidate="">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">网点名称:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.stationName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">所属省:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.provinceName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">所属市:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.cityName}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">优惠券名称:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.preferentialTitle}}</label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">兑换限额:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.quantity}}<span ng-if="cashinfo.unitTool(cashinfo.query.quantity+'')">{{cashinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">已兑换数量:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.exchangeQuantity}}<span ng-if="cashinfo.unitTool(cashinfo.query.exchangeQuantity+'')">{{cashinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">过期未兑换数量:</label>
+            <div class="col-sm-4"><label class="control-label">{{cashinfo.query.restQuantity}}<span ng-if="cashinfo.unitTool(cashinfo.query.restQuantity+'')">{{cashinfo.query.unit}}</span></label></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">已兑换车辆列表:</label>
+            <div class="col-sm-6">
+              <table class="table" border="0">
+                <tbody>
+                <tr>
+                  <th>车辆VIN</th>
+                  <th>用户名</th>
+                  <th>电话</th>
+                  <th>兑换时间</th>
+                  <th>兑换数量</th>
+                  <th>物品单位</th>
+                </tr>
+                <tr ng-repeat="obj in cashinfo.query.list">
+                  <td>{{obj.vin}}</td>
+                  <td>{{obj.userName}}</td>
+                  <td>{{obj.phone}}</td>
+                  <td>{{obj.exchangeTime}}</td>
+                  <td>{{obj.exchangeQuantity}}</td>
+                  <td>{{cashinfo.query.unit}}</td>
+                </tr>
+                <tr ng-if="cashinfo.query.list.length === 0">
+                  <td colspan="6" style="text-align: center;">无数据</td>
+                </tr>
+                </tbody>
+              </table>
+              <wd-page-number total="cashinfo.query.total" page-size="cashinfo.pageSize" page-index="cashinfo.pageIndex"
+                              query="cashinfo.flip"></wd-page-number>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+

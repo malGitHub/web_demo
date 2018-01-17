@@ -1,0 +1,43 @@
+<div class="content-padding">
+    <ul class="nav nav-tabs"  >
+        <li class="uib-tab ng-isolate-scope active" heading="实时车况" >
+            <a href="" class="ng-binding">实时车况</a>
+        </li>
+        <li class="uib-tab ng-isolate-scope" heading="注册信息">
+            <a ng-if="carecall.filter.role===1" ng-click="carecall.seeDriver(carecall.filter)" class="ng-binding" >注册信息</a>
+            <a ng-if="carecall.filter.role!=1" ng-click="carecall.seeOwner(carecall.filter)" class="ng-binding" >注册信息</a>
+        </li>
+    </ul>
+    <!--<uib-tabset >-->
+        <!--<uib-tab heading="实时车况">-->
+            <div class="content-body">
+                <div>
+                  <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">车况信息：</h5>
+                  <ul style="line-height: 40px;">
+                    <li class="ml50">当前油量：{{carecall.query.instantOil}}升</li>
+                    <li class="ml50">整车里程：{{carecall.query.mileage}}公里</li>
+                    <li class="ml50">转数：{{carecall.query.revolution}}</li>
+                    <li class="ml50">末次上传时间：{{carecall.query.uploadTime}}</li>
+                    <li class="ml50">末次位置：{{carecall.query.uploadLocation}}</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 style="background: #d6def0;line-height: 40px;text-indent:10px">故障信息：</h5>
+                  <ul style="line-height: 40px;">
+                    <li ng-repeat="obj in carecall.faultInfoList" class="ml50"><span>{{obj.pcode}}</span><span class="ml20">{{obj.description}}</span></li>
+                  </ul>
+                  <div class="ml50" ng-if="!carecall.query.faultInfoList">无故障信息</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-3">
+                        <button ui-sref="tservice.care" class="btn btn-default" type="reset" style="width: 85px;margin-bottom:15px;">返回</button>
+                    </div>
+                </div>
+
+                <div style="clear:both;"></div>
+            </div>
+</div>
+
+

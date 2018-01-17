@@ -1,0 +1,19 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{vm.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <ul>
+                  <li ng-repeat="c in vm.codes">{{c}}</li><!--<a ui-sref="tservice.dealorderview({id:c})" ng-click="vm.clickcode()">{{c}}</a>-->
+                </ul>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-3">
+                    <button ng-click="vm.closeEdit()" class="btn btn-default wh100" type="reset">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

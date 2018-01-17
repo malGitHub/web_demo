@@ -1,0 +1,135 @@
+<div class="content-padding">
+    <uib-tabset >
+      <uib-tab heading="当前会话" id="fromBackIm">
+        <div class="content-body">
+          <div class="wrapper box-sizing">
+            <div ng-show="webim.prepareLoading">{{webim.prepareLoadingTxt}}</div>
+            <div ng-show="!webim.prepareLoading" class="content">
+              <div class="left-panel radius5px" id="left-panel">
+                <div class="title">
+                  &nbsp;&nbsp;&nbsp;<span id="myname">{{webim.username}}</span>
+                </div>
+                <div class="item" id="sessionsWrap" data-type="sessions">		<!-- 最近联系人 -->
+                  <div class="list">
+                    <div id="sessions">
+                      <p ng-if="!webim.sessionGroup">当前没有会话</p>
+                      <ul class="m-panel j-session">
+                        <laber ng-repeat="obj in webim.sessionGroup">
+                          <li class="panel_item" ng-click="webim.gethistoryText(obj)" ng-class="{true:'active',false:''}[obj.customerId==webim.toperson]" data-from="{{obj.customerName}}"><div class="panel_avatar"><img class="panel_image" ng-src="{{obj.header}}"  onerror="onerror=null;src='assets/webim/default-icon.png'"></div><div class="panel_text"><p class="panel_multi-row"><span class="panel_nick">{{obj.customerName}}</span></p><p class="panel_multi-row"><span class="panel_lastMsg">{{obj.msgType=='TEXT'?obj.content:obj.msgType}}</span><b ng-if="obj.msgCount!=0" class="panel_count">{{obj.msgCount}}</b></p></div></li>
+                        </laber>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="right-panel radius5px" id="rightPanel">	<!-- 聊天面板 -->
+                <div class="boxTimeLoading" ng-show="webim.boxTimeLoading"><img ng-src="../../../assets/images/timg.gif" alt=""></div>
+                <div ng-show="webim.chartbox" class="chat-box">
+                  <div class="title" id="chatTitle">
+                    　　<span id="contacting">{{webim.personNickname}}</span>
+                        <span id="contactTime">当前会话时长　<i>{{webim.howlong}}</i></span>
+                        <img class="instructionDetailImg wh30" ng-click="webim.moreobject=!webim.moreobject" src="..\..\assets\images\tishi.png" title="提示">
+                        <div id="closeContact" ng-click="webim.close();">结束服务</div>
+                        <div id="overContactTime" ng-click="webim.cancelDialogTimeout()">{{webim.state=='2'?'恢复超时关闭':'取消超时关闭'}}</div><!-- ng-class="{true: 'offTimeout', false: ''}[webim.state=='2']"-->
+                  </div>
+                  <div class="niceBar">
+                    <div class="chat-content box-sizing" id="chatContent" ng-bind-html='myText' > <!-- 聊天记录 -->
+                    </div>
+                  </div>
+
+                  <!--<div class="u-chat-notice">您已退出</div>-->
+                  <div class="chat-editor box-sizing" >
+                    <!--表情和图片-->
+                    <div id="emojiTag" class="m-emojiTag" ng-show="webim.showEmoji" checked="checked">
+                      <div class="m-emoji-wrapper"><div class="m-emoji-picCol">
+                        <span ng-click="webim.putEmoji(key)" ng-repeat="(key,value) in webim.emoji" id="pic-emoji-{{key}}"><img ng-if="webim.emoji" ng-src="{{value.file}}"></span>
+                      </div>
+                      </div>
+                    </div>
+                   <a class="u-emoji" id="showEmoji" ng-click="webim.toShowEmoji()" checked="checked">
+                     <img src="/assets/webim/emoticonArea.png" alt="表情">
+                   </a>
+                   <span class="msg-type" id="chooseFileBtn">
+                                     <a class="icon icon-file" data-type="file">
+                                       <img src="/assets/webim/imageArea.png" alt="图片">
+                                     </a>
+                                 </span>
+                    <form action="" id="uploadForm">
+                      <input multiple="multiple" type="file" name="file" id="uploadFile" ng-bind="webim.sendText" file-model="webim.file" class="hide"/>
+                    </form>
+                    <textarea id="messageText" class="msg-input box-sizing radius5px" rows="1" autofocus="autofocus" maxlength="500"></textarea>
+                    <button class="btn-send radius5px" id="sendBtn" ng-click="webim.sendText()" type="submit" >发送</button>
+                  </div>
+                </div>
+              </div>
+              <div id="instructionDetail" class="instructionDetail" ng-show="webim.moreobject">
+                <p>结束服务：结束本次对话，会话内容进入历史会话中。</p>
+                <p>取消超时关闭：系统默认超时10分钟自动结束，10分钟之内咨询者有会话产生，则该定时失效，该用户会话依旧在当前会话中，10分钟之内咨询者无会话产生，则超时自动关闭会话，进入历史记录中。点击“取消超时关闭”，则系统超时关闭不生效。</p>
+                <p>恢复超时关闭：“取消超时关闭”的逆状态。</p>
+              </div>
+            </div>
+          </div>
+          <div id="mask" class="mask hide"></div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="历史记录" select="webim.getImHistoryList()">
+     <div class="content-body">
+       <table class="table">
+         <thead>
+         <tr>
+           <th colspan="10" style="text-align: right;">
+             <div class="ib Searchfor" style="float: right;">
+               <input ng-model="webim.query.customerName" style="width:200px;" type="text" class="ml15 ib form-control width-100"  placeholder="请输入用户名"/>
+               <span ng-click="webim.getImHistoryList()" class="glyphicon glyphicon-search"></span>
+             </div>
+             <div class="obj wd-date" ng-show="webim.myVar" id="sessionTime">
+                <div class="mp-date-time-pick ib col-sm-10">
+                 <wd-date-picker class="ib col-sm-5" ng-change="webim.getImHistoryList();"  format="yyyy-mm-dd" ng-model="webim.query.startTime">
+                 </wd-date-picker>
+                 <span class="ib Hfilter col-sm-1" style="text-align: center;">至</span>
+                 <wd-date-picker class="ib col-sm-5" ng-change="webim.getImHistoryList();"  format="yyyy-mm-dd" ng-model="webim.query.endTime">
+                 </wd-date-picker>
+               </div>
+             </div>
+             <div class="ib" style="float: right; ">
+               <span class="ib Hfilter mr10">会话时间</span>
+               <div class="ib">
+                 <select  ng-change="webim.changeDate()"  ng-model="webim.timeHistoryType" name="modelNameCare" id="modelNameCare" class="form-control" ng-options="item.key as item.value for item in webim.historyTime"></select>
+               </div>
+             </div>
+            </th>   <!--第一行th用于新建等按钮-->
+
+         </tr>
+         <tr>
+           <th>用户名</th>
+           <th>会话开始时间</th>
+           <th>会话结束时间</th>
+           <th>操作</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr ng-repeat="obj in webim.imInfor">
+           <td>{{obj.customerName}}</td>
+           <td>{{obj.startTime}}</td>
+           <td>{{obj.endTime}}</td>
+           <td>
+             <a ng-click="webim.item(obj.dialogId,obj.customerName,obj.startTime,obj.endTime,obj.customerId)">查看</a>
+           </td>
+         </tr>
+         <tr ng-if="webim.imInfor.length === 0">
+           <td colspan="10" style="text-align: center;">无数据</td>
+         </tr>
+         </tbody>
+       </table>
+
+     </div>
+         <wd-page-number  total="webim.total" page-size="webim.page_size"  page-index="webim.page_number" query="webim.flip"></wd-page-number>
+   </uib-tab>
+    </uib-tabset>
+
+</div>
+<script>
+    function loadImgWebim() {
+       document.getElementById('chatContent').scrollTop = document.getElementById('chatContent').scrollHeight;
+    }
+</script>

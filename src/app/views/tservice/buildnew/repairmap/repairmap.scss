@@ -1,0 +1,58 @@
+.repairmap .searchBtn{
+  height: 34px;
+  background: #57a4f3;
+  color: #fff;
+  border: none;
+}
+.repairmap .search{
+  position:absolute;
+  top: 15px;
+  left:70px;
+  width:210px;
+  z-index: 99;
+}
+.repairmap .searchInput{
+  border-right:0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius:0;
+}
+.repairmap .searchRemove{
+  position:absolute;
+  right:5px;
+  top:10px;
+  color: gray;
+  background:#fff;
+}
+.repairmap .table td{
+  padding:5px!important;
+  text-align: left;
+  cursor: pointer
+}
+.repairmap .table{
+  position: absolute;
+  top: 32px;
+  z-index: 1000000;
+  border: 1px rgb(204, 204, 204) solid;
+  max-height: 10px!important;
+  background: #fff;
+  left: 0;
+}
+.repairmap .table td span{
+  background: #ff756f;
+  border-radius:50px;
+  display: inline-block;
+  color:#fff;
+  width:18px;
+  height:18px;
+  line-height:18px;
+  text-align: center;
+}
+.repairmap .city{
+  float:left;
+  margin:0 5px;
+}
+.repairmap .mapWH{
+  height: 410px;
+  width: 100%;
+  overflow:hidden;
+}
