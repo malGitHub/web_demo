@@ -1,8 +1,8 @@
-##TBOSS运营支撑系统
+##pc端管理平台
 
 ### 导入项目
 
-	$ git clone https://wdgit.mapbar.com/WebFrontends/qingqi-operate-plateform.git
+	$ git clone https:/###.git
 
 ### 安装依赖
 
